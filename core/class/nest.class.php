@@ -74,6 +74,7 @@ class nest extends eqLogic {
 
                 /*                 * ********************THERMOSTAT NEST********************** */
                 if ($eqLogic->getConfiguration('nest_type') == 'thermostat') {
+                    log::add('nest', 'debug', print_r($device_info, true));
                     $eqLogic->setConfiguration('wan_ip', $device_info->network->wan_ip);
                     $eqLogic->setConfiguration('last_connection', $device_info->network->last_connection);
                     $eqLogic->setConfiguration('ac', $device_info->current_state->ac);
@@ -138,7 +139,10 @@ class nest extends eqLogic {
                 $cmd->setType('info');
                 $cmd->setSubType('string');
                 $cmd->setEventOnly(1);
+                $cmd->setOrder(1);
                 $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->setTemplate('dashboard', 'tile');
+                $cmd->setTemplate('mobile', 'tile');
                 $cmd->save();
             }
 
@@ -151,6 +155,7 @@ class nest extends eqLogic {
                 $cmd->setType('info');
                 $cmd->setSubType('numeric');
                 $cmd->setEventOnly(1);
+                $cmd->setOrder(6);
                 $cmd->setEqLogic_id($eqLogic->getId());
                 $cmd->save();
             }
@@ -160,10 +165,11 @@ class nest extends eqLogic {
                 $cmd = new nestCmd();
                 $cmd->setLogicalId('humidity');
                 $cmd->setIsVisible(1);
-                $cmd->setName(__('CO', __FILE__));
+                $cmd->setName(__('Humidité', __FILE__));
                 $cmd->setType('info');
                 $cmd->setSubType('numeric');
                 $cmd->setEventOnly(1);
+                $cmd->setOrder(7);
                 $cmd->setEqLogic_id($eqLogic->getId());
                 $cmd->save();
             }
@@ -177,6 +183,7 @@ class nest extends eqLogic {
                 $cmd->setType('info');
                 $cmd->setSubType('binary');
                 $cmd->setEventOnly(1);
+                $cmd->setOrder(2);
                 $cmd->setEqLogic_id($eqLogic->getId());
                 $cmd->save();
             }
@@ -190,6 +197,7 @@ class nest extends eqLogic {
                 $cmd->setType('info');
                 $cmd->setSubType('binary');
                 $cmd->setEventOnly(1);
+                $cmd->setOrder(3);
                 $cmd->setEqLogic_id($eqLogic->getId());
                 $cmd->save();
             }
@@ -199,10 +207,11 @@ class nest extends eqLogic {
                 $cmd = new nestCmd();
                 $cmd->setLogicalId('auto_away');
                 $cmd->setIsVisible(1);
-                $cmd->setName(__('Absence autamatique', __FILE__));
+                $cmd->setName(__('Absence automatique', __FILE__));
                 $cmd->setType('info');
                 $cmd->setSubType('binary');
                 $cmd->setEventOnly(1);
+                $cmd->setOrder(5);
                 $cmd->setEqLogic_id($eqLogic->getId());
                 $cmd->save();
             }
@@ -216,6 +225,7 @@ class nest extends eqLogic {
                 $cmd->setType('info');
                 $cmd->setSubType('binary');
                 $cmd->setEventOnly(1);
+                $cmd->setOrder(4);
                 $cmd->setEqLogic_id($eqLogic->getId());
                 $cmd->save();
             }
@@ -239,11 +249,12 @@ class nest extends eqLogic {
                 $cmd->setIsVisible(1);
                 $cmd->setName(__('Thermostat', __FILE__));
                 $cmd->setType('action');
-                $cmd->setSubType('numeric');
+                $cmd->setSubType('slider');
                 $cmd->setEqLogic_id($eqLogic->getId());
                 $cmd->setTemplate('dashboard', 'thermostat');
                 $cmd->setTemplate('mobile', 'thermostat');
                 $cmd->setValue($order->getId());
+                $cmd->setOrder(8);
                 $cmd->save();
             }
 
@@ -256,6 +267,7 @@ class nest extends eqLogic {
                 $cmd->setType('action');
                 $cmd->setSubType('other');
                 $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->setOrder(9);
                 $cmd->save();
             }
 
@@ -268,6 +280,7 @@ class nest extends eqLogic {
                 $cmd->setType('action');
                 $cmd->setSubType('other');
                 $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->setOrder(10);
                 $cmd->save();
             }
 
@@ -280,6 +293,7 @@ class nest extends eqLogic {
                 $cmd->setType('action');
                 $cmd->setSubType('other');
                 $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->setOrder(15);
                 $cmd->save();
             }
 
@@ -292,6 +306,7 @@ class nest extends eqLogic {
                 $cmd->setType('action');
                 $cmd->setSubType('other');
                 $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->setOrder(11);
                 $cmd->save();
             }
 
@@ -304,6 +319,7 @@ class nest extends eqLogic {
                 $cmd->setType('action');
                 $cmd->setSubType('other');
                 $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->setOrder(12);
                 $cmd->save();
             }
 
@@ -316,6 +332,7 @@ class nest extends eqLogic {
                 $cmd->setType('action');
                 $cmd->setSubType('other');
                 $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->setOrder(13);
                 $cmd->save();
             }
 
@@ -328,6 +345,7 @@ class nest extends eqLogic {
                 $cmd->setType('action');
                 $cmd->setSubType('other');
                 $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->setOrder(14);
                 $cmd->save();
             }
         }
