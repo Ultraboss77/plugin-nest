@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info>
+    <id>nest</id>
+    <name>Nest</name>
+    <description>Plugin pour exploiter les nest protect et thermostat</description>
+    <icon>fa fa-coffee</icon>
+    <licence>AGPL</licence>
+    <author>Loïc Gevrey</author>
+    <installation>Aucune</installation>
+    <require>1.10</require>
+    <version>1.0</version>
+    <category>communication</category>
+    <include type="php">nest.inc</include>
+</info>
+
