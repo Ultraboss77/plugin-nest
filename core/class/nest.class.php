@@ -37,6 +37,8 @@ class nest extends eqLogic {
                 }
                 $eqLogic->setConfiguration('local_ip', $device_info->network->local_ip);
                 $eqLogic->setConfiguration('local_mac', $device_info->network->mac_address);
+
+                /*                 * ********************PROTECT NEST********************** */
                 if ($eqLogic->getConfiguration('nest_type') == 'protect') {
                     $cmd = $eqLogic->getCmd(null, 'co_status');
                     if (is_object($cmd)) {
@@ -69,6 +71,33 @@ class nest extends eqLogic {
                         message::removeAll('nest', 'nestTest', true);
                     }
                 }
+
+                /*                 * ********************THERMOSTAT NEST********************** */
+                if ($eqLogic->getConfiguration('nest_type') == 'thermostat') {
+                    $eqLogic->setConfiguration('wan_ip', $device_info->network->wan_ip);
+                    $eqLogic->setConfiguration('last_connection', $device_info->network->last_connection);
+                    $eqLogic->setConfiguration('ac', $device_info->current_state->ac);
+                    $eqLogic->setConfiguration('battery_level', $device_info->current_state->battery_level);
+
+                    foreach ($device_info->current_state as $key => $value) {
+                        $cmd = $eqLogic->getCmd(null, $key);
+                        if ($cmd->execCmd() === '' || $cmd->execCmd() != $cmd->formatValue($value)) {
+                            $cmd->setCollectDate('');
+                            $cmd->event($value);
+                        }
+                    }
+                    $temperatures = $device_info->target->temperature;
+                    $order = $eqLogic->getCmd(null, 'order');
+                    if (is_array($temperatures)) {
+                        $temperature = array_sum($temperatures) / count($temperatures);
+                    } else {
+                        $temperature = $temperatures;
+                    }
+                    if ($order->execCmd() === '' || $order->execCmd() != $order->formatValue($temperature)) {
+                        $order->setCollectDate('');
+                        $order->event($temperature);
+                    }
+                }
                 $eqLogic->save();
             }
         }
@@ -99,6 +128,208 @@ class nest extends eqLogic {
             $eqLogic->setConfiguration('local_ip', $device_info->network->local_ip);
             $eqLogic->setConfiguration('local_mac', $device_info->network->mac_address);
             $eqLogic->save();
+
+            $cmd = $eqLogic->getCmd(null, 'mode');
+            if (!is_object($cmd)) {
+                $cmd = new nestCmd();
+                $cmd->setLogicalId('mode');
+                $cmd->setIsVisible(1);
+                $cmd->setName(__('Mode', __FILE__));
+                $cmd->setType('info');
+                $cmd->setSubType('string');
+                $cmd->setEventOnly(1);
+                $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->save();
+            }
+
+            $cmd = $eqLogic->getCmd(null, 'temperature');
+            if (!is_object($cmd)) {
+                $cmd = new nestCmd();
+                $cmd->setLogicalId('temperature');
+                $cmd->setIsVisible(1);
+                $cmd->setName(__('Température', __FILE__));
+                $cmd->setType('info');
+                $cmd->setSubType('numeric');
+                $cmd->setEventOnly(1);
+                $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->save();
+            }
+
+            $cmd = $eqLogic->getCmd(null, 'humidity');
+            if (!is_object($cmd)) {
+                $cmd = new nestCmd();
+                $cmd->setLogicalId('humidity');
+                $cmd->setIsVisible(1);
+                $cmd->setName(__('CO', __FILE__));
+                $cmd->setType('info');
+                $cmd->setSubType('numeric');
+                $cmd->setEventOnly(1);
+                $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->save();
+            }
+
+            $cmd = $eqLogic->getCmd(null, 'heat');
+            if (!is_object($cmd)) {
+                $cmd = new nestCmd();
+                $cmd->setLogicalId('heat');
+                $cmd->setIsVisible(1);
+                $cmd->setName(__('Chauffage', __FILE__));
+                $cmd->setType('info');
+                $cmd->setSubType('binary');
+                $cmd->setEventOnly(1);
+                $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->save();
+            }
+
+            $cmd = $eqLogic->getCmd(null, 'fan');
+            if (!is_object($cmd)) {
+                $cmd = new nestCmd();
+                $cmd->setLogicalId('fan');
+                $cmd->setIsVisible(1);
+                $cmd->setName(__('Ventilation', __FILE__));
+                $cmd->setType('info');
+                $cmd->setSubType('binary');
+                $cmd->setEventOnly(1);
+                $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->save();
+            }
+
+            $cmd = $eqLogic->getCmd(null, 'auto_away');
+            if (!is_object($cmd)) {
+                $cmd = new nestCmd();
+                $cmd->setLogicalId('auto_away');
+                $cmd->setIsVisible(1);
+                $cmd->setName(__('Absence autamatique', __FILE__));
+                $cmd->setType('info');
+                $cmd->setSubType('binary');
+                $cmd->setEventOnly(1);
+                $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->save();
+            }
+
+            $cmd = $eqLogic->getCmd(null, 'manual_away');
+            if (!is_object($cmd)) {
+                $cmd = new nestCmd();
+                $cmd->setLogicalId('manual_away');
+                $cmd->setIsVisible(1);
+                $cmd->setName(__('Absence', __FILE__));
+                $cmd->setType('info');
+                $cmd->setSubType('binary');
+                $cmd->setEventOnly(1);
+                $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->save();
+            }
+
+            $order = $eqLogic->getCmd(null, 'order');
+            if (!is_object($order)) {
+                $order = new nestCmd();
+                $order->setLogicalId('order');
+                $order->setIsVisible(0);
+                $order->setName(__('Thermostat', __FILE__));
+                $order->setType('info');
+                $order->setSubType('numeric');
+                $order->setEqLogic_id($eqLogic->getId());
+                $order->save();
+            }
+
+            $cmd = $eqLogic->getCmd(null, 'thermostat');
+            if (!is_object($cmd)) {
+                $cmd = new nestCmd();
+                $cmd->setLogicalId('thermostat');
+                $cmd->setIsVisible(1);
+                $cmd->setName(__('Thermostat', __FILE__));
+                $cmd->setType('action');
+                $cmd->setSubType('numeric');
+                $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->setTemplate('dashboard', 'thermostat');
+                $cmd->setTemplate('mobile', 'thermostat');
+                $cmd->setValue($order->getId());
+                $cmd->save();
+            }
+
+            $cmd = $eqLogic->getCmd(null, 'fan_mode_on');
+            if (!is_object($cmd)) {
+                $cmd = new nestCmd();
+                $cmd->setLogicalId('fan_mode_on');
+                $cmd->setIsVisible(1);
+                $cmd->setName(__('Ventilation ON', __FILE__));
+                $cmd->setType('action');
+                $cmd->setSubType('other');
+                $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->save();
+            }
+
+            $cmd = $eqLogic->getCmd(null, 'fan_mode_off');
+            if (!is_object($cmd)) {
+                $cmd = new nestCmd();
+                $cmd->setLogicalId('fan_mode_off');
+                $cmd->setIsVisible(1);
+                $cmd->setName(__('Ventiliation OFF', __FILE__));
+                $cmd->setType('action');
+                $cmd->setSubType('other');
+                $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->save();
+            }
+
+            $cmd = $eqLogic->getCmd(null, 'off');
+            if (!is_object($cmd)) {
+                $cmd = new nestCmd();
+                $cmd->setLogicalId('off');
+                $cmd->setIsVisible(1);
+                $cmd->setName(__('OFF', __FILE__));
+                $cmd->setType('action');
+                $cmd->setSubType('other');
+                $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->save();
+            }
+
+            $cmd = $eqLogic->getCmd(null, 'away_on');
+            if (!is_object($cmd)) {
+                $cmd = new nestCmd();
+                $cmd->setLogicalId('away_on');
+                $cmd->setIsVisible(1);
+                $cmd->setName(__('Absent', __FILE__));
+                $cmd->setType('action');
+                $cmd->setSubType('other');
+                $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->save();
+            }
+
+            $cmd = $eqLogic->getCmd(null, 'away_off');
+            if (!is_object($cmd)) {
+                $cmd = new nestCmd();
+                $cmd->setLogicalId('away_off');
+                $cmd->setIsVisible(1);
+                $cmd->setName(__('Présent', __FILE__));
+                $cmd->setType('action');
+                $cmd->setSubType('other');
+                $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->save();
+            }
+
+            $cmd = $eqLogic->getCmd(null, 'auto_away_on');
+            if (!is_object($cmd)) {
+                $cmd = new nestCmd();
+                $cmd->setLogicalId('auto_away_on');
+                $cmd->setIsVisible(1);
+                $cmd->setName(__('Absence automatique on', __FILE__));
+                $cmd->setType('action');
+                $cmd->setSubType('other');
+                $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->save();
+            }
+
+            $cmd = $eqLogic->getCmd(null, 'auto_away_off');
+            if (!is_object($cmd)) {
+                $cmd = new nestCmd();
+                $cmd->setLogicalId('auto_away_on');
+                $cmd->setIsVisible(1);
+                $cmd->setName(__('Absence automatique off', __FILE__));
+                $cmd->setType('action');
+                $cmd->setSubType('other');
+                $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->save();
+            }
         }
         foreach ($nest_api->getDevices(DEVICE_TYPE_PROTECT) as $protects) {
             $eqLogic = nest::byLogicalId($protects, 'nest');
@@ -159,7 +390,34 @@ class nestCmd extends cmd {
 
     /*     * *********************Methode d'instance************************* */
 
-
+    public function execute($_options = null) {
+        $eqLogic = $this->getEqLogic();
+        $nest_api = self::getNestApi();
+        if ($this->getLogicalId() == 'thermostat') {
+            $nest_api->setTargetTemperature($_options['slider'], $eqLogic->getLogicalId());
+        }
+        if ($this->getLogicalId() == 'fan_mode_on') {
+            $nest_api->setFanMode(FAN_MODE_ON, $eqLogic->getLogicalId());
+        }
+        if ($this->getLogicalId() == 'fan_mode_off') {
+            $nest_api->setFanMode(FAN_MODE_OFF, $eqLogic->getLogicalId());
+        }
+        if ($this->getLogicalId() == 'off') {
+            $nest_api->turnOff($eqLogic->getLogicalId());
+        }
+        if ($this->getLogicalId() == 'away_on') {
+            $nest_api->setAway(AWAY_MODE_ON, $eqLogic->getLogicalId());
+        }
+        if ($this->getLogicalId() == 'away_off') {
+            $nest_api->setAway(AWAY_MODE_OFF, $eqLogic->getLogicalId());
+        }
+        if ($this->getLogicalId() == 'auto_away_on') {
+            $nest_api->setAutoAwayEnabled(true, $eqLogic->getLogicalId());
+        }
+        if ($this->getLogicalId() == 'auto_away_off') {
+            $nest_api->setAutoAwayEnabled(false, $eqLogic->getLogicalId());
+        }
+    }
 
     /*     * **********************Getteur Setteur*************************** */
 }

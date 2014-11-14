@@ -124,14 +124,31 @@ sendVarToJS('eqType', 'nest');
                             </div>
                         </div>
                         <div class="type_nest type_thermostat">
-
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">{{IP externe}}</label>
+                                <div class="col-lg-2">
+                                    <span class="eqLogicAttr tooltips label label-default" data-l1key="configuration" data-l2key="wan_ip" ></span>
+                                </div>
+                                <label class="col-lg-2 control-label">{{Dernier connexion}}</label>
+                                <div class="col-lg-2">
+                                    <span class="eqLogicAttr tooltips label label-default" data-l1key="configuration" data-l2key="last_connection" ></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">{{Alimenté}}</label>
+                                <div class="col-lg-2">
+                                    <span class="eqLogicAttr tooltips label label-default" data-l1key="configuration" data-l2key="ac" ></span>
+                                </div>
+                                <label class="col-lg-2 control-label">{{Batterie}}</label>
+                                <div class="col-lg-2">
+                                    <span class="eqLogicAttr tooltips label label-default" data-l1key="configuration" data-l2key="battery_level" ></span>
+                                </div>
+                            </div>
                         </div>
                     </fieldset> 
                 </form>
             </div>
         </div>
-
-
 
         <legend>{{Commande}}</legend>
         <table id="table_cmd" class="table table-bordered table-condensed">

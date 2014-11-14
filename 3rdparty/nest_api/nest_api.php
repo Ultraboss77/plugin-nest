@@ -308,8 +308,7 @@ class nest_api {
 
         if ($mode == TARGET_TEMP_MODE_RANGE) {
             if (!is_array($temperature) || count($temperature) != 2 || !is_numeric($temperature[0]) || !is_numeric($temperature[1])) {
-                echo "Error: when using TARGET_TEMP_MODE_RANGE, you need to set the target temperatures (second argument of setTargetTemperatureMode) using an array of two numeric values.\n";
-                return FALSE;
+                throw new Exception("Error: when using TARGET_TEMP_MODE_RANGE, you need to set the target temperatures (second argument of setTargetTemperatureMode) using an array of two numeric values.");
             }
             $temp_low = $this->temperatureInCelsius($temperature[0], $serial_number);
             $temp_high = $this->temperatureInCelsius($temperature[1], $serial_number);
@@ -318,8 +317,7 @@ class nest_api {
         } else if ($mode != TARGET_TEMP_MODE_OFF) {
             // heat or cool
             if (!is_numeric($temperature)) {
-                echo "Error: when using TARGET_TEMP_MODE_HEAT or TARGET_TEMP_MODE_COLD, you need to set the target temperature (second argument of setTargetTemperatureMode) using an numeric value.\n";
-                return FALSE;
+                throw new Exception("Error: when using TARGET_TEMP_MODE_HEAT or TARGET_TEMP_MODE_COLD, you need to set the target temperature (second argument of setTargetTemperatureMode) using an numeric value.");
             }
             $temperature = $this->temperatureInCelsius($temperature, $serial_number);
             $data = json_encode(array('target_change_pending' => TRUE, 'target_temperature' => $temperature));
