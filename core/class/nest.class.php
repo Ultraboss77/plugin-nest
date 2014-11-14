@@ -225,7 +225,7 @@ class nest extends eqLogic {
                 $order = new nestCmd();
                 $order->setLogicalId('order');
                 $order->setIsVisible(0);
-                $order->setName(__('Thermostat', __FILE__));
+                $order->setName(__('Consigne', __FILE__));
                 $order->setType('info');
                 $order->setSubType('numeric');
                 $order->setEqLogic_id($eqLogic->getId());
