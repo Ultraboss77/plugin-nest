@@ -25,6 +25,50 @@ class nest extends eqLogic {
 
     /*     * ***********************Methode static*************************** */
 
+    public static function pull() {
+        $nest_api = self::getNestApi();
+        foreach (nest::byType('nest') as $eqLogic) {
+            if ($eqLogic->getIsEnable() == 1) {
+                $device_info = $nest_api->getDeviceInfo($eqLogic->getLogicalId());
+                $eqLogic->setConfiguration('local_ip', $device_info->network->local_ip);
+                $eqLogic->setConfiguration('local_mac', $device_info->network->mac_address);
+                if ($eqLogic->getConfiguration('nest_type') == 'protect') {
+                    $cmd = $eqLogic->getCmd(null, 'co_status');
+                    if (is_object($cmd)) {
+                        if ($cmd->execCmd() === '' || $cmd->execCmd() != $cmd->formatValue($device_info->co_status)) {
+                            $cmd->setCollectDate('');
+                            $cmd->event($device_info->co_status);
+                        }
+                    }
+                    $cmd = $eqLogic->getCmd(null, 'smoke_status');
+                    if (is_object($cmd)) {
+                        if ($cmd->execCmd() === '' || $cmd->execCmd() != $cmd->formatValue($device_info->smoke_status)) {
+                            $cmd->setCollectDate('');
+                            $cmd->event($device_info->smoke_status);
+                        }
+                    }
+                    $eqLogic->setConfiguration('battery_level', $device_info->battery_level);
+                    $eqLogic->setConfiguration('battery_health_state', $device_info->battery_health_state);
+                    $eqLogic->setConfiguration('replace_by_date', $device_info->replace_by_date);
+                    $eqLogic->setConfiguration('last_update', $device_info->last_update);
+                    $eqLogic->setConfiguration('last_manual_test', $device_info->last_manual_test);
+                    $testOk = true;
+                    foreach ($device_info->tests_passed as $key => $value) {
+                        $eqLogic->setConfiguration('test_' . $key, $value);
+                        if ($value != 1) {
+                            $testOk = false;
+                            log::add('nest', 'error', __('Echec du test : ', __FILE__) . $key . __(' sur ', __FILE__) . $eqLogic->getHumanName(), 'nestTest' . $key);
+                        }
+                    }
+                    if ($testOk) {
+                        message::removeAll('nest', 'nestTest', true);
+                    }
+                }
+                $eqLogic->save();
+            }
+        }
+    }
+
     public static function getNestApi() {
         return new nest_api(config::byKey('username', 'nest'), config::byKey('password', 'nest'));
     }
@@ -60,34 +104,30 @@ class nest extends eqLogic {
                 $eqLogic->setLogicalId($protects);
                 $eqLogic->setConfiguration('nest_type', 'protect');
             }
-            $device_info = $nest_api->getDeviceInfo($protects);
-            $eqLogic->setConfiguration('local_ip', $device_info->network->local_ip);
-            $eqLogic->setConfiguration('local_mac', $device_info->network->mac_address);
             $eqLogic->save();
-
             $cmd = $eqLogic->getCmd(null, 'co_status');
             if (!is_object($cmd)) {
                 $cmd = new nestCmd();
                 $cmd->setLogicalId('co_status');
                 $cmd->setIsVisible(1);
-                $cmd->setName(__('CO',__FILE__));
+                $cmd->setName(__('CO', __FILE__));
                 $cmd->setType('info');
-                $cmd->setSubType('binaty');
+                $cmd->setSubType('binary');
                 $cmd->setEventOnly(1);
+                $cmd->setDisplay('invertBinary', 1);
                 $cmd->setEqLogic_id($eqLogic->getId());
                 $cmd->save();
             }
-
-
             $cmd = $eqLogic->getCmd(null, 'smoke_status');
             if (!is_object($cmd)) {
                 $cmd = new nestCmd();
                 $cmd->setLogicalId('smoke_status');
                 $cmd->setIsVisible(1);
-                $cmd->setName(__('Fumée',__FILE__));
+                $cmd->setName(__('Fumée', __FILE__));
                 $cmd->setType('info');
-                $cmd->setSubType('binaty');
+                $cmd->setSubType('binary');
                 $cmd->setEventOnly(1);
+                $cmd->setDisplay('invertBinary', 1);
                 $cmd->setEqLogic_id($eqLogic->getId());
                 $cmd->save();
             }
