@@ -36,6 +36,34 @@ if (!isConnect()) {
                 <input type="password" class="configKey form-control" data-l1key="password" />
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-lg-4 control-label">Synchroniser</label>
+            <div class="col-lg-2">
+                <a class="btn btn-default" id="bt_syncWithNest"><i class='fa fa-refresh'></i> Synchroniser mes équipements</a> 
+            </div>
+        </div>
     </fieldset>
 </form>
 
+<script>
+    $('#bt_syncWithNest').on('click', function () {
+        $.ajax({// fonction permettant de faire de l'ajax
+            type: "POST", // methode de transmission des données au fichier php
+            url: "plugins/nest/core/ajax/nest.ajax.php", // url du fichier php
+            data: {
+                action: "syncWithNest",
+            },
+            dataType: 'json',
+            error: function (request, status, error) {
+                handleAjaxError(request, status, error);
+            },
+            success: function (data) { // si l'appel a bien fonctionné
+                if (data.state != 'ok') {
+                    $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                    return;
+                }
+                $('#div_alert').showAlert({message: 'Synchronisation réussie', level: 'success'});
+            }
+        });
+    });
+</script>

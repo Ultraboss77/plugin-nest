@@ -97,7 +97,7 @@ sendVarToJS('eqType', 'nest');
                                 <span class="eqLogicAttr tooltips label label-default" data-l1key="configuration" data-l2key="local_mac" ></span>
                             </div>
                         </div>
-                        <div class="nest nest_protect">
+                        <div class="type_nest type_protect">
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">{{Batterie}}</label>
                                 <div class="col-lg-2">
@@ -107,13 +107,10 @@ sendVarToJS('eqType', 'nest');
                                 <div class="col-lg-1">
                                     <span class="eqLogicAttr tooltips label label-default" data-l1key="configuration" data-l2key="battery_health_state" ></span>
                                 </div>
-                                  <label class="col-lg-2 control-label">{{Remplacer le}}</label>
+                                <label class="col-lg-2 control-label">{{Remplacer le}}</label>
                                 <div class="col-lg-2">
                                     <span class="eqLogicAttr tooltips label label-default" data-l1key="configuration" data-l2key="replace_by_date" ></span>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                              
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">{{Dernière mise à jour}}</label>
@@ -125,6 +122,9 @@ sendVarToJS('eqType', 'nest');
                                     <span class="eqLogicAttr tooltips label label-default" data-l1key="configuration" data-l2key="last_manual_test" ></span>
                                 </div>
                             </div>
+                        </div>
+                        <div class="type_nest type_thermostat">
+
                         </div>
                     </fieldset> 
                 </form>

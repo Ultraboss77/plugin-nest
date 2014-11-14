@@ -29,7 +29,12 @@ class nest extends eqLogic {
         $nest_api = self::getNestApi();
         foreach (nest::byType('nest') as $eqLogic) {
             if ($eqLogic->getIsEnable() == 1) {
-                $device_info = $nest_api->getDeviceInfo($eqLogic->getLogicalId());
+                try {
+                    $device_info = $nest_api->getDeviceInfo($eqLogic->getLogicalId());
+                } catch (Exception $e) {
+                    log::add('nest', 'error', __('Erreur sur ', __FILE__) . $eqLogic->getName() . ' : ' . $e->getMessage());
+                    continue;
+                }
                 $eqLogic->setConfiguration('local_ip', $device_info->network->local_ip);
                 $eqLogic->setConfiguration('local_mac', $device_info->network->mac_address);
                 if ($eqLogic->getConfiguration('nest_type') == 'protect') {
@@ -70,6 +75,9 @@ class nest extends eqLogic {
     }
 
     public static function getNestApi() {
+        if (config::byKey('username', 'nest') == '' || config::byKey('password', 'nest') == '') {
+            throw new Exception(__('Aucun nom d\'utilisateur ou mot de passe défini', __FILE__));
+        }
         return new nest_api(config::byKey('username', 'nest'), config::byKey('password', 'nest'));
     }
 
@@ -132,6 +140,7 @@ class nest extends eqLogic {
                 $cmd->save();
             }
         }
+        self::pull();
     }
 
     /*     * *********************Methode d'instance************************* */

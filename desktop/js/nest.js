@@ -16,6 +16,12 @@
  */
 
 
+function printEqLogic(_eqLogic) {
+    $('.type_nest').hide();
+    if (isset(_eqLogic.configuration) && isset(_eqLogic.configuration.nest_type)) {
+        $('.type_' + _eqLogic.configuration.nest_type).show();
+    }
+}
 
 function addCmdToTable(_cmd) {
     if (!isset(_cmd)) {
