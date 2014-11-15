@@ -59,22 +59,6 @@ class nest extends eqLogic {
             $eqLogic->setConfiguration('local_mac', $device_info->network->mac_address);
             $eqLogic->save();
 
-            $cmd = $eqLogic->getCmd(null, 'mode');
-            if (!is_object($cmd)) {
-                $cmd = new nestCmd();
-                $cmd->setLogicalId('mode');
-                $cmd->setIsVisible(1);
-                $cmd->setName(__('Mode', __FILE__));
-                $cmd->setType('info');
-                $cmd->setSubType('string');
-                $cmd->setEventOnly(1);
-                $cmd->setOrder(1);
-                $cmd->setEqLogic_id($eqLogic->getId());
-                $cmd->setTemplate('dashboard', 'tile');
-                $cmd->setTemplate('mobile', 'tile');
-                $cmd->save();
-            }
-
             $cmd = $eqLogic->getCmd(null, 'temperature');
             if (!is_object($cmd)) {
                 $cmd = new nestCmd();
@@ -321,14 +305,16 @@ class nest extends eqLogic {
             }
             $temperatures = $device_info->target->temperature;
             $order = $this->getCmd(null, 'order');
-            if (is_array($temperatures)) {
-                $temperature = array_sum($temperatures) / count($temperatures);
-            } else {
-                $temperature = $temperatures;
-            }
-            if ($order->execCmd() === '' || $order->execCmd() != $order->formatValue($temperature)) {
-                $order->setCollectDate('');
-                $order->event($temperature);
+            if (is_object($order)) {
+                if (is_array($temperatures)) {
+                    $temperature = array_sum($temperatures) / count($temperatures);
+                } else {
+                    $temperature = $temperatures;
+                }
+                if ($order->execCmd() === '' || $order->execCmd() != $order->formatValue($temperature)) {
+                    $order->setCollectDate('');
+                    $order->event($temperature);
+                }
             }
         }
         $this->save();
