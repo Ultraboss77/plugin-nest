@@ -26,80 +26,9 @@ class nest extends eqLogic {
     /*     * ***********************Methode static*************************** */
 
     public static function pull() {
-        $nest_api = self::getNestApi();
         foreach (nest::byType('nest') as $eqLogic) {
             if ($eqLogic->getIsEnable() == 1) {
-                try {
-                    $device_info = $nest_api->getDeviceInfo($eqLogic->getLogicalId());
-                } catch (Exception $e) {
-                    log::add('nest', 'error', __('Erreur sur ', __FILE__) . $eqLogic->getName() . ' : ' . $e->getMessage());
-                    continue;
-                }
-                $eqLogic->setConfiguration('local_ip', $device_info->network->local_ip);
-                $eqLogic->setConfiguration('local_mac', $device_info->network->mac_address);
-
-                /*                 * ********************PROTECT NEST********************** */
-                if ($eqLogic->getConfiguration('nest_type') == 'protect') {
-                    $cmd = $eqLogic->getCmd(null, 'co_status');
-                    if (is_object($cmd)) {
-                        if ($cmd->execCmd() === '' || $cmd->execCmd() != $cmd->formatValue($device_info->co_status)) {
-                            $cmd->setCollectDate('');
-                            $cmd->event($device_info->co_status);
-                        }
-                    }
-                    $cmd = $eqLogic->getCmd(null, 'smoke_status');
-                    if (is_object($cmd)) {
-                        if ($cmd->execCmd() === '' || $cmd->execCmd() != $cmd->formatValue($device_info->smoke_status)) {
-                            $cmd->setCollectDate('');
-                            $cmd->event($device_info->smoke_status);
-                        }
-                    }
-                    $eqLogic->setConfiguration('battery_level', $device_info->battery_level);
-                    $eqLogic->setConfiguration('battery_health_state', $device_info->battery_health_state);
-                    $eqLogic->setConfiguration('replace_by_date', $device_info->replace_by_date);
-                    $eqLogic->setConfiguration('last_update', $device_info->last_update);
-                    $eqLogic->setConfiguration('last_manual_test', $device_info->last_manual_test);
-                    $testOk = true;
-                    foreach ($device_info->tests_passed as $key => $value) {
-                        $eqLogic->setConfiguration('test_' . $key, $value);
-                        if ($value != 1) {
-                            $testOk = false;
-                            log::add('nest', 'error', __('Echec du test : ', __FILE__) . $key . __(' sur ', __FILE__) . $eqLogic->getHumanName(), 'nestTest' . $key);
-                        }
-                    }
-                    if ($testOk) {
-                        message::removeAll('nest', 'nestTest', true);
-                    }
-                }
-
-                /*                 * ********************THERMOSTAT NEST********************** */
-                if ($eqLogic->getConfiguration('nest_type') == 'thermostat') {
-                    log::add('nest', 'debug', print_r($device_info, true));
-                    $eqLogic->setConfiguration('wan_ip', $device_info->network->wan_ip);
-                    $eqLogic->setConfiguration('last_connection', $device_info->network->last_connection);
-                    $eqLogic->setConfiguration('ac', $device_info->current_state->ac);
-                    $eqLogic->setConfiguration('battery_level', $device_info->current_state->battery_level);
-
-                    foreach ($device_info->current_state as $key => $value) {
-                        $cmd = $eqLogic->getCmd(null, $key);
-                        if ($cmd->execCmd() === '' || $cmd->execCmd() != $cmd->formatValue($value)) {
-                            $cmd->setCollectDate('');
-                            $cmd->event($value);
-                        }
-                    }
-                    $temperatures = $device_info->target->temperature;
-                    $order = $eqLogic->getCmd(null, 'order');
-                    if (is_array($temperatures)) {
-                        $temperature = array_sum($temperatures) / count($temperatures);
-                    } else {
-                        $temperature = $temperatures;
-                    }
-                    if ($order->execCmd() === '' || $order->execCmd() != $order->formatValue($temperature)) {
-                        $order->setCollectDate('');
-                        $order->event($temperature);
-                    }
-                }
-                $eqLogic->save();
+                $eqLogic->updateFromNest();
             }
         }
     }
@@ -258,45 +187,6 @@ class nest extends eqLogic {
                 $cmd->save();
             }
 
-            $cmd = $eqLogic->getCmd(null, 'fan_mode_on');
-            if (!is_object($cmd)) {
-                $cmd = new nestCmd();
-                $cmd->setLogicalId('fan_mode_on');
-                $cmd->setIsVisible(1);
-                $cmd->setName(__('Ventilation ON', __FILE__));
-                $cmd->setType('action');
-                $cmd->setSubType('other');
-                $cmd->setEqLogic_id($eqLogic->getId());
-                $cmd->setOrder(9);
-                $cmd->save();
-            }
-
-            $cmd = $eqLogic->getCmd(null, 'fan_mode_off');
-            if (!is_object($cmd)) {
-                $cmd = new nestCmd();
-                $cmd->setLogicalId('fan_mode_off');
-                $cmd->setIsVisible(1);
-                $cmd->setName(__('Ventiliation OFF', __FILE__));
-                $cmd->setType('action');
-                $cmd->setSubType('other');
-                $cmd->setEqLogic_id($eqLogic->getId());
-                $cmd->setOrder(10);
-                $cmd->save();
-            }
-
-            $cmd = $eqLogic->getCmd(null, 'off');
-            if (!is_object($cmd)) {
-                $cmd = new nestCmd();
-                $cmd->setLogicalId('off');
-                $cmd->setIsVisible(1);
-                $cmd->setName(__('OFF', __FILE__));
-                $cmd->setType('action');
-                $cmd->setSubType('other');
-                $cmd->setEqLogic_id($eqLogic->getId());
-                $cmd->setOrder(15);
-                $cmd->save();
-            }
-
             $cmd = $eqLogic->getCmd(null, 'away_on');
             if (!is_object($cmd)) {
                 $cmd = new nestCmd();
@@ -322,32 +212,7 @@ class nest extends eqLogic {
                 $cmd->setOrder(12);
                 $cmd->save();
             }
-
-            $cmd = $eqLogic->getCmd(null, 'auto_away_on');
-            if (!is_object($cmd)) {
-                $cmd = new nestCmd();
-                $cmd->setLogicalId('auto_away_on');
-                $cmd->setIsVisible(1);
-                $cmd->setName(__('Absence automatique on', __FILE__));
-                $cmd->setType('action');
-                $cmd->setSubType('other');
-                $cmd->setEqLogic_id($eqLogic->getId());
-                $cmd->setOrder(13);
-                $cmd->save();
-            }
-
-            $cmd = $eqLogic->getCmd(null, 'auto_away_off');
-            if (!is_object($cmd)) {
-                $cmd = new nestCmd();
-                $cmd->setLogicalId('auto_away_on');
-                $cmd->setIsVisible(1);
-                $cmd->setName(__('Absence automatique off', __FILE__));
-                $cmd->setType('action');
-                $cmd->setSubType('other');
-                $cmd->setEqLogic_id($eqLogic->getId());
-                $cmd->setOrder(14);
-                $cmd->save();
-            }
+            $eqLogic->updateFromNest();
         }
         foreach ($nest_api->getDevices(DEVICE_TYPE_PROTECT) as $protects) {
             $eqLogic = nest::byLogicalId($protects, 'nest');
@@ -388,13 +253,86 @@ class nest extends eqLogic {
                 $cmd->setEqLogic_id($eqLogic->getId());
                 $cmd->save();
             }
+            $eqLogic->updateFromNest();
         }
         self::pull();
     }
 
     /*     * *********************Methode d'instance************************* */
 
+    public function updateFromNest() {
+        try {
+            $nest_api = nest::getNestApi();
+            $device_info = $nest_api->getDeviceInfo($this->getLogicalId());
+        } catch (Exception $e) {
+            log::add('nest', 'error', __('Erreur sur ', __FILE__) . $this->getName() . ' : ' . $e->getMessage());
+            return;
+        }
+        $this->setConfiguration('local_ip', $device_info->network->local_ip);
+        $this->setConfiguration('local_mac', $device_info->network->mac_address);
 
+        /*         * ********************PROTECT NEST********************** */
+        if ($this->getConfiguration('nest_type') == 'protect') {
+            $cmd = $this->getCmd(null, 'co_status');
+            if (is_object($cmd)) {
+                if ($cmd->execCmd() === '' || $cmd->execCmd() != $cmd->formatValue($device_info->co_status)) {
+                    $cmd->setCollectDate('');
+                    $cmd->event($device_info->co_status);
+                }
+            }
+            $cmd = $this->getCmd(null, 'smoke_status');
+            if (is_object($cmd)) {
+                if ($cmd->execCmd() === '' || $cmd->execCmd() != $cmd->formatValue($device_info->smoke_status)) {
+                    $cmd->setCollectDate('');
+                    $cmd->event($device_info->smoke_status);
+                }
+            }
+            $this->setConfiguration('battery_level', $device_info->battery_level);
+            $this->setConfiguration('battery_health_state', $device_info->battery_health_state);
+            $this->setConfiguration('replace_by_date', $device_info->replace_by_date);
+            $this->setConfiguration('last_update', $device_info->last_update);
+            $this->setConfiguration('last_manual_test', $device_info->last_manual_test);
+            $testOk = true;
+            foreach ($device_info->tests_passed as $key => $value) {
+                $this->setConfiguration('test_' . $key, $value);
+                if ($value != 1) {
+                    $testOk = false;
+                    log::add('nest', 'error', __('Echec du test : ', __FILE__) . $key . __(' sur ', __FILE__) . $this->getHumanName(), 'nestTest' . $key);
+                }
+            }
+            if ($testOk) {
+                message::removeAll('nest', 'nestTest', true);
+            }
+        }
+
+        /*         * ********************THERMOSTAT NEST********************** */
+        if ($this->getConfiguration('nest_type') == 'thermostat') {
+            $this->setConfiguration('wan_ip', $device_info->network->wan_ip);
+            $this->setConfiguration('last_connection', $device_info->network->last_connection);
+            $this->setConfiguration('ac', $device_info->current_state->ac);
+            $this->setConfiguration('battery_level', $device_info->current_state->battery_level);
+
+            foreach ($device_info->current_state as $key => $value) {
+                $cmd = $this->getCmd(null, $key);
+                if (is_object($cmd) && ($cmd->execCmd() === '' || $cmd->execCmd() != $cmd->formatValue($value))) {
+                    $cmd->setCollectDate('');
+                    $cmd->event($value);
+                }
+            }
+            $temperatures = $device_info->target->temperature;
+            $order = $this->getCmd(null, 'order');
+            if (is_array($temperatures)) {
+                $temperature = array_sum($temperatures) / count($temperatures);
+            } else {
+                $temperature = $temperatures;
+            }
+            if ($order->execCmd() === '' || $order->execCmd() != $order->formatValue($temperature)) {
+                $order->setCollectDate('');
+                $order->event($temperature);
+            }
+        }
+        $this->save();
+    }
 
     /*     * **********************Getteur Setteur*************************** */
 }
@@ -410,7 +348,7 @@ class nestCmd extends cmd {
 
     public function execute($_options = null) {
         $eqLogic = $this->getEqLogic();
-        $nest_api = self::getNestApi();
+        $nest_api = nest::getNestApi();
         if ($this->getLogicalId() == 'thermostat') {
             $nest_api->setTargetTemperature($_options['slider'], $eqLogic->getLogicalId());
         }
@@ -435,6 +373,7 @@ class nestCmd extends cmd {
         if ($this->getLogicalId() == 'auto_away_off') {
             $nest_api->setAutoAwayEnabled(false, $eqLogic->getLogicalId());
         }
+        $eqLogic->updateFromNest();
     }
 
     /*     * **********************Getteur Setteur*************************** */
