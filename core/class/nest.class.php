@@ -29,6 +29,7 @@ class nest extends eqLogic {
         foreach (nest::byType('nest') as $eqLogic) {
             if ($eqLogic->getIsEnable() == 1) {
                 $eqLogic->updateFromNest();
+                $eqLogic->save();
             }
         }
     }
@@ -197,6 +198,7 @@ class nest extends eqLogic {
                 $cmd->save();
             }
             $eqLogic->updateFromNest();
+            $eqLogic->save();
         }
         foreach ($nest_api->getDevices(DEVICE_TYPE_PROTECT) as $protects) {
             $eqLogic = nest::byLogicalId($protects, 'nest');
@@ -238,6 +240,7 @@ class nest extends eqLogic {
                 $cmd->save();
             }
             $eqLogic->updateFromNest();
+            $eqLogic->save();
         }
         self::pull();
     }
@@ -252,8 +255,14 @@ class nest extends eqLogic {
             log::add('nest', 'error', __('Erreur sur ', __FILE__) . $this->getName() . ' : ' . $e->getMessage());
             return;
         }
-        $this->setConfiguration('local_ip', $device_info->network->local_ip);
-        $this->setConfiguration('local_mac', $device_info->network->mac_address);
+        if (isset($device_info->network)) {
+            if (isset($device_info->network->local_ip)) {
+                $this->setConfiguration('local_ip', $device_info->network->local_ip);
+            }
+            if (isset($device_info->network->mac_address)) {
+                $this->setConfiguration('local_mac', $device_info->network->mac_address);
+            }
+        }
 
         /*         * ********************PROTECT NEST********************** */
         if ($this->getConfiguration('nest_type') == 'protect') {
@@ -291,33 +300,45 @@ class nest extends eqLogic {
 
         /*         * ********************THERMOSTAT NEST********************** */
         if ($this->getConfiguration('nest_type') == 'thermostat') {
-            $this->setConfiguration('wan_ip', $device_info->network->wan_ip);
-            $this->setConfiguration('last_connection', $device_info->network->last_connection);
-            $this->setConfiguration('ac', $device_info->current_state->ac);
-            $this->setConfiguration('battery_level', $device_info->current_state->battery_level);
-
-            foreach ($device_info->current_state as $key => $value) {
-                $cmd = $this->getCmd(null, $key);
-                if (is_object($cmd) && ($cmd->execCmd() === '' || $cmd->execCmd() != $cmd->formatValue($value))) {
-                    $cmd->setCollectDate('');
-                    $cmd->event($value);
+            if (isset($device_info->network)) {
+                if (isset($device_info->network->wan_ip)) {
+                    $this->setConfiguration('wan_ip', $device_info->network->wan_ip);
+                }
+                if (isset($device_info->network->last_connection)) {
+                    $this->setConfiguration('last_connection', $device_info->network->last_connection);
                 }
             }
-            $temperatures = $device_info->target->temperature;
-            $order = $this->getCmd(null, 'order');
-            if (is_object($order)) {
-                if (is_array($temperatures)) {
-                    $temperature = array_sum($temperatures) / count($temperatures);
-                } else {
-                    $temperature = $temperatures;
+            if (isset($device_info->network)) {
+                if (isset($device_info->current_state->ac)) {
+                    $this->setConfiguration('ac', $device_info->current_state->ac);
                 }
-                if ($order->execCmd() === '' || $order->execCmd() != $order->formatValue($temperature)) {
-                    $order->setCollectDate('');
-                    $order->event($temperature);
+                if (isset($device_info->current_state->battery_level)) {
+                    $this->setConfiguration('battery_level', $device_info->current_state->battery_level);
+                }
+                foreach ($device_info->current_state as $key => $value) {
+                    $cmd = $this->getCmd(null, $key);
+                    if (is_object($cmd) && ($cmd->execCmd() === '' || $cmd->execCmd() != $cmd->formatValue($value))) {
+                        $cmd->setCollectDate('');
+                        $cmd->event($value);
+                    }
+                }
+            }
+            if (isset($device_info->target) && isset($device_info->target->temperature)) {
+                $temperatures = $device_info->target->temperature;
+                $order = $this->getCmd(null, 'order');
+                if (is_object($order)) {
+                    if (is_array($temperatures)) {
+                        $temperature = array_sum($temperatures) / count($temperatures);
+                    } else {
+                        $temperature = $temperatures;
+                    }
+                    if ($order->execCmd() === '' || $order->execCmd() != $order->formatValue($temperature)) {
+                        $order->setCollectDate('');
+                        $order->event($temperature);
+                    }
                 }
             }
         }
-        $this->save();
     }
 
     /*     * **********************Getteur Setteur*************************** */
@@ -360,6 +381,7 @@ class nestCmd extends cmd {
             $nest_api->setAutoAwayEnabled(false, $eqLogic->getLogicalId());
         }
         $eqLogic->updateFromNest();
+        $eqLogic->save();
     }
 
     /*     * **********************Getteur Setteur*************************** */
