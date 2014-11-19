@@ -57,8 +57,8 @@ class nest extends eqLogic {
                 $eqLogic->setCategory('heating', 1);
                 $eqLogic->setLogicalId($thermostat);
                 $eqLogic->setConfiguration('nest_type', 'thermostat');
+                 $eqLogic->save();
             }
-            $eqLogic->save();
             log::add('nest', 'debug', 'Boucle point 2');
 
             $cmd = $eqLogic->getCmd(null, 'temperature');
