@@ -42,11 +42,8 @@ class nest extends eqLogic {
     }
 
     public static function syncWithNest() {
-        log::add('nest', 'debug', 'Debut sync with nest');
         $nest_api = self::getNestApi();
-        log::add('nest', 'debug', 'Point A');
         foreach ($nest_api->getDevices() as $thermostat) {
-            log::add('nest', 'debug', 'Boucle point 1');
             $eqLogic = nest::byLogicalId($thermostat, 'nest');
             if (!is_object($eqLogic)) {
                 $eqLogic = new nest();
@@ -57,9 +54,8 @@ class nest extends eqLogic {
                 $eqLogic->setCategory('heating', 1);
                 $eqLogic->setLogicalId($thermostat);
                 $eqLogic->setConfiguration('nest_type', 'thermostat');
-                 $eqLogic->save();
+                $eqLogic->save();
             }
-            log::add('nest', 'debug', 'Boucle point 2');
 
             $cmd = $eqLogic->getCmd(null, 'temperature');
             if (!is_object($cmd)) {
@@ -74,7 +70,6 @@ class nest extends eqLogic {
                 $cmd->setEqLogic_id($eqLogic->getId());
                 $cmd->save();
             }
-            log::add('nest', 'debug', 'Boucle point 3');
 
             $cmd = $eqLogic->getCmd(null, 'humidity');
             if (!is_object($cmd)) {
@@ -89,7 +84,6 @@ class nest extends eqLogic {
                 $cmd->setEqLogic_id($eqLogic->getId());
                 $cmd->save();
             }
-            log::add('nest', 'debug', 'Boucle point 4');
 
             $cmd = $eqLogic->getCmd(null, 'heat');
             if (!is_object($cmd)) {
@@ -104,7 +98,6 @@ class nest extends eqLogic {
                 $cmd->setEqLogic_id($eqLogic->getId());
                 $cmd->save();
             }
-            log::add('nest', 'debug', 'Boucle point 5');
 
             $cmd = $eqLogic->getCmd(null, 'fan');
             if (!is_object($cmd)) {
@@ -119,7 +112,6 @@ class nest extends eqLogic {
                 $cmd->setEqLogic_id($eqLogic->getId());
                 $cmd->save();
             }
-            log::add('nest', 'debug', 'Boucle point 6');
 
             $cmd = $eqLogic->getCmd(null, 'auto_away');
             if (!is_object($cmd)) {
@@ -134,7 +126,6 @@ class nest extends eqLogic {
                 $cmd->setEqLogic_id($eqLogic->getId());
                 $cmd->save();
             }
-            log::add('nest', 'debug', 'Boucle point 7');
 
             $cmd = $eqLogic->getCmd(null, 'manual_away');
             if (!is_object($cmd)) {
@@ -149,7 +140,6 @@ class nest extends eqLogic {
                 $cmd->setEqLogic_id($eqLogic->getId());
                 $cmd->save();
             }
-            log::add('nest', 'debug', 'Boucle point 8');
 
             $order = $eqLogic->getCmd(null, 'order');
             if (!is_object($order)) {
@@ -159,10 +149,10 @@ class nest extends eqLogic {
                 $order->setName(__('Consigne', __FILE__));
                 $order->setType('info');
                 $order->setSubType('numeric');
+                $cmd->setEventOnly(1);
                 $order->setEqLogic_id($eqLogic->getId());
                 $order->save();
             }
-            log::add('nest', 'debug', 'Boucle point 9');
 
             $cmd = $eqLogic->getCmd(null, 'thermostat');
             if (!is_object($cmd)) {
@@ -179,7 +169,6 @@ class nest extends eqLogic {
                 $cmd->setOrder(8);
                 $cmd->save();
             }
-            log::add('nest', 'debug', 'Boucle point 10');
 
             $cmd = $eqLogic->getCmd(null, 'away_on');
             if (!is_object($cmd)) {
@@ -193,7 +182,6 @@ class nest extends eqLogic {
                 $cmd->setOrder(11);
                 $cmd->save();
             }
-            log::add('nest', 'debug', 'Boucle point 11');
 
             $cmd = $eqLogic->getCmd(null, 'away_off');
             if (!is_object($cmd)) {
@@ -207,7 +195,6 @@ class nest extends eqLogic {
                 $cmd->setOrder(12);
                 $cmd->save();
             }
-            log::add('nest', 'debug', 'Boucle point 12');
             $eqLogic->updateFromNest();
             $eqLogic->save();
         }
@@ -253,13 +240,11 @@ class nest extends eqLogic {
             $eqLogic->updateFromNest();
             $eqLogic->save();
         }
-        log::add('nest', 'debug', 'Fin sync with nest');
     }
 
     /*     * *********************Methode d'instance************************* */
 
     public function updateFromNest() {
-        log::add('nest', 'debug', 'Debut update from nest');
         try {
             $nest_api = nest::getNestApi();
             $device_info = $nest_api->getDeviceInfo($this->getLogicalId());
@@ -275,7 +260,6 @@ class nest extends eqLogic {
                 $this->setConfiguration('local_mac', $device_info->network->mac_address);
             }
         }
-         log::add('nest', 'debug', 'UPDATE FROM NEST A');
 
         /*         * ********************PROTECT NEST********************** */
         if ($this->getConfiguration('nest_type') == 'protect') {
@@ -313,7 +297,6 @@ class nest extends eqLogic {
 
         /*         * ********************THERMOSTAT NEST********************** */
         if ($this->getConfiguration('nest_type') == 'thermostat') {
-            log::add('nest', 'debug', 'UPDATE FROM NEST B');
             if (isset($device_info->network)) {
                 if (isset($device_info->network->wan_ip)) {
                     $this->setConfiguration('wan_ip', $device_info->network->wan_ip);
@@ -322,7 +305,6 @@ class nest extends eqLogic {
                     $this->setConfiguration('last_connection', $device_info->network->last_connection);
                 }
             }
-            log::add('nest', 'debug', 'UPDATE FROM NEST C');
             if (isset($device_info->network)) {
                 if (isset($device_info->current_state->ac)) {
                     $this->setConfiguration('ac', $device_info->current_state->ac);
@@ -338,13 +320,12 @@ class nest extends eqLogic {
                     }
                 }
             }
-            log::add('nest', 'debug', 'UPDATE FROM NEST D');
             if (isset($device_info->target) && isset($device_info->target->temperature)) {
                 $temperatures = $device_info->target->temperature;
                 $order = $this->getCmd(null, 'order');
                 if (is_object($order)) {
                     if (is_array($temperatures)) {
-                        $temperature = array_sum($temperatures) / count($temperatures);
+                        $temperature = round(array_sum($temperatures) / count($temperatures), 1);
                     } else {
                         $temperature = $temperatures;
                     }
@@ -354,9 +335,7 @@ class nest extends eqLogic {
                     }
                 }
             }
-            log::add('nest', 'debug', 'UPDATE FROM NEST E');
         }
-        log::add('nest', 'debug', 'FIN UPDATE FROM NEST A');
     }
 
     /*     * **********************Getteur Setteur*************************** */
@@ -372,6 +351,9 @@ class nestCmd extends cmd {
     /*     * *********************Methode d'instance************************* */
 
     public function execute($_options = null) {
+        if ($this->getType() == 'info') {
+            return '';
+        }
         $eqLogic = $this->getEqLogic();
         $nest_api = nest::getNestApi();
         if ($this->getLogicalId() == 'thermostat') {
@@ -400,6 +382,7 @@ class nestCmd extends cmd {
         }
         $eqLogic->updateFromNest();
         $eqLogic->save();
+        return '';
     }
 
     /*     * **********************Getteur Setteur*************************** */
