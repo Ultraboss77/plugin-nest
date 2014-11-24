@@ -63,13 +63,13 @@ class nest extends eqLogic {
                 $cmd->setLogicalId('temperature');
                 $cmd->setIsVisible(1);
                 $cmd->setName(__('Température', __FILE__));
-                $cmd->setType('info');
-                $cmd->setSubType('numeric');
-                $cmd->setEventOnly(1);
                 $cmd->setOrder(6);
-                $cmd->setEqLogic_id($eqLogic->getId());
-                $cmd->save();
             }
+            $cmd->setType('info');
+            $cmd->setSubType('numeric');
+            $cmd->setEventOnly(1);
+            $cmd->setEqLogic_id($eqLogic->getId());
+            $cmd->save();
 
             $cmd = $eqLogic->getCmd(null, 'humidity');
             if (!is_object($cmd)) {
@@ -77,41 +77,41 @@ class nest extends eqLogic {
                 $cmd->setLogicalId('humidity');
                 $cmd->setIsVisible(1);
                 $cmd->setName(__('Humidité', __FILE__));
-                $cmd->setType('info');
-                $cmd->setSubType('numeric');
-                $cmd->setEventOnly(1);
                 $cmd->setOrder(7);
-                $cmd->setEqLogic_id($eqLogic->getId());
-                $cmd->save();
             }
+            $cmd->setType('info');
+            $cmd->setSubType('numeric');
+            $cmd->setEventOnly(1);
+            $cmd->setEqLogic_id($eqLogic->getId());
+            $cmd->save();
 
             $cmd = $eqLogic->getCmd(null, 'heat');
             if (!is_object($cmd)) {
                 $cmd = new nestCmd();
                 $cmd->setLogicalId('heat');
                 $cmd->setIsVisible(1);
-                $cmd->setName(__('Chauffage', __FILE__));
-                $cmd->setType('info');
-                $cmd->setSubType('binary');
-                $cmd->setEventOnly(1);
                 $cmd->setOrder(2);
-                $cmd->setEqLogic_id($eqLogic->getId());
-                $cmd->save();
+                $cmd->setName(__('Chauffage', __FILE__));
             }
+            $cmd->setType('info');
+            $cmd->setSubType('binary');
+            $cmd->setEventOnly(1);
+            $cmd->setEqLogic_id($eqLogic->getId());
+            $cmd->save();
 
             $cmd = $eqLogic->getCmd(null, 'fan');
             if (!is_object($cmd)) {
                 $cmd = new nestCmd();
                 $cmd->setLogicalId('fan');
                 $cmd->setIsVisible(1);
-                $cmd->setName(__('Ventilation', __FILE__));
-                $cmd->setType('info');
-                $cmd->setSubType('binary');
-                $cmd->setEventOnly(1);
                 $cmd->setOrder(3);
-                $cmd->setEqLogic_id($eqLogic->getId());
-                $cmd->save();
             }
+            $cmd->setName(__('Ventilation', __FILE__));
+            $cmd->setType('info');
+            $cmd->setSubType('binary');
+            $cmd->setEventOnly(1);
+            $cmd->setEqLogic_id($eqLogic->getId());
+            $cmd->save();
 
             $cmd = $eqLogic->getCmd(null, 'auto_away');
             if (!is_object($cmd)) {
@@ -119,13 +119,13 @@ class nest extends eqLogic {
                 $cmd->setLogicalId('auto_away');
                 $cmd->setIsVisible(1);
                 $cmd->setName(__('Absence automatique', __FILE__));
-                $cmd->setType('info');
-                $cmd->setSubType('binary');
-                $cmd->setEventOnly(1);
                 $cmd->setOrder(5);
-                $cmd->setEqLogic_id($eqLogic->getId());
-                $cmd->save();
             }
+            $cmd->setType('info');
+            $cmd->setSubType('binary');
+            $cmd->setEventOnly(1);
+            $cmd->setEqLogic_id($eqLogic->getId());
+            $cmd->save();
 
             $cmd = $eqLogic->getCmd(null, 'manual_away');
             if (!is_object($cmd)) {
@@ -133,13 +133,13 @@ class nest extends eqLogic {
                 $cmd->setLogicalId('manual_away');
                 $cmd->setIsVisible(1);
                 $cmd->setName(__('Absence', __FILE__));
-                $cmd->setType('info');
-                $cmd->setSubType('binary');
-                $cmd->setEventOnly(1);
                 $cmd->setOrder(4);
-                $cmd->setEqLogic_id($eqLogic->getId());
-                $cmd->save();
             }
+            $cmd->setType('info');
+            $cmd->setSubType('binary');
+            $cmd->setEventOnly(1);
+            $cmd->setEqLogic_id($eqLogic->getId());
+            $cmd->save();
 
             $order = $eqLogic->getCmd(null, 'order');
             if (!is_object($order)) {
@@ -147,12 +147,12 @@ class nest extends eqLogic {
                 $order->setLogicalId('order');
                 $order->setIsVisible(0);
                 $order->setName(__('Consigne', __FILE__));
-                $order->setType('info');
-                $order->setSubType('numeric');
-                $cmd->setEventOnly(1);
-                $order->setEqLogic_id($eqLogic->getId());
-                $order->save();
             }
+            $order->setType('info');
+            $order->setSubType('numeric');
+            $cmd->setEventOnly(1);
+            $order->setEqLogic_id($eqLogic->getId());
+            $order->save();
 
             $cmd = $eqLogic->getCmd(null, 'thermostat');
             if (!is_object($cmd)) {
@@ -160,15 +160,15 @@ class nest extends eqLogic {
                 $cmd->setLogicalId('thermostat');
                 $cmd->setIsVisible(1);
                 $cmd->setName(__('Thermostat', __FILE__));
-                $cmd->setType('action');
-                $cmd->setSubType('slider');
-                $cmd->setEqLogic_id($eqLogic->getId());
                 $cmd->setTemplate('dashboard', 'thermostat');
                 $cmd->setTemplate('mobile', 'thermostat');
-                $cmd->setValue($order->getId());
                 $cmd->setOrder(8);
-                $cmd->save();
             }
+            $cmd->setType('action');
+            $cmd->setSubType('slider');
+            $cmd->setEqLogic_id($eqLogic->getId());
+            $cmd->setValue($order->getId());
+            $cmd->save();
 
             $cmd = $eqLogic->getCmd(null, 'away_on');
             if (!is_object($cmd)) {
@@ -176,12 +176,12 @@ class nest extends eqLogic {
                 $cmd->setLogicalId('away_on');
                 $cmd->setIsVisible(1);
                 $cmd->setName(__('Absent', __FILE__));
-                $cmd->setType('action');
-                $cmd->setSubType('other');
-                $cmd->setEqLogic_id($eqLogic->getId());
                 $cmd->setOrder(11);
-                $cmd->save();
             }
+            $cmd->setType('action');
+            $cmd->setSubType('other');
+            $cmd->setEqLogic_id($eqLogic->getId());
+            $cmd->save();
 
             $cmd = $eqLogic->getCmd(null, 'away_off');
             if (!is_object($cmd)) {
@@ -189,12 +189,13 @@ class nest extends eqLogic {
                 $cmd->setLogicalId('away_off');
                 $cmd->setIsVisible(1);
                 $cmd->setName(__('Présent', __FILE__));
-                $cmd->setType('action');
-                $cmd->setSubType('other');
-                $cmd->setEqLogic_id($eqLogic->getId());
                 $cmd->setOrder(12);
-                $cmd->save();
             }
+            $cmd->setType('action');
+            $cmd->setSubType('other');
+            $cmd->setEqLogic_id($eqLogic->getId());
+            $cmd->save();
+
             $eqLogic->updateFromNest();
             $eqLogic->save();
         }
@@ -217,26 +218,27 @@ class nest extends eqLogic {
                 $cmd->setLogicalId('co_status');
                 $cmd->setIsVisible(1);
                 $cmd->setName(__('CO', __FILE__));
-                $cmd->setType('info');
-                $cmd->setSubType('binary');
-                $cmd->setEventOnly(1);
-                $cmd->setDisplay('invertBinary', 1);
-                $cmd->setEqLogic_id($eqLogic->getId());
-                $cmd->save();
             }
+            $cmd->setType('info');
+            $cmd->setSubType('binary');
+            $cmd->setEventOnly(1);
+            $cmd->setDisplay('invertBinary', 1);
+            $cmd->setEqLogic_id($eqLogic->getId());
+            $cmd->save();
+
             $cmd = $eqLogic->getCmd(null, 'smoke_status');
             if (!is_object($cmd)) {
                 $cmd = new nestCmd();
                 $cmd->setLogicalId('smoke_status');
                 $cmd->setIsVisible(1);
                 $cmd->setName(__('Fumée', __FILE__));
-                $cmd->setType('info');
-                $cmd->setSubType('binary');
-                $cmd->setEventOnly(1);
-                $cmd->setDisplay('invertBinary', 1);
-                $cmd->setEqLogic_id($eqLogic->getId());
-                $cmd->save();
             }
+            $cmd->setType('info');
+            $cmd->setSubType('binary');
+            $cmd->setEventOnly(1);
+            $cmd->setDisplay('invertBinary', 1);
+            $cmd->setEqLogic_id($eqLogic->getId());
+            $cmd->save();
             $eqLogic->updateFromNest();
             $eqLogic->save();
         }

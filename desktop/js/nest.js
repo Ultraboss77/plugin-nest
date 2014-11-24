@@ -36,8 +36,8 @@ function addCmdToTable(_cmd) {
     tr += '<span><input type="checkbox" class="cmdAttr" data-l1key="isVisible" checked/> {{Afficher}}<br/></span>';
     tr += '</td>';
     tr += '<td>';
-    tr += '<input class="cmdAttr form-control input-sm" data-l1key="type" value="action" style="display : none;">';
-    tr += '<input class="cmdAttr form-control input-sm" data-l1key="subType" value="message" style="display : none;">';
+    tr += '<input class="cmdAttr form-control input-sm" data-l1key="type" style="display : none;">';
+    tr += '<input class="cmdAttr form-control input-sm" data-l1key="subType" style="display : none;">';
     if (is_numeric(_cmd.id)) {
         tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fa fa-rss"></i> {{Tester}}</a>';
     }
@@ -45,4 +45,5 @@ function addCmdToTable(_cmd) {
     tr += '</tr>';
     $('#table_cmd tbody').append(tr);
     $('#table_cmd tbody tr:last').setValues(_cmd, '.cmdAttr');
+    jeedom.cmd.changeType($('#table_cmd tbody tr:last'), init(_cmd.subType));
 }
