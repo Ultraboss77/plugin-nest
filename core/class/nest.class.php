@@ -150,7 +150,7 @@ class nest extends eqLogic {
             }
             $order->setType('info');
             $order->setSubType('numeric');
-            $cmd->setEventOnly(1);
+            $order->setEventOnly(1);
             $order->setEqLogic_id($eqLogic->getId());
             $order->save();
 
