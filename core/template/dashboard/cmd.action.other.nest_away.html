@@ -7,12 +7,12 @@
         var cmdName = '#name#';
         if ('#state#' == '1' || '#state#' == 1) {
             $('#iconCmd#id#').append('<i class="icon jeedom-mouvement"></i>');
-            if (cmdName.toLowerCase().indexOf('Présent') == 0) {
+            if (cmdName.toLowerCase().indexOf('absent') == 0) {
                 $('.cmd[data-cmd_id=#id#]').hide();
             }
         } else {
             $('#iconCmd#id#').append('<i class="fa fa-check"></i>');
-            if (cmdName.toLowerCase().indexOf('Absent') == 0) {
+            if (cmdName.toLowerCase().indexOf('présent') == 0) {
                 $('.cmd[data-cmd_id=#id#]').hide();
             }
         }

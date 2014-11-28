@@ -91,7 +91,7 @@ class nest extends eqLogic {
             if (!is_object($heat)) {
                 $heat = new nestCmd();
                 $heat->setLogicalId('heat');
-                $heat->setIsVisible(1);
+                $heat->setIsVisible(0);
                 $heat->setOrder(2);
                 $heat->setName(__('Chauffage', __FILE__));
             }
