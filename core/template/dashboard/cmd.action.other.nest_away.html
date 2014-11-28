@@ -1,0 +1,24 @@
+<div style="width:90px;min-height:80px;" class="cmd #history# tooltips cmd-widget cursor" data-type="info" data-subtype="numeric" data-cmd_id="#id#">
+    <center>
+        <span class='cmdName' style="font-weight: bold;font-size : 12px;">#valueName#</span><br/>
+        <span style="font-size: 3em;font-weight: bold;margin-top: 5px;" class="action" id="iconCmd#id#"></span>
+    </center>
+    <script>
+        var cmdName = '#name#';
+        if ('#state#' == '1' || '#state#' == 1) {
+            $('#iconCmd#id#').append('<i class="icon jeedom-mouvement"></i>');
+            if (cmdName.toLowerCase().indexOf('away_on') == 0) {
+                $('.cmd[data-cmd_id=#id#]').hide();
+            }
+        } else {
+            $('#iconCmd#id#').append('<i class="fa fa-check"></i>');
+            if (cmdName.toLowerCase().indexOf('away_off') == 0) {
+                $('.cmd[data-cmd_id=#id#]').hide();
+            }
+        }
+        $('.cmd[data-cmd_id=#id#] .action').off();
+        $('.cmd[data-cmd_id=#id#] .action').on('click', function () {
+            jeedom.cmd.execute({id: '#id#'});
+        });
+    </script>
+</div>

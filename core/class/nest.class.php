@@ -99,20 +99,6 @@ class nest extends eqLogic {
             $cmd->setEqLogic_id($eqLogic->getId());
             $cmd->save();
 
-            $cmd = $eqLogic->getCmd(null, 'fan');
-            if (!is_object($cmd)) {
-                $cmd = new nestCmd();
-                $cmd->setLogicalId('fan');
-                $cmd->setIsVisible(1);
-                $cmd->setOrder(3);
-            }
-            $cmd->setName(__('Ventilation', __FILE__));
-            $cmd->setType('info');
-            $cmd->setSubType('binary');
-            $cmd->setEventOnly(1);
-            $cmd->setEqLogic_id($eqLogic->getId());
-            $cmd->save();
-
             $cmd = $eqLogic->getCmd(null, 'auto_away');
             if (!is_object($cmd)) {
                 $cmd = new nestCmd();
@@ -127,19 +113,19 @@ class nest extends eqLogic {
             $cmd->setEqLogic_id($eqLogic->getId());
             $cmd->save();
 
-            $cmd = $eqLogic->getCmd(null, 'manual_away');
-            if (!is_object($cmd)) {
-                $cmd = new nestCmd();
-                $cmd->setLogicalId('manual_away');
-                $cmd->setIsVisible(1);
-                $cmd->setName(__('Absence', __FILE__));
-                $cmd->setOrder(4);
+            $manual_away = $eqLogic->getCmd(null, 'manual_away');
+            if (!is_object($manual_away)) {
+                $manual_away = new nestCmd();
+                $manual_away->setLogicalId('manual_away');
+                $manual_away->setIsVisible(1);
+                $manual_away->setName(__('Absence', __FILE__));
+                $manual_away->setOrder(4);
             }
-            $cmd->setType('info');
-            $cmd->setSubType('binary');
-            $cmd->setEventOnly(1);
-            $cmd->setEqLogic_id($eqLogic->getId());
-            $cmd->save();
+            $manual_away->setType('info');
+            $manual_away->setSubType('binary');
+            $manual_away->setEventOnly(1);
+            $manual_away->setEqLogic_id($eqLogic->getId());
+            $manual_away->save();
 
             $order = $eqLogic->getCmd(null, 'order');
             if (!is_object($order)) {
@@ -154,47 +140,55 @@ class nest extends eqLogic {
             $order->setEqLogic_id($eqLogic->getId());
             $order->save();
 
-            $cmd = $eqLogic->getCmd(null, 'thermostat');
-            if (!is_object($cmd)) {
-                $cmd = new nestCmd();
-                $cmd->setLogicalId('thermostat');
-                $cmd->setIsVisible(1);
-                $cmd->setName(__('Thermostat', __FILE__));
-                $cmd->setTemplate('dashboard', 'thermostat');
-                $cmd->setTemplate('mobile', 'thermostat');
-                $cmd->setOrder(8);
+            $thermostat = $eqLogic->getCmd(null, 'thermostat');
+            if (!is_object($thermostat)) {
+                $thermostat = new nestCmd();
+                $thermostat->setLogicalId('thermostat');
+                $thermostat->setIsVisible(1);
+                $thermostat->setName(__('Thermostat', __FILE__));
+                $thermostat->setTemplate('dashboard', 'thermostat');
+                $thermostat->setTemplate('mobile', 'thermostat');
+                $thermostat->setOrder(8);
             }
-            $cmd->setType('action');
-            $cmd->setSubType('slider');
-            $cmd->setEqLogic_id($eqLogic->getId());
-            $cmd->setValue($order->getId());
-            $cmd->save();
+            $thermostat->setType('action');
+            $thermostat->setSubType('slider');
+            $thermostat->setConfiguration('minValue', 16);
+            $thermostat->setConfiguration('maxValue', 28);
+            $thermostat->setEqLogic_id($eqLogic->getId());
+            $thermostat->setValue($order->getId());
+            $thermostat->save();
 
-            $cmd = $eqLogic->getCmd(null, 'away_on');
-            if (!is_object($cmd)) {
-                $cmd = new nestCmd();
-                $cmd->setLogicalId('away_on');
-                $cmd->setIsVisible(1);
-                $cmd->setName(__('Absent', __FILE__));
-                $cmd->setOrder(11);
+            $away_on = $eqLogic->getCmd(null, 'away_on');
+            if (!is_object($away_on)) {
+                $away_on = new nestCmd();
+                $away_on->setLogicalId('away_on');
+                $away_on->setIsVisible(1);
+                $away_on->setName(__('Absent', __FILE__));
+                $away_on->setTemplate('dashboard', 'nest_away');
+                $away_on->setTemplate('mobile', 'nest_away');
+                $away_on->setOrder(11);
             }
-            $cmd->setType('action');
-            $cmd->setSubType('other');
-            $cmd->setEqLogic_id($eqLogic->getId());
-            $cmd->save();
+            $away_on->setType('action');
+            $away_on->setSubType('other');
+            $away_on->setValue($manual_away->getId());
+            $away_on->setEqLogic_id($eqLogic->getId());
+            $away_on->save();
 
-            $cmd = $eqLogic->getCmd(null, 'away_off');
-            if (!is_object($cmd)) {
-                $cmd = new nestCmd();
-                $cmd->setLogicalId('away_off');
-                $cmd->setIsVisible(1);
-                $cmd->setName(__('Présent', __FILE__));
-                $cmd->setOrder(12);
+            $away_off = $eqLogic->getCmd(null, 'away_off');
+            if (!is_object($away_off)) {
+                $away_off = new nestCmd();
+                $away_off->setLogicalId('away_off');
+                $away_off->setIsVisible(1);
+                $away_off->setName(__('Présent', __FILE__));
+                $away_off->setTemplate('dashboard', 'nest_away');
+                $away_off->setTemplate('mobile', 'nest_away');
+                $away_off->setOrder(12);
             }
-            $cmd->setType('action');
-            $cmd->setSubType('other');
-            $cmd->setEqLogic_id($eqLogic->getId());
-            $cmd->save();
+            $away_off->setType('action');
+            $away_off->setSubType('other');
+            $away_off->setValue($manual_away->getId());
+            $away_off->setEqLogic_id($eqLogic->getId());
+            $away_off->save();
 
             $eqLogic->updateFromNest();
             $eqLogic->save();
