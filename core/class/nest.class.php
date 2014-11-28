@@ -117,7 +117,7 @@ class nest extends eqLogic {
             if (!is_object($manual_away)) {
                 $manual_away = new nestCmd();
                 $manual_away->setLogicalId('manual_away');
-                $manual_away->setIsVisible(1);
+                $manual_away->setIsVisible(0);
                 $manual_away->setName(__('Absence', __FILE__));
                 $manual_away->setOrder(4);
             }
@@ -321,13 +321,13 @@ class nest extends eqLogic {
                 $order = $this->getCmd(null, 'order');
                 if (is_object($order)) {
                     if (is_array($temperatures)) {
-                        $temperature = round(array_sum($temperatures) / count($temperatures), 1);
+                        $temperature = array_sum($temperatures) / count($temperatures);
                     } else {
                         $temperature = $temperatures;
                     }
                     if ($order->execCmd() === '' || $order->execCmd() != $order->formatValue($temperature)) {
                         $order->setCollectDate('');
-                        $order->event($temperature);
+                        $order->event(round($temperature, 1));
                     }
                 }
             }
