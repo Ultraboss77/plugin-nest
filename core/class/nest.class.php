@@ -57,61 +57,63 @@ class nest extends eqLogic {
                 $eqLogic->save();
             }
 
-            $cmd = $eqLogic->getCmd(null, 'temperature');
-            if (!is_object($cmd)) {
-                $cmd = new nestCmd();
-                $cmd->setLogicalId('temperature');
-                $cmd->setIsVisible(1);
-                $cmd->setName(__('Température', __FILE__));
-                $cmd->setOrder(6);
+            $temperature = $eqLogic->getCmd(null, 'temperature');
+            if (!is_object($temperature)) {
+                $temperature = new nestCmd();
+                $temperature->setLogicalId('temperature');
+                $temperature->setIsVisible(1);
+                $temperature->setName(__('Température', __FILE__));
+                $temperature->setOrder(6);
             }
-            $cmd->setType('info');
-            $cmd->setSubType('numeric');
-            $cmd->setEventOnly(1);
-            $cmd->setEqLogic_id($eqLogic->getId());
-            $cmd->save();
+            $temperature->setUnite('°C');
+            $temperature->setType('info');
+            $temperature->setSubType('numeric');
+            $temperature->setEventOnly(1);
+            $temperature->setEqLogic_id($eqLogic->getId());
+            $temperature->save();
 
-            $cmd = $eqLogic->getCmd(null, 'humidity');
-            if (!is_object($cmd)) {
-                $cmd = new nestCmd();
-                $cmd->setLogicalId('humidity');
-                $cmd->setIsVisible(1);
-                $cmd->setName(__('Humidité', __FILE__));
-                $cmd->setOrder(7);
+            $humidity = $eqLogic->getCmd(null, 'humidity');
+            if (!is_object($humidity)) {
+                $humidity = new nestCmd();
+                $humidity->setLogicalId('humidity');
+                $humidity->setIsVisible(1);
+                $humidity->setName(__('Humidité', __FILE__));
+                $humidity->setOrder(7);
             }
-            $cmd->setType('info');
-            $cmd->setSubType('numeric');
-            $cmd->setEventOnly(1);
-            $cmd->setEqLogic_id($eqLogic->getId());
-            $cmd->save();
+            $humidity->setType('info');
+            $humidity->setSubType('numeric');
+            $humidity->setUnite('%');
+            $humidity->setEventOnly(1);
+            $humidity->setEqLogic_id($eqLogic->getId());
+            $humidity->save();
 
-            $cmd = $eqLogic->getCmd(null, 'heat');
-            if (!is_object($cmd)) {
-                $cmd = new nestCmd();
-                $cmd->setLogicalId('heat');
-                $cmd->setIsVisible(1);
-                $cmd->setOrder(2);
-                $cmd->setName(__('Chauffage', __FILE__));
+            $heat = $eqLogic->getCmd(null, 'heat');
+            if (!is_object($heat)) {
+                $heat = new nestCmd();
+                $heat->setLogicalId('heat');
+                $heat->setIsVisible(1);
+                $heat->setOrder(2);
+                $heat->setName(__('Chauffage', __FILE__));
             }
-            $cmd->setType('info');
-            $cmd->setSubType('binary');
-            $cmd->setEventOnly(1);
-            $cmd->setEqLogic_id($eqLogic->getId());
-            $cmd->save();
+            $heat->setType('info');
+            $heat->setSubType('binary');
+            $heat->setEventOnly(1);
+            $heat->setEqLogic_id($eqLogic->getId());
+            $heat->save();
 
-            $cmd = $eqLogic->getCmd(null, 'auto_away');
-            if (!is_object($cmd)) {
-                $cmd = new nestCmd();
-                $cmd->setLogicalId('auto_away');
-                $cmd->setIsVisible(1);
-                $cmd->setName(__('Absence automatique', __FILE__));
-                $cmd->setOrder(5);
+            $auto_away = $eqLogic->getCmd(null, 'auto_away');
+            if (!is_object($auto_away)) {
+                $auto_away = new nestCmd();
+                $auto_away->setLogicalId('auto_away');
+                $auto_away->setIsVisible(1);
+                $auto_away->setName(__('Absence automatique', __FILE__));
+                $auto_away->setOrder(5);
             }
-            $cmd->setType('info');
-            $cmd->setSubType('binary');
-            $cmd->setEventOnly(1);
-            $cmd->setEqLogic_id($eqLogic->getId());
-            $cmd->save();
+            $auto_away->setType('info');
+            $auto_away->setSubType('binary');
+            $auto_away->setEventOnly(1);
+            $auto_away->setEqLogic_id($eqLogic->getId());
+            $auto_away->save();
 
             $manual_away = $eqLogic->getCmd(null, 'manual_away');
             if (!is_object($manual_away)) {
@@ -137,6 +139,7 @@ class nest extends eqLogic {
             $order->setType('info');
             $order->setSubType('numeric');
             $order->setEventOnly(1);
+            $order->setUnite('°C');
             $order->setEqLogic_id($eqLogic->getId());
             $order->save();
 
@@ -156,6 +159,7 @@ class nest extends eqLogic {
             $thermostat->setConfiguration('maxValue', 28);
             $thermostat->setEqLogic_id($eqLogic->getId());
             $thermostat->setValue($order->getId());
+            $thermostat->setUnite('°C');
             $thermostat->save();
 
             $away_on = $eqLogic->getCmd(null, 'away_on');
