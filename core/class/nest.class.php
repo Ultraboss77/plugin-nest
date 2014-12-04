@@ -22,6 +22,7 @@ require_once dirname(__FILE__) . '/../../core/php/nest.inc.php';
 class nest extends eqLogic {
     /*     * *************************Attributs****************************** */
 
+    private $_collectDate = '';
 
     /*     * ***********************Methode static*************************** */
 
@@ -336,9 +337,86 @@ class nest extends eqLogic {
                 }
             }
         }
+
+        $mc = cache::byKey('nestWidgetmobile' . $this->getId());
+        $mc->remove();
+        $mc = cache::byKey('nestWidgetdashboard' . $this->getId());
+        $mc->remove();
+        $this->setCollectDate(date('Y-m-d H:i:s'));
+        $this->toHtml('mobile');
+        $this->toHtml('dashboard');
+        $this->refreshWidget();
+    }
+
+    public function toHtml($_version = 'dashboard') {
+        if ($this->getIsEnable() != 1) {
+            return '';
+        }
+        $_version = jeedom::versionAlias($_version);
+        $mc = cache::byKey('nestWidget' . $_version . $this->getId());
+        if ($mc->getValue() != '') {
+            //return $mc->getValue();
+        }
+        if ($this->getConfiguration('nest_type') == 'thermostat') {
+            $replace = array(
+                '#name#' => $this->getName(),
+                '#id#' => $this->getId(),
+                '#background_color#' => $this->getBackgroundColor($_version),
+                '#eqLink#' => $this->getLinkToConfiguration(),
+                '#collectDate#' => $this->getCollectDate(),
+            );
+
+            foreach ($this->getCmd() as $cmd) {
+                if ($cmd->getType() == 'info') {
+                    if ($cmd->getIsVisible() == 1) {
+                        $replace['#' . $cmd->getLogicalId() . '#'] = $cmd->execCmd();
+                    } else {
+                        $replace['#' . $cmd->getLogicalId() . '#'] = '';
+                    }
+                }
+            }
+
+
+
+            $thermostat = $this->getCmd(null, 'thermostat');
+            $replace['#thermostat_cmd_id#'] = $thermostat->getId();
+            $replace['#thermostat_maxValue#'] = $thermostat->getConfiguration('maxValue');
+            $replace['#thermostat_minValue#'] = $thermostat->getConfiguration('minValue');
+
+            $auto_away = $this->getCmd(null, 'auto_away');
+            $replace['#auto_away_id#'] = $auto_away->getId();
+
+            $away_on = $this->getCmd(null, 'away_on');
+            $replace['#away_on_id#'] = $away_on->getId();
+
+            $away_off = $this->getCmd(null, 'away_off');
+            $replace['#away_off_id#'] = $away_off->getId();
+
+            $parameters = $this->getDisplay('parameters');
+            if (is_array($parameters)) {
+                foreach ($parameters as $key => $value) {
+                    $replace['#' . $key . '#'] = $value;
+                }
+            }
+
+            $html = template_replace($replace, getTemplate('core', $_version, 'nest', 'nest'));
+        } else {
+            $html = parent::toHtml($_version);
+        }
+        cache::set('nestWidget' . $_version . $this->getId(), $html, 0);
+        return $html;
     }
 
     /*     * **********************Getteur Setteur*************************** */
+
+    public function getCollectDate() {
+        return $this->_collectDate;
+    }
+
+    public function setCollectDate($_collectDate) {
+        $this->_collectDate = $_collectDate;
+    }
+
 }
 
 class nestCmd extends cmd {
