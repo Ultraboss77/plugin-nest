@@ -1,29 +1,34 @@
 <div class="eqLogic-widget eqLogic noResize" style="width: 330px;background-color: #background_color#; padding : 5px; #style#" data-eqLogic_id="#id#" data-version="dashboard" title="#collectDate#" >
+    <span class="statusCmd" style="position : absolute;left : 5px; width : 30px;z-index: 1030;"></span>
     <center><strong><a href="#eqLink#" style="font-size : 1.1em;"> #name# </a></strong></center>
     <div class="row">
         <div class="col-xs-6">
             <br/>
-            <span style="font-size : 1.2em; font-weight: bold;margin-left : 20px;">#temperature# °C / #humidity# %  </span><br/><br/>
+            <center>
+                <span style="font-size : 1.2em; font-weight: bold;margin-left : 20px;">#temperature# °C / #humidity# %</span>
+            </center>
+            <br/>
 
+            <span class="cmd cmd-widget" data-cmd_id="#auto_away_on_id#" style="display:none;"></span>
+            <span class="cmd cmd-widget" data-cmd_id="#away_off_id#" style="display:none;"></span>
+            <span class="cmd cmd-widget" data-cmd_id="#away_on_id#" style="display:none;"></span>
 
-            <i class="fa fa-home home" style="font-size: 3em;margin-left: 2px;color:#3498db"></i>
-
-            <i class="fa fa-eye auto" style="font-size: 3em;margin-left: 5px;color:#3498db"></i>
-
-            <i class="icon jeedom-mouvement away" style="font-size: 3em;margin-left: 5px;color:#3498db"></i>
+            <i class="fa fa-home home cursor" style="font-size: 3em;margin-left: 2px;color:#3498db"></i>
+            <i class="fa fa-eye auto cursor" style="font-size: 3em;margin-left: 5px;color:#3498db"></i>
+            <i class="icon jeedom-mouvement away cursor" style="font-size: 3em;margin-left: 5px;color:#3498db"></i>
 
             <script>
-                if ('#auto_away#' == 1) {
+                if ('#auto_away#' == '1') {
                     $('.eqLogic[data-eqLogic_id=#id#] .auto').css('color', 'white');
                 } else {
-                    if ('#manual_away#' == 1) {
+                    if ('#manual_away#' == '0') {
                         $('.eqLogic[data-eqLogic_id=#id#] .home').css('color', 'white');
                     } else {
                         $('.eqLogic[data-eqLogic_id=#id#] .away').css('color', 'white');
                     }
                 }
                 $('.eqLogic[data-eqLogic_id=#id#] .auto').on('click', function () {
-                    jeedom.cmd.execute({id: '#auto_away_id#'});
+                    jeedom.cmd.execute({id: '#auto_away_on_id#'});
                 });
                 $('.eqLogic[data-eqLogic_id=#id#] .home').on('click', function () {
                     jeedom.cmd.execute({id: '#away_off_id#'});

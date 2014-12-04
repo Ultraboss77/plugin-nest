@@ -31,6 +31,7 @@ function nest_install() {
 }
 
 function nest_update() {
+    nest::syncWithNest();
     $cron = cron::byClassAndFunction('nest', 'pull');
     if (!is_object($cron)) {
         $cron = new cron();
