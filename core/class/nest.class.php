@@ -148,7 +148,7 @@ class nest extends eqLogic {
             }
             $thermostat->setType('action');
             $thermostat->setSubType('slider');
-            $thermostat->setConfiguration('minValue', 16);
+            $thermostat->setConfiguration('minValue', 12);
             $thermostat->setConfiguration('maxValue', 28);
             $thermostat->setEqLogic_id($eqLogic->getId());
             $thermostat->setUnite('°C');
@@ -201,6 +201,18 @@ class nest extends eqLogic {
             $auto_away_on->setSubType('other');
             $auto_away_on->setEqLogic_id($eqLogic->getId());
             $auto_away_on->save();
+
+            $leaf = $eqLogic->getCmd(null, 'leaf');
+            if (!is_object($leaf)) {
+                $leaf = new nestCmd();
+                $leaf->setLogicalId('leaf');
+                $leaf->setIsVisible(1);
+                $leaf->setName(__('Mode eco', __FILE__));
+            }
+            $leaf->setType('info');
+            $leaf->setSubType('numeric');
+            $leaf->setEqLogic_id($eqLogic->getId());
+            $leaf->save();
 
             $eqLogic->updateFromNest();
             $eqLogic->save();
@@ -260,6 +272,7 @@ class nest extends eqLogic {
             log::add('nest', 'error', __('Erreur sur ', __FILE__) . $this->getName() . ' : ' . $e->getMessage());
             return;
         }
+        log::add('nest', 'debug', print_r($device_info, true));
         if (isset($device_info->network)) {
             if (isset($device_info->network->local_ip)) {
                 $this->setConfiguration('local_ip', $device_info->network->local_ip);
@@ -322,6 +335,20 @@ class nest extends eqLogic {
                 }
                 foreach ($device_info->current_state as $key => $value) {
                     $cmd = $this->getCmd(null, $key);
+                    if ($key == 'auto_away') {
+                        if ($value == -1) {
+                            $value = 0;
+                        } else {
+                            $value = 1;
+                        }
+                    }
+                    if ($key == 'manual_away') {
+                        if ($value == 1) {
+                            $value = 1;
+                        } else {
+                            $value = 0;
+                        }
+                    }
                     if (is_object($cmd) && ($cmd->execCmd() === '' || $cmd->execCmd() != $cmd->formatValue($value))) {
                         $cmd->setCollectDate('');
                         $cmd->event($value);
@@ -375,14 +402,10 @@ class nest extends eqLogic {
 
             foreach ($this->getCmd() as $cmd) {
                 if ($cmd->getType() == 'info') {
-                    if ($cmd->getIsVisible() == 1) {
-                        $replace['#' . $cmd->getLogicalId() . '#'] = $cmd->execCmd();
-                    } else {
-                        $replace['#' . $cmd->getLogicalId() . '#'] = '';
-                    }
+                    $replace['#' . $cmd->getLogicalId() . '#'] = $cmd->execCmd();
                 }
             }
-            
+
             $thermostat = $this->getCmd(null, 'thermostat');
             $replace['#thermostat_cmd_id#'] = $thermostat->getId();
             $replace['#thermostat_maxValue#'] = $thermostat->getConfiguration('maxValue');
@@ -465,6 +488,7 @@ class nestCmd extends cmd {
         if ($this->getLogicalId() == 'auto_away_off') {
             $nest_api->setAutoAwayEnabled(FALSE, $eqLogic->getLogicalId());
         }
+        sleep(5);
         $eqLogic->updateFromNest();
         $eqLogic->save();
         return '';

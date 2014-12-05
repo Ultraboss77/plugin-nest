@@ -17,6 +17,9 @@
             <i class="fa fa-eye auto cursor" style="font-size: 3em;margin-left: 5px;color:#3498db"></i>
             <i class="icon jeedom-mouvement away cursor" style="font-size: 3em;margin-left: 5px;color:#3498db"></i>
 
+
+            <span class="leaf"><i class="fa fa-leaf" style="margin-top : 13px;margin-left:4px;"></i></span>
+
             <script>
                 if ('#auto_away#' == '1') {
                     $('.eqLogic[data-eqLogic_id=#id#] .auto').css('color', 'white');
@@ -26,6 +29,11 @@
                     } else {
                         $('.eqLogic[data-eqLogic_id=#id#] .away').css('color', 'white');
                     }
+                }
+                if ('#leaf#' == '1') {
+                    $('.eqLogic[data-eqLogic_id=#id#] .leaf').show();
+                } else {
+                    $('.eqLogic[data-eqLogic_id=#id#] .leaf').hide();
                 }
                 $('.eqLogic[data-eqLogic_id=#id#] .auto').on('click', function () {
                     jeedom.cmd.execute({id: '#auto_away_on_id#'});
