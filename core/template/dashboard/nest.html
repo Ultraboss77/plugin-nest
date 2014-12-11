@@ -1,94 +1,95 @@
-<div class="eqLogic-widget eqLogic noResize" style="width: 330px;background-color: #background_color#; padding : 5px; #style#" data-eqLogic_id="#id#" data-version="dashboard" title="#collectDate#" >
-    <span class="statusCmd" style="position : absolute;left : 5px; width : 30px;z-index: 1030;"></span>
-    <center><strong><a href="#eqLink#" style="font-size : 1.1em;"> #name# </a></strong></center>
-    <div class="row">
-        <div class="col-xs-6">
-            <br/>
-            <center>
-                <span style="font-size : 1.2em; font-weight: bold;margin-left : 20px;">#temperature# °C / #humidity# %</span>
-            </center>
-            <br/>
+<div class="eqLogic-widget eqLogic noResize" style="width: 330px;background-color: #background_color#; padding : 5px; #style#" data-eqLogic_id="#id#" data-version="dashboard">
+    <div title="#collectDate#" >
+        <span class="statusCmd" style="position : absolute;left : 5px; width : 30px;z-index: 1030;"></span>
+        <center><strong><a href="#eqLink#" style="font-size : 1.1em;"> #name# </a></strong></center>
+        <div class="row">
+            <div class="col-xs-6">
+                <br/>
+                <center>
+                    <span style="font-size : 1.2em; font-weight: bold;margin-left : 20px;">#temperature# °C / #humidity# %</span>
+                </center>
+                <br/>
 
-            <span class="cmd cmd-widget" data-cmd_id="#auto_away_on_id#" style="display:none;"></span>
-            <span class="cmd cmd-widget" data-cmd_id="#away_off_id#" style="display:none;"></span>
-            <span class="cmd cmd-widget" data-cmd_id="#away_on_id#" style="display:none;"></span>
+                <span class="cmd cmd-widget" data-cmd_id="#auto_away_on_id#" style="display:none;"></span>
+                <span class="cmd cmd-widget" data-cmd_id="#away_off_id#" style="display:none;"></span>
+                <span class="cmd cmd-widget" data-cmd_id="#away_on_id#" style="display:none;"></span>
 
-            <i class="fa fa-home home cursor" style="font-size: 3em;margin-left: 2px;color:#3498db"></i>
-            <i class="fa fa-eye auto cursor" style="font-size: 3em;margin-left: 5px;color:#3498db"></i>
-            <i class="icon jeedom-mouvement away cursor" style="font-size: 3em;margin-left: 5px;color:#3498db"></i>
+                <i class="fa fa-home home cursor" style="font-size: 3em;margin-left: 2px;color:#3498db"></i>
+                <i class="fa fa-eye auto cursor" style="font-size: 3em;margin-left: 5px;color:#3498db"></i>
+                <i class="icon jeedom-mouvement away cursor" style="font-size: 3em;margin-left: 5px;color:#3498db"></i>
 
 
-            <span class="leaf"><i class="fa fa-leaf" style="margin-top : 13px;margin-left:4px;"></i></span>
+                <span class="leaf"><i class="fa fa-leaf" style="margin-top : 13px;margin-left:4px;"></i></span>
 
-            <script>
-                if ('#auto_away#' == '1') {
-                    $('.eqLogic[data-eqLogic_id=#id#] .auto').css('color', 'white');
-                } else {
-                    if ('#manual_away#' == '0') {
-                        $('.eqLogic[data-eqLogic_id=#id#] .home').css('color', 'white');
-                    } else {
-                        $('.eqLogic[data-eqLogic_id=#id#] .away').css('color', 'white');
-                    }
-                }
-                if ('#leaf#' == '1') {
-                    $('.eqLogic[data-eqLogic_id=#id#] .leaf').show();
-                } else {
-                    $('.eqLogic[data-eqLogic_id=#id#] .leaf').hide();
-                }
-                $('.eqLogic[data-eqLogic_id=#id#] .auto').on('click', function () {
-                    jeedom.cmd.execute({id: '#auto_away_on_id#'});
-                });
-                $('.eqLogic[data-eqLogic_id=#id#] .home').on('click', function () {
-                    jeedom.cmd.execute({id: '#away_off_id#'});
-                });
-                $('.eqLogic[data-eqLogic_id=#id#] .away').on('click', function () {
-                    jeedom.cmd.execute({id: '#away_on_id#'});
-                });
-            </script>
-        </div>
-        <div class="col-xs-6">
-            <div class="cmd cmd-widget" data-type="action" data-subtype="slider" data-cmd_id="#thermostat_cmd_id#" style="width : 150px;height : 120px;display : block;">
-                <span id="iconCmd#thermostat_cmd_id#" class="pull-left" style="position : relative;font-size: 6em;height:100px;"></span>
-                <div>
-                    <div style="margin-top : 20px;" >
-                        <input type="text" class="dial" value="#order#" data-min="#thermostat_minValue#" data-max="#thermostat_maxValue#" data-width="100" data-height="100"/>
-                    </div>
-                    <div style="position: relative; top: -15px; left : 120px;">
-                        °C
-                    </div>
-                </div>
                 <script>
-                    $.include(['plugins/nest/core/template/dashboard/jquery.kontrol.js'], function () {
-                        $(".cmd[data-cmd_id=#thermostat_cmd_id#] .dial").dial({
-                            bgColor: "#3498db",
-                            fgColor: '#FFFFFF',
-                            noScroll: true,
-                            release: function (v) {
-                                jeedom.cmd.execute({id: '#thermostat_cmd_id#', value: {slider: v}});
-                            },
-                            draw: function () {
-                                setTimeout(function () {
-                                    $(".cmd[data-cmd_id=#id#] .dial").css('margin-top', '0px');
-                                    setTimeout(function () {
-                                        $(".cmd[data-cmd_id=#id#] .dial").css('margin-top', '33px');
-                                    }, 100);
-                                }, 200);
-                            }
-                        });
-
-                        if (parseInt('#order#') > 21) {
-                            $('#iconCmd#thermostat_cmd_id#').append('<i class="icon jeedom-thermo-chaud"></i>');
-                        } else if (parseInt('#order#') >= 19) {
-                            $('#iconCmd#thermostat_cmd_id#').append('<i class="icon jeedom-thermo-moyen"></i>');
+                    if ('#auto_away#' == '1') {
+                        $('.eqLogic[data-eqLogic_id=#id#] .auto').css('color', 'white');
+                    } else {
+                        if ('#manual_away#' == '0') {
+                            $('.eqLogic[data-eqLogic_id=#id#] .home').css('color', 'white');
                         } else {
-                            $('#iconCmd#thermostat_cmd_id#').append('<i class="icon jeedom-thermo-froid"></i>');
+                            $('.eqLogic[data-eqLogic_id=#id#] .away').css('color', 'white');
                         }
+                    }
+                    if ('#leaf#' == '1') {
+                        $('.eqLogic[data-eqLogic_id=#id#] .leaf').show();
+                    } else {
+                        $('.eqLogic[data-eqLogic_id=#id#] .leaf').hide();
+                    }
+                    $('.eqLogic[data-eqLogic_id=#id#] .auto').on('click', function () {
+                        jeedom.cmd.execute({id: '#auto_away_on_id#'});
+                    });
+                    $('.eqLogic[data-eqLogic_id=#id#] .home').on('click', function () {
+                        jeedom.cmd.execute({id: '#away_off_id#'});
+                    });
+                    $('.eqLogic[data-eqLogic_id=#id#] .away').on('click', function () {
+                        jeedom.cmd.execute({id: '#away_on_id#'});
                     });
                 </script>
+            </div>
+            <div class="col-xs-6">
+                <div class="cmd cmd-widget" data-type="action" data-subtype="slider" data-cmd_id="#thermostat_cmd_id#" style="width : 150px;height : 120px;display : block;">
+                    <span id="iconCmd#thermostat_cmd_id#" class="pull-left" style="position : relative;font-size: 6em;height:100px;"></span>
+                    <div>
+                        <div style="margin-top : 20px;" >
+                            <input type="text" class="dial" value="#order#" data-min="#thermostat_minValue#" data-max="#thermostat_maxValue#" data-width="100" data-height="100"/>
+                        </div>
+                        <div style="position: relative; top: -15px; left : 120px;">
+                            °C
+                        </div>
+                    </div>
+                    <script>
+                        $.include(['plugins/nest/core/template/dashboard/jquery.kontrol.js'], function () {
+                            $(".cmd[data-cmd_id=#thermostat_cmd_id#] .dial").dial({
+                                bgColor: "#3498db",
+                                fgColor: '#FFFFFF',
+                                noScroll: true,
+                                release: function (v) {
+                                    jeedom.cmd.execute({id: '#thermostat_cmd_id#', value: {slider: v}});
+                                },
+                                draw: function () {
+                                    setTimeout(function () {
+                                        $(".cmd[data-cmd_id=#id#] .dial").css('margin-top', '0px');
+                                        setTimeout(function () {
+                                            $(".cmd[data-cmd_id=#id#] .dial").css('margin-top', '33px');
+                                        }, 100);
+                                    }, 200);
+                                }
+                            });
 
+                            if (parseInt('#order#') > 21) {
+                                $('#iconCmd#thermostat_cmd_id#').append('<i class="icon jeedom-thermo-chaud"></i>');
+                            } else if (parseInt('#order#') >= 19) {
+                                $('#iconCmd#thermostat_cmd_id#').append('<i class="icon jeedom-thermo-moyen"></i>');
+                            } else {
+                                $('#iconCmd#thermostat_cmd_id#').append('<i class="icon jeedom-thermo-froid"></i>');
+                            }
+                        });
+                    </script>
+
+                </div>
             </div>
         </div>
     </div>
-
 </div>
 
