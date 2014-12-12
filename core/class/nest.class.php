@@ -58,6 +58,18 @@ class nest extends eqLogic {
                 $eqLogic->save();
             }
 
+            $refresh = $eqLogic->getCmd(null, 'refresh');
+            if (!is_object($refresh)) {
+                $refresh = new nestCmd();
+                $refresh->setLogicalId('refresh');
+                $refresh->setIsVisible(1);
+                $refresh->setName(__('Rafraîhir', __FILE__));
+            }
+            $refresh->setType('action');
+            $refresh->setSubType('other');
+            $refresh->setEqLogic_id($eqLogic->getId());
+            $refresh->save();
+
             $temperature = $eqLogic->getCmd(null, 'temperature');
             if (!is_object($temperature)) {
                 $temperature = new nestCmd();
@@ -420,6 +432,9 @@ class nest extends eqLogic {
             $away_off = $this->getCmd(null, 'away_off');
             $replace['#away_off_id#'] = $away_off->getId();
 
+            $refresh = $this->getCmd(null, 'refresh');
+            $replace['#refresh_id#'] = $refresh->getId();
+
             $parameters = $this->getDisplay('parameters');
             if (is_array($parameters)) {
                 foreach ($parameters as $key => $value) {
@@ -464,31 +479,39 @@ class nestCmd extends cmd {
         $nest_api = nest::getNestApi();
         if ($this->getLogicalId() == 'thermostat') {
             $nest_api->setTargetTemperature($_options['slider'], $eqLogic->getLogicalId());
+            sleep(5);
         }
         if ($this->getLogicalId() == 'fan_mode_on') {
             $nest_api->setFanMode(FAN_MODE_ON, $eqLogic->getLogicalId());
+            sleep(5);
         }
         if ($this->getLogicalId() == 'fan_mode_off') {
             $nest_api->setFanMode(FAN_MODE_OFF, $eqLogic->getLogicalId());
+            sleep(5);
         }
         if ($this->getLogicalId() == 'off') {
             $nest_api->turnOff($eqLogic->getLogicalId());
+            sleep(5);
         }
         if ($this->getLogicalId() == 'away_on') {
             $nest_api->setAutoAwayEnabled(FALSE, $eqLogic->getLogicalId());
             $nest_api->setAway(TRUE, $eqLogic->getLogicalId());
+            sleep(5);
         }
         if ($this->getLogicalId() == 'away_off') {
             $nest_api->setAutoAwayEnabled(FALSE, $eqLogic->getLogicalId());
             $nest_api->setAway(FALSE, $eqLogic->getLogicalId());
+            sleep(5);
         }
         if ($this->getLogicalId() == 'auto_away_on') {
             $nest_api->setAutoAwayEnabled(TRUE, $eqLogic->getLogicalId());
+            sleep(5);
         }
         if ($this->getLogicalId() == 'auto_away_off') {
             $nest_api->setAutoAwayEnabled(FALSE, $eqLogic->getLogicalId());
+            sleep(5);
         }
-        sleep(5);
+
         $eqLogic->updateFromNest();
         $eqLogic->save();
         return '';

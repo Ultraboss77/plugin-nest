@@ -1,6 +1,7 @@
 <div class="eqLogic-widget eqLogic" style="background-color: #background_color#; #style#" data-eqLogic_id="#id#" data-version="mobile" >
     <div title="#collectDate#" >
         <span class="statusCmd" style="position : absolute;left : 5px; width : 30px;z-index: 1030;"></span>
+        <i class='fa fa-refresh pull-right cursor refresh' style="margin-top: 3px;margin-right: 3px;"></i>
         <center><strong><a href="#eqLink#" style="font-size : 1.1em;"> #name# </a></strong></center>
         <center>
             <span style="font-size : 1.2em; font-weight: bold;">#temperature# °C / #humidity# %</span>
@@ -9,11 +10,16 @@
         <span class="cmd cmd-widget" data-cmd_id="#auto_away_on_id#" style="display:none;"></span>
         <span class="cmd cmd-widget" data-cmd_id="#away_off_id#" style="display:none;"></span>
         <span class="cmd cmd-widget" data-cmd_id="#away_on_id#" style="display:none;"></span>
+        <span class="cmd cmd-widget" data-cmd_id="#refresh_id#" style="display:none;"></span>
 
         <i class="fa fa-home home cursor" style="font-size: 3em;margin-left: 2px;color:#3498db"></i>
         <i class="fa fa-eye auto cursor" style="font-size: 3em;margin-left: 5px;color:#3498db"></i>
         <i class="icon jeedom-mouvement away cursor" style="font-size: 3em;margin-left: 5px;color:#3498db"></i>
         <script>
+            $('.eqLogic[data-eqLogic_id=#id#] .refresh').on('click', function () {
+                jeedom.cmd.execute({id: '#refresh_id#'});
+            });
+
             if ('#auto_away#' == '1') {
                 $('.eqLogic[data-eqLogic_id=#id#] .auto').css('color', 'white');
             } else {
