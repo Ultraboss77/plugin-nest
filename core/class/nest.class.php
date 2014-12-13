@@ -433,7 +433,9 @@ class nest extends eqLogic {
             $replace['#away_off_id#'] = $away_off->getId();
 
             $refresh = $this->getCmd(null, 'refresh');
-            $replace['#refresh_id#'] = $refresh->getId();
+            if (is_object($refresh)) {
+                $replace['#refresh_id#'] = $refresh->getId();
+            }
 
             $parameters = $this->getDisplay('parameters');
             if (is_array($parameters)) {
