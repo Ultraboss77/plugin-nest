@@ -25,21 +25,21 @@ if (!isConnect()) {
 <form class="form-horizontal">
     <fieldset>
         <div class="form-group">
-            <label class="col-lg-4 control-label">Nom d'utilisateur</label>
+            <label class="col-lg-4 control-label">{{Nom d'utilisateur}}</label>
             <div class="col-lg-4">
                 <input class="configKey form-control" data-l1key="username" />
             </div>
         </div>
         <div class="form-group">
-            <label class="col-lg-4 control-label">Mot de passe</label>
+            <label class="col-lg-4 control-label">{{Mot de passe}}</label>
             <div class="col-lg-4">
                 <input type="password" class="configKey form-control" data-l1key="password" />
             </div>
         </div>
         <div class="form-group">
-            <label class="col-lg-4 control-label">Synchroniser</label>
+            <label class="col-lg-4 control-label">{{Synchroniser</label>
             <div class="col-lg-2">
-                <a class="btn btn-default" id="bt_syncWithNest"><i class='fa fa-refresh'></i> Synchroniser mes équipements</a> 
+                <a class="btn btn-default" id="bt_syncWithNest"><i class='fa fa-refresh'></i> {{Synchroniser mes équipements}}</a> 
             </div>
         </div>
     </fieldset>
@@ -62,7 +62,7 @@ if (!isConnect()) {
                     $('#div_alert').showAlert({message: data.result, level: 'danger'});
                     return;
                 }
-                $('#div_alert').showAlert({message: 'Synchronisation réussie', level: 'success'});
+                $('#div_alert').showAlert({message: '{{Synchronisation réussie}}', level: 'success'});
             }
         });
     });
