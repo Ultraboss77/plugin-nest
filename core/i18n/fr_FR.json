@@ -38,5 +38,9 @@
     "plugins\/nest\/desktop\/js\/nest.js": {
         "Historiser": "Historiser",
         "Tester": "Tester"
+    },
+    "plugins\/nest\/plugin_info\/info.xml": {
+        "Plugin pour exploiter les nest protect et thermostat": "Plugin pour exploiter les nest protect et thermostat",
+        "Aucune": "Aucune"
     }
 }
