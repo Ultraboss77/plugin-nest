@@ -18,8 +18,8 @@
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 include_file('core', 'authentification', 'php');
 if (!isConnect()) {
-    include_file('desktop', '404', 'php');
-    die();
+	include_file('desktop', '404', 'php');
+	die();
 }
 ?>
 <form class="form-horizontal">
@@ -37,9 +37,9 @@ if (!isConnect()) {
             </div>
         </div>
         <div class="form-group">
-            <label class="col-lg-4 control-label">{{Synchroniser</label>
+            <label class="col-lg-4 control-label">{{Synchroniser}}</label>
             <div class="col-lg-2">
-                <a class="btn btn-default" id="bt_syncWithNest"><i class='fa fa-refresh'></i> {{Synchroniser mes équipements}}</a> 
+                <a class="btn btn-default" id="bt_syncWithNest"><i class='fa fa-refresh'></i> {{Synchroniser mes équipements}}</a>
             </div>
         </div>
     </fieldset>
