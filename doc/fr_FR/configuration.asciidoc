@@ -62,14 +62,14 @@ image::../images/nest5.PNG[]
 
 Vous retrouvé l'information sur le CO2 et sur la Fumée
 
-Voici le widget pour le themrostat : 
+Voici le widget pour le thermostat : 
 
 image::../images/nest6.PNG[]
 
 Vous retrouvez sur ce widget : 
 
-* en haut les informations de temperature et d'humidité
-* à droite la valeur actuel de la consigne du thermostat (il suffit de cliquer sur le cercle pour la changer)
-* maison : permet de forcer le Nest en mode présence
-* oeil : permet de passer la detection de presence du Nest en mode automatique
-* personne : permet de forcer le Nest en mode absence
+* *en haut* : les informations de temperature et d'humidité
+* *à droite* la valeur actuel de la consigne du thermostat (il suffit de cliquer sur le cercle pour la changer)
+* *maison* : permet de forcer le Nest en mode présence
+* *oeil* : permet de passer la detection de presence du Nest en mode automatique
+* *personne* : permet de forcer le Nest en mode absence
