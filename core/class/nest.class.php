@@ -284,8 +284,17 @@ class nest extends eqLogic {
 		try {
 			$nest_api = nest::getNestApi();
 			$device_info = $nest_api->getDeviceInfo($this->getLogicalId());
+			if ($this->getConfiguration('nestNumberFailed', 0) > 0) {
+				$this->setConfiguration('nestNumberFailed', 0);
+				$this->save();
+			}
 		} catch (Exception $e) {
-			log::add('nest', 'error', __('Erreur sur ', __FILE__) . $this->getName() . ' : ' . $e->getMessage());
+			if ($this->getConfiguration('nestNumberFailed', 0) > 3) {
+				log::add('nest', 'error', __('Erreur sur ', __FILE__) . $this->getHumanName() . ' : ' . $e->getMessage());
+			} else {
+				$this->setConfiguration('nestNumberFailed', $this->getConfiguration('nestNumberFailed', 0) + 1);
+				$this->save();
+			}
 			return;
 		}
 		log::add('nest', 'debug', print_r($device_info, true));
