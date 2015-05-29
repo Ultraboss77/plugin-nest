@@ -494,7 +494,7 @@ class nestCmd extends cmd {
 				"type" => imperihome::convertType($this),
 				'params' => array(),
 			);
-			$cmd_params = imperihome::generateParam($cmd, $info_device['type'], $ISSStructure);
+			$cmd_params = imperihome::generateParam($this, $info_device['type'], $ISSStructure);
 			$info_device['params'] = $cmd_params['params'];
 			return $info_device;
 		}
