@@ -43,10 +43,7 @@ class nest extends eqLogic {
 	}
 
 	public static function syncWithNest() {
-		log::add('nest', 'debug', 'Lancement synchronisation avec nest');
 		$nest_api = self::getNestApi();
-		log::add('nest', 'debug', 'API : ' . print_r($nest_api, true));
-		log::add('nest', 'debug', 'Sync thermostat : ' . print_r($nest_api->getDevices(), true));
 		foreach ($nest_api->getDevices() as $thermostat) {
 			$eqLogic = nest::byLogicalId($thermostat, 'nest');
 			if (!is_object($eqLogic)) {
@@ -233,7 +230,6 @@ class nest extends eqLogic {
 			$eqLogic->save();
 		}
 		foreach ($nest_api->getDevices(DEVICE_TYPE_PROTECT) as $protects) {
-			log::add('nest', 'debug', 'Sync protect : ' . print_r($protects, true));
 			$eqLogic = nest::byLogicalId($protects, 'nest');
 			if (!is_object($eqLogic)) {
 				$eqLogic = new nest();
@@ -486,6 +482,58 @@ class nestCmd extends cmd {
 	/*     * ***********************Methode static*************************** */
 
 	/*     * *********************Methode d'instance************************* */
+
+	public function imperihomeGenerate($ISSStructure) {
+		$eqLogic = $this->getEqLogic();
+		$object = $eqLogic->getObject();
+		if ($eqLogic->getConfiguration('nest_type') == 'protect') {
+			$info_device = array(
+				"id" => $this->getId(),
+				"name" => ($this->getName() == __('Etat', __FILE__)) ? $eqLogic->getName() : $this->getName(),
+				"room" => (is_object($object)) ? $object->getId() : 99999,
+				"type" => imperihome::convertType($this),
+				'params' => array(),
+			);
+			$cmd_params = imperihome::generateParam($cmd, $info_device['type'], $ISSStructure);
+			$info_device['params'] = $cmd_params['params'];
+			return $info_device;
+		}
+
+		$type = 'DevThermostat';
+		$info_device = array(
+			'id' => $this->getId(),
+			'name' => $eqLogic->getName(),
+			'room' => (is_object($object)) ? $object->getId() : 99999,
+			'type' => $type,
+			'params' => array(),
+		);
+		$info_device['params'] = $ISSStructure[$info_device['type']]['params'];
+		$info_device['params'][1]['value'] = '#' . $eqLogic->getCmd('info', 'temperature')->getId() . '#';
+		$info_device['params'][2]['value'] = '#' . $eqLogic->getCmd('info', 'thermostat')->getId() . '#';
+		$info_device['params'][3]['value'] = 1;
+		return $info_device;
+	}
+
+	public function imperihomeAction($_action, $_value) {
+		$eqLogic = $this->getEqLogic();
+		if ($_action == 'setSetPoint') {
+			$cmd = $eqLogic->getCmd('action', 'thermostat');
+			if (is_object($cmd)) {
+				$cmd->execCmd(array('slider' => $_value));
+			}
+		}
+	}
+
+	public function imperihomeCmd() {
+		$eqLogic = $this->getEqLogic();
+		if ($eqLogic->getConfiguration('nest_type') == 'protect') {
+			return true;
+		}
+		if ($this->getLogicalId() == 'thermostat') {
+			return true;
+		}
+		return false;
+	}
 
 	public function execute($_options = null) {
 		if ($this->getType() == 'info') {
