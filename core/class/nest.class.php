@@ -286,7 +286,7 @@ class nest extends eqLogic {
 			}
 		} catch (Exception $e) {
 			if ($this->getConfiguration('nestNumberFailed', 0) > 3) {
-				log::add('nest', 'error', __('Erreur sur ', __FILE__) . $this->getHumanName() . ' : ' . $e->getMessage());
+				log::add('nest', 'error', __('Erreur sur ', __FILE__) . $this->getHumanName() . ' (' . $this->getConfiguration('nestNumberFailed', 0) . ') : ' . $e->getMessage());
 			} else {
 				$this->setConfiguration('nestNumberFailed', $this->getConfiguration('nestNumberFailed', 0) + 1);
 				$this->save();
