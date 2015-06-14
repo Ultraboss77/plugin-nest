@@ -420,12 +420,9 @@ class nest extends eqLogic {
 				'#name#' => $this->getName(),
 				'#id#' => $this->getId(),
 				'#background_color#' => $this->getBackgroundColor($_version),
-				'#eqLink#' => $this->getLinkToConfiguration(),
+				'#eqLink#' => ($this->hasRight('w')) ? $this->getLinkToConfiguration() : '#',
 				'#collectDate#' => $this->getCollectDate(),
 			);
-			if (!$this->hasRight('w')) {
-				$replace['#eqLink#'] = '#';
-			}
 
 			foreach ($this->getCmd() as $cmd) {
 				if ($cmd->getType() == 'info') {
