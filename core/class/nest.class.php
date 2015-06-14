@@ -423,6 +423,9 @@ class nest extends eqLogic {
 				'#eqLink#' => $this->getLinkToConfiguration(),
 				'#collectDate#' => $this->getCollectDate(),
 			);
+			if (!$this->hasRight('w')) {
+				$replace['#eqLink#'] = '#';
+			}
 
 			foreach ($this->getCmd() as $cmd) {
 				if ($cmd->getType() == 'info') {
