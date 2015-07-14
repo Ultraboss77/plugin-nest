@@ -18,6 +18,9 @@ Voilà à quoi ressemble la page du plugin Nest (ici avec déjà 1 équipement) 
 
 image::../images/nest3.PNG[]
 
+[TIP]
+Comme à beaucoup d'endroits sur Jeedom, placer la souris tout à gauche permet de faire apparaître un menu d'accès rapide (vous pouvez à partir de votre profil le laisser toujours visible).
+
 Une fois que vous cliquez sur un équipement vous obtenez (ici un Protect) : 
 
 image::../images/nest4.PNG[]
