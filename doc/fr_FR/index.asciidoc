@@ -1,6 +1,5 @@
 = Nest
 
-Plugin permettant de communiquer avec les Nest Protect et Thermostat
+Le plugin Nest permet de piloter le thermostat Nest et de récupérer les informations du Nest Protect.
 
-== Configuration
 include::configuration.asciidoc[]
