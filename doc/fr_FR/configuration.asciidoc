@@ -1,6 +1,6 @@
 Le plugin Nest permet de piloter le thermostat Nest et de récupérer les informations du Nest Protect.
 
-==== Configuration du plugin
+=== Configuration du plugin
 
 Une fois le plugin installé, il vous faut renseigner vos informations de connexion Nest : 
 
@@ -10,7 +10,7 @@ image::../images/nest1.PNG[]
 * *Mot de passe* : mot de passe de votre compte Nest
 * *Synchroniser* : permet de synchroniser Jeedom avec votre compte Nest pour découvrir automatiquement vos équipements Nest. A faire après avoir sauvegardé les équipements.
 
-==== Configuration des équipements
+=== Configuration des équipements
 
 La configuration des équipements Nest est accessible à partir du menu plugin : 
 
@@ -54,7 +54,7 @@ En dessous vous retrouvez la liste des commandes :
 * supprimer (signe -) : permet de supprimer la commande
 
 
-==== Widget
+=== Widget
 
 Voici le widget pour le protect : 
 

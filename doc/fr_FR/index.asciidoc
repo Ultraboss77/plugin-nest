@@ -1,10 +1,6 @@
-== Nest
+= Nest
 
-=== Description
 Plugin permettant de communiquer avec les Nest Protect et Thermostat
 
-=== Configuration
+== Configuration
 include::configuration.asciidoc[]
-
-=== FAQ
-include::faq.asciidoc[]
