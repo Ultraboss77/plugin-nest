@@ -18,37 +18,12 @@
 
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
-function nest_install() {
-    $cron = cron::byClassAndFunction('nest', 'pull');
-    if (!is_object($cron)) {
-        $cron = new cron();
-        $cron->setClass('nest');
-        $cron->setFunction('pull');
-        $cron->setEnable(1);
-        $cron->setSchedule('*/10 * * * *');
-        $cron->save();
-    }
-}
-
 function nest_update() {
-    nest::syncWithNest();
-    $cron = cron::byClassAndFunction('nest', 'pull');
-    if (!is_object($cron)) {
-        $cron = new cron();
-        $cron->setClass('nest');
-        $cron->setFunction('pull');
-        $cron->setEnable(1);
-        $cron->setSchedule('*/10 * * * *');
-        $cron->save();
-    }
-    $cron->stop();
-}
+	$cron = cron::byClassAndFunction('nest', 'pull');
+	if (is_object($cron)) {
+		$cron->remove();
+	}
 
-function nest_remove() {
-    $cron = cron::byClassAndFunction('nest', 'pull');
-    if (is_object($cron)) {
-        $cron->remove();
-    }
 }
 
 ?>

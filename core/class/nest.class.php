@@ -26,7 +26,7 @@ class nest extends eqLogic {
 
 	/*     * ***********************Methode static*************************** */
 
-	public static function pull() {
+	public static function cron15() {
 		foreach (nest::byType('nest') as $eqLogic) {
 			if ($eqLogic->getIsEnable() == 1) {
 				$eqLogic->updateFromNest();
