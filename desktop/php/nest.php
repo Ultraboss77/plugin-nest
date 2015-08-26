@@ -31,7 +31,11 @@ if (count($eqLogics) == 0) {
        <div class="eqLogicThumbnailContainer">
         <?php
 foreach ($eqLogics as $eqLogic) {
-		echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >';
+		$opacity = '';
+		if ($eqLogic->getIsEnable() != 1) {
+			$opacity = 'opacity:0.3;';
+		}
+		echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
 		echo "<center>";
 		if ($eqLogic->getConfiguration('nest_type') != '') {
 			echo '<img src="plugins/nest/core/img/' . $eqLogic->getConfiguration('nest_type', '') . '.jpg" height="105" width="95" />';
