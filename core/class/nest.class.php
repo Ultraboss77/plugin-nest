@@ -411,6 +411,9 @@ class nest extends eqLogic {
 			return '';
 		}
 		$_version = jeedom::versionAlias($_version);
+		if ($this->getDisplay('hideOn' . $version) == 1) {
+			return '';
+		}
 		$mc = cache::byKey('nestWidget' . $_version . $this->getId());
 		if ($mc->getValue() != '') {
 			return $mc->getValue();
