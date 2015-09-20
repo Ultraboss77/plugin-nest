@@ -416,7 +416,7 @@ class nest extends eqLogic {
 		}
 		$mc = cache::byKey('nestWidget' . $_version . $this->getId());
 		if ($mc->getValue() != '') {
-			return $mc->getValue();
+			return preg_replace("/" . preg_quote(self::UIDDELIMITER) . "(.*?)" . preg_quote(self::UIDDELIMITER) . "/", self::UIDDELIMITER . mt_rand() . self::UIDDELIMITER, $mc->getValue());
 		}
 		if ($this->getConfiguration('nest_type') == 'thermostat') {
 			$replace = array(
@@ -425,6 +425,7 @@ class nest extends eqLogic {
 				'#background_color#' => $this->getBackgroundColor($_version),
 				'#eqLink#' => ($this->hasRight('w')) ? $this->getLinkToConfiguration() : '#',
 				'#collectDate#' => $this->getCollectDate(),
+				'#uid#' => 'nest' . $this->getId() . self::UIDDELIMITER . mt_rand() . self::UIDDELIMITER,
 			);
 
 			foreach ($this->getCmd() as $cmd) {
