@@ -495,7 +495,7 @@ class nestCmd extends cmd {
 				"id" => $this->getId(),
 				"name" => ($this->getName() == __('Etat', __FILE__)) ? $eqLogic->getName() : $this->getName(),
 				"room" => (is_object($object)) ? $object->getId() : 99999,
-				"type" => imperihome::convertType($this),
+				"type" => imperihome::convertType($this, $ISSStructure, true),
 				'params' => array(),
 			);
 			$cmd_params = imperihome::generateParam($this, $info_device['type'], $ISSStructure);
