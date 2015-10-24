@@ -241,6 +241,7 @@ class nest extends eqLogic {
 				$eqLogic->setLogicalId($protects);
 				$eqLogic->setConfiguration('nest_type', 'protect');
 			}
+			$eqLogic->setConfiguration('battery_type', '6* AA Ultimate Lithium (L91)');
 			$eqLogic->save();
 			$cmd = $eqLogic->getCmd(null, 'co_status');
 			if (!is_object($cmd)) {
@@ -320,6 +321,13 @@ class nest extends eqLogic {
 				}
 			}
 			$this->setConfiguration('battery_level', $device_info->battery_level);
+			$battery_max = 5500;
+			$battery_min = 3600;
+			$battery = round(($device_info->battery_level - $battery_min) / ($battery_max - $battery_min) * 100, 0);
+			if ($battery < 0) {
+				$battery = 0;
+			}
+			$this->batteryStatus($battery);
 			$this->setConfiguration('battery_health_state', $device_info->battery_health_state);
 			$this->setConfiguration('replace_by_date', $device_info->replace_by_date);
 			$this->setConfiguration('last_update', $device_info->last_update);
