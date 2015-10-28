@@ -241,7 +241,7 @@ class nest extends eqLogic {
 				$eqLogic->setLogicalId($protects);
 				$eqLogic->setConfiguration('nest_type', 'protect');
 			}
-			$eqLogic->setConfiguration('battery_type', '6* AA Ultimate Lithium (L91)');
+			$eqLogic->setConfiguration('battery_type', '6xAA Ultimate Lithium (L91)');
 			$eqLogic->save();
 			$cmd = $eqLogic->getCmd(null, 'co_status');
 			if (!is_object($cmd)) {
