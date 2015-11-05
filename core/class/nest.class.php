@@ -45,7 +45,7 @@ class nest extends eqLogic {
 	public static function syncWithNest() {
 		$nest_api = self::getNestApi();
 		$devices = $nest_api->getDevices();
-		log::add('nest', 'debug', print_r($devices, true));
+		log::add('nest', 'debug', 'NEST themrostat : ' . print_r($devices, true));
 		foreach ($devices as $thermostat) {
 			$eqLogic = nest::byLogicalId($thermostat, 'nest');
 			if (!is_object($eqLogic)) {
@@ -231,7 +231,9 @@ class nest extends eqLogic {
 			$eqLogic->updateFromNest();
 			$eqLogic->save();
 		}
-		foreach ($nest_api->getDevices(DEVICE_TYPE_PROTECT) as $protects) {
+		$devices = $nest_api->getDevices(DEVICE_TYPE_PROTECT);
+		log::add('nest', 'debug', 'NEST protect device : ' . print_r($devices, true));
+		foreach ($devices as $protects) {
 			$eqLogic = nest::byLogicalId($protects, 'nest');
 			if (!is_object($eqLogic)) {
 				$eqLogic = new nest();
