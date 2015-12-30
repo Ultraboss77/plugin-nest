@@ -525,7 +525,7 @@ class nestCmd extends cmd {
 		);
 		$info_device['params'] = $ISSStructure[$info_device['type']]['params'];
 		$info_device['params'][1]['value'] = '#' . $eqLogic->getCmd('info', 'temperature')->getId() . '#';
-		$info_device['params'][2]['value'] = '#' . $eqLogic->getCmd('info', 'thermostat')->getId() . '#';
+		$info_device['params'][2]['value'] = '#' . $eqLogic->getCmd('info', 'order')->getId() . '#';
 		$info_device['params'][3]['value'] = 1;
 		return $info_device;
 	}
