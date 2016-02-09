@@ -225,6 +225,7 @@ class nest extends eqLogic {
 			}
 			$leaf->setType('info');
 			$leaf->setSubType('numeric');
+			$leaf->setEventOnly(1);
 			$leaf->setEqLogic_id($eqLogic->getId());
 			$leaf->save();
 
