@@ -82,7 +82,6 @@ class nest extends eqLogic {
 			$temperature->setUnite('°C');
 			$temperature->setType('info');
 			$temperature->setSubType('numeric');
-			$temperature->setEventOnly(1);
 			$temperature->setEqLogic_id($eqLogic->getId());
 			$temperature->save();
 
@@ -96,7 +95,6 @@ class nest extends eqLogic {
 			$humidity->setType('info');
 			$humidity->setSubType('numeric');
 			$humidity->setUnite('%');
-			$humidity->setEventOnly(1);
 			$humidity->setEqLogic_id($eqLogic->getId());
 			$humidity->save();
 
@@ -109,7 +107,6 @@ class nest extends eqLogic {
 			}
 			$heat->setType('info');
 			$heat->setSubType('binary');
-			$heat->setEventOnly(1);
 			$heat->setEqLogic_id($eqLogic->getId());
 			$heat->save();
 
@@ -122,7 +119,6 @@ class nest extends eqLogic {
 			}
 			$auto_away->setType('info');
 			$auto_away->setSubType('binary');
-			$auto_away->setEventOnly(1);
 			$auto_away->setEqLogic_id($eqLogic->getId());
 			$auto_away->save();
 
@@ -135,7 +131,6 @@ class nest extends eqLogic {
 			}
 			$manual_away->setType('info');
 			$manual_away->setSubType('binary');
-			$manual_away->setEventOnly(1);
 			$manual_away->setEqLogic_id($eqLogic->getId());
 			$manual_away->save();
 
@@ -148,7 +143,6 @@ class nest extends eqLogic {
 			}
 			$order->setType('info');
 			$order->setSubType('numeric');
-			$order->setEventOnly(1);
 			$order->setUnite('°C');
 			$order->setEqLogic_id($eqLogic->getId());
 			$order->save();
@@ -225,7 +219,6 @@ class nest extends eqLogic {
 			}
 			$leaf->setType('info');
 			$leaf->setSubType('numeric');
-			$leaf->setEventOnly(1);
 			$leaf->setEqLogic_id($eqLogic->getId());
 			$leaf->save();
 
@@ -257,7 +250,6 @@ class nest extends eqLogic {
 			}
 			$cmd->setType('info');
 			$cmd->setSubType('binary');
-			$cmd->setEventOnly(1);
 			$cmd->setDisplay('invertBinary', 1);
 			$cmd->setEqLogic_id($eqLogic->getId());
 			$cmd->save();
@@ -271,7 +263,6 @@ class nest extends eqLogic {
 			}
 			$cmd->setType('info');
 			$cmd->setSubType('binary');
-			$cmd->setEventOnly(1);
 			$cmd->setDisplay('invertBinary', 1);
 			$cmd->setEqLogic_id($eqLogic->getId());
 			$cmd->save();
