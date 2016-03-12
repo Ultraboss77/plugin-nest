@@ -23,6 +23,7 @@ class nest extends eqLogic {
 	/*     * *************************Attributs****************************** */
 
 	private $_collectDate = '';
+	public static $_widgetPossibility = array('custom' => true);
 
 	/*     * ***********************Methode static*************************** */
 
@@ -408,36 +409,17 @@ class nest extends eqLogic {
 	}
 
 	public function toHtml($_version = 'dashboard') {
-		if ($this->getIsEnable() != 1) {
-			return '';
-		}
-		if (!$this->hasRight('r')) {
-			return '';
-		}
-		$_version = jeedom::versionAlias($_version);
-		if ($this->getDisplay('hideOn' . $_version) == 1) {
-			return '';
-		}
-		$mc = cache::byKey('nestWidget' . $_version . $this->getId());
-		if ($mc->getValue() != '') {
-			return preg_replace("/" . preg_quote(self::UIDDELIMITER) . "(.*?)" . preg_quote(self::UIDDELIMITER) . "/", self::UIDDELIMITER . mt_rand() . self::UIDDELIMITER, $mc->getValue());
-		}
 		if ($this->getConfiguration('nest_type') == 'thermostat') {
-			$replace = array(
-				'#name#' => $this->getName(),
-				'#id#' => $this->getId(),
-				'#background_color#' => $this->getBackgroundColor($_version),
-				'#eqLink#' => ($this->hasRight('w')) ? $this->getLinkToConfiguration() : '#',
-				'#collectDate#' => $this->getCollectDate(),
-				'#uid#' => 'nest' . $this->getId() . self::UIDDELIMITER . mt_rand() . self::UIDDELIMITER,
-			);
-
+			$replace = $this->preToHtml($_version);
+			if (!is_array($replace)) {
+				return $replace;
+			}
+			$_version = jeedom::versionAlias($_version);
 			foreach ($this->getCmd() as $cmd) {
 				if ($cmd->getType() == 'info') {
 					$replace['#' . $cmd->getLogicalId() . '#'] = $cmd->execCmd();
 				}
 			}
-
 			$thermostat = $this->getCmd(null, 'thermostat');
 			$replace['#thermostat_cmd_id#'] = $thermostat->getId();
 			$replace['#thermostat_maxValue#'] = $thermostat->getConfiguration('maxValue');
@@ -456,20 +438,12 @@ class nest extends eqLogic {
 			if (is_object($refresh)) {
 				$replace['#refresh_id#'] = $refresh->getId();
 			}
-
-			$parameters = $this->getDisplay('parameters');
-			if (is_array($parameters)) {
-				foreach ($parameters as $key => $value) {
-					$replace['#' . $key . '#'] = $value;
-				}
-			}
-
 			$html = template_replace($replace, getTemplate('core', $_version, 'nest', 'nest'));
+			cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
+			return $html;
 		} else {
-			$html = parent::toHtml($_version);
+			return parent::toHtml($_version);
 		}
-		cache::set('nestWidget' . $_version . $this->getId(), $html, 0);
-		return $html;
 	}
 
 /*     * **********************Getteur Setteur*************************** */
