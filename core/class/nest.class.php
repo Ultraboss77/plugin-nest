@@ -397,14 +397,6 @@ class nest extends eqLogic {
 				}
 			}
 		}
-
-		$mc = cache::byKey('nestWidgetmobile' . $this->getId());
-		$mc->remove();
-		$mc = cache::byKey('nestWidgetdashboard' . $this->getId());
-		$mc->remove();
-		$this->setCollectDate(date('Y-m-d H:i:s'));
-		$this->toHtml('mobile');
-		$this->toHtml('dashboard');
 		$this->refreshWidget();
 	}
 
