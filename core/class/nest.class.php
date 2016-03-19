@@ -406,7 +406,7 @@ class nest extends eqLogic {
 			if (!is_array($replace)) {
 				return $replace;
 			}
-			$_version = jeedom::versionAlias($_version);
+			$version = jeedom::versionAlias($_version);
 			foreach ($this->getCmd() as $cmd) {
 				if ($cmd->getType() == 'info') {
 					$replace['#' . $cmd->getLogicalId() . '#'] = $cmd->execCmd();
@@ -430,7 +430,7 @@ class nest extends eqLogic {
 			if (is_object($refresh)) {
 				$replace['#refresh_id#'] = $refresh->getId();
 			}
-			$html = template_replace($replace, getTemplate('core', $_version, 'nest', 'nest'));
+			$html = template_replace($replace, getTemplate('core', $version, 'nest', 'nest'));
 			cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
 			return $html;
 		} else {
