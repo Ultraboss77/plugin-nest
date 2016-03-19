@@ -453,6 +453,8 @@ class nest extends eqLogic {
 class nestCmd extends cmd {
 	/*     * *************************Attributs****************************** */
 
+	public static $_widgetPossibility = array('custom' => false);
+
 	/*     * ***********************Methode static*************************** */
 
 	/*     * *********************Methode d'instance************************* */
