@@ -518,7 +518,7 @@ class nestCmd extends cmd {
 		$eqLogic = $this->getEqLogic();
 		$nest_api = nest::getNestApi();
 		if ($this->getLogicalId() == 'thermostat') {
-			$nest_api->setTargetTemperature(intval($_options['slider']), $eqLogic->getLogicalId());
+			$nest_api->setTargetTemperature(round($_options['slider'] * 2) / 2, $eqLogic->getLogicalId());
 			sleep(5);
 		}
 		if ($this->getLogicalId() == 'fan_mode_on') {
