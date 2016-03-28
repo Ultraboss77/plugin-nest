@@ -551,7 +551,6 @@ class nestCmd extends cmd {
 			$nest_api->setAutoAwayEnabled(FALSE, $eqLogic->getLogicalId());
 			sleep(5);
 		}
-
 		$eqLogic->updateFromNest();
 		$eqLogic->save();
 		return '';
