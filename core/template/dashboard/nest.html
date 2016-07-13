@@ -64,8 +64,9 @@
                     </div>
                 </div>
                 <script>
-                    $.include(['plugins/nest/core/template/dashboard/jquery.kontrol.js'], function () {
-                        $(".eqLogic[data-eqLogic_uid=#uid#] .cmd[data-cmd_id=#thermostat_cmd_id#] .dial").dial({
+                    $.include(['plugins/nest/core/template/dashboard/jquery.knob.js'], function () {
+                        $(".eqLogic[data-eqLogic_uid=#uid#] .cmd[data-cmd_id=#thermostat_cmd_id#] .dial").knob({
+                            step: 0.5,
                             bgColor: "#3498db",
                             fgColor: '#FFFFFF',
                             noScroll: true,

@@ -45,8 +45,9 @@
                     <input type="text" class="dial" data-role="none" value="#order#" data-min="#thermostat_minValue#" data-max="#thermostat_maxValue#" data-width="100" data-height="100" />
                 </div>
                 <script>
-                    $.include(['plugins/nest/core/template/mobile/jquery.kontrol.js'], function () {
-                        $(".eqLogic[data-eqLogic_uid=#uid#] .cmd[data-thermostat_id=#thermostat_cmd_id#] .dial").dial({
+                    $.include(['plugins/nest/core/template/mobile/jquery.knob.js'], function () {
+                        $(".eqLogic[data-eqLogic_uid=#uid#] .cmd[data-thermostat_id=#thermostat_cmd_id#] .dial").knob({
+                            step: 0.5,
                             bgColor: "#3498db",
                             fgColor: '#FFFFFF',
                             noScroll: true,
