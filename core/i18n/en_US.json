@@ -1,0 +1,46 @@
+{
+    "plugins/nest/plugin_info/configuration.php": {
+        "Nom d'utilisateur": "Username",
+        "Mot de passe": "Password",
+        "Synchroniser</label>\r\n            <div class=\"col-lg-2\">\r\n                <a class=\"btn btn-default\" id=\"bt_syncWithNest\"><i class='fa fa-refresh'></i> {{Synchroniser mes équipements": "Synchronize</label>\n            <div class=\"col-lg-2\">\n                <a class=\"btn btn-default\" id=\"bt_syncWithNest\"><i class='fa fa-refresh'></i> {{Synchronize my devices",
+        "Synchronisation réussie": "Synchronization successful"
+    },
+    "plugins/nest/desktop/php/nest.php": {
+        "Rechercher": "Search",
+        "Mes équipements Nest": "My Nest devices",
+        "Général": "Main",
+        "Nom de l'équipement nest": "Nest device name",
+        "Nom de l'équipement mail": "Email device name",
+        "Objet parent": "Parent object",
+        "Aucun": "None",
+        "Activer": "Enabled",
+        "Visible": "Visible",
+        "Catégorie": "Category",
+        "Informations": "Information",
+        "Type": "Type",
+        "ID": "ID",
+        "IP": "IP",
+        "MAC": "MAC",
+        "Batterie": "Battery",
+        "Santé": "Health",
+        "Remplacer le": "Replace on",
+        "Dernière mise à jour": "Last update",
+        "Dernier test": "Last test",
+        "IP externe": "External IP",
+        "Dernier connexion": "Last connection",
+        "Alimenté": "Powered",
+        "Commande": "Command",
+        "Nom": "Name",
+        "Options": "Options",
+        "Supprimer": "Delete",
+        "Sauvegarder": "Save"
+    },
+    "plugins/nest/desktop/js/nest.js": {
+        "Historiser": "Historize",
+        "Tester": "Test"
+    },
+    "plugins/nest/plugin_info/info.xml": {
+        "Plugin pour exploiter les nest protect et thermostat": "Plugin to use Nest Protect and Thermostat",
+        "Aucune": "None"
+    }
+}

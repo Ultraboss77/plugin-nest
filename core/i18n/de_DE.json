@@ -1,0 +1,46 @@
+{
+    "plugins/nest/plugin_info/configuration.php": {
+        "Nom d'utilisateur": "Benutzername",
+        "Mot de passe": "Passwort",
+        "Synchroniser</label>\r\n            <div class=\"col-lg-2\">\r\n                <a class=\"btn btn-default\" id=\"bt_syncWithNest\"><i class='fa fa-refresh'></i> {{Synchroniser mes équipements": "synchronisieren</label>\n<div class=\"col-lg-2\">\n<a class=\"btn btn-default\" id=\"bt_syncWithNest\"><i class='fa fa-refresh'></i> {{Synchronisieren Sie meine Geräte",
+        "Synchronisation réussie": "erfolgreiche Synchronisation"
+    },
+    "plugins/nest/desktop/php/nest.php": {
+        "Rechercher": "Suchen nach",
+        "Mes équipements Nest": "Meine Nest Geräte",
+        "Général": "Allgemein",
+        "Nom de l'équipement nest": "Nest Gerätename",
+        "Nom de l'équipement mail": "E-Mail Name",
+        "Objet parent": "Eltern-Objekt",
+        "Aucun": "Ohne",
+        "Activer": "aktivieren",
+        "Visible": "Sichtbar",
+        "Catégorie": "Kategorie",
+        "Informations": "Information",
+        "Type": "Typ",
+        "ID": "ID",
+        "IP": "IP",
+        "MAC": "MAC",
+        "Batterie": "Batterie",
+        "Santé": "Gesundheit",
+        "Remplacer le": "ersetzen",
+        "Dernière mise à jour": "Letzte Änderung",
+        "Dernier test": "letzter Test",
+        "IP externe": "Externe IP",
+        "Dernier connexion": "Letzer Login",
+        "Alimenté": "Aktiv",
+        "Commande": "Befehl",
+        "Nom": "Name",
+        "Options": "Optionen",
+        "Supprimer": "Löschen",
+        "Sauvegarder": "Speichern"
+    },
+    "plugins/nest/desktop/js/nest.js": {
+        "Historiser": "Chronik",
+        "Tester": "Test"
+    },
+    "plugins/nest/plugin_info/info.xml": {
+        "Plugin pour exploiter les nest protect et thermostat": "Plugin um Nest Thermostat zu nutzen und zu schützen ",
+        "Aucune": "Ohne"
+    }
+}
