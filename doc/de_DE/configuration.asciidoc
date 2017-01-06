@@ -1,4 +1,4 @@
-== Configuration du plugin
+== Plugin Konfiguration
 
 Une fois le plugin installé, il vous faut renseigner vos informations de connexion Nest : 
 
