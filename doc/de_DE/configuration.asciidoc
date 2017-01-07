@@ -8,7 +8,7 @@ image::../images/nest1.PNG[]
 * *Mot de passe* : mot de passe de votre compte Nest
 * *Synchroniser* : permet de synchroniser Jeedom avec votre compte Nest pour découvrir automatiquement vos équipements Nest. A faire après avoir sauvegardé les paramètres précedent.
 
-== Configuration des équipements
+== Geräte Konfiguration
 
 La configuration des équipements Nest est accessible à partir du menu plugin : 
 
