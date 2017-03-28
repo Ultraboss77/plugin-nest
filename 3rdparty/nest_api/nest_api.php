@@ -1,9 +1,12 @@
 <?php
-
+define('DATE_FORMAT', 'Y-m-d');
+define('DATETIME_FORMAT', DATE_FORMAT . ' H:i:s');
 define('TARGET_TEMP_MODE_COOL', 'cool');
 define('TARGET_TEMP_MODE_HEAT', 'heat');
 define('TARGET_TEMP_MODE_RANGE', 'range');
 define('TARGET_TEMP_MODE_OFF', 'off');
+define('ECO_MODE_MANUAL', 'manual-eco');
+define('ECO_MODE_SCHEDULE', 'schedule');
 define('FAN_MODE_AUTO', 'auto');
 define('FAN_MODE_ON', 'on');
 define('FAN_MODE_EVERY_DAY_ON', 'on');
@@ -206,15 +209,23 @@ class nest_api {
 			if ($serial_number == $protect->serial_number) {
 				// The specified device is a Nest Protect
 				$infos = (object) array(
-					'co_status' => $protect->co_status,
-					'smoke_status' => $protect->smoke_status,
-					'line_power_present' => $protect->line_power_present,
-					'battery_level' => $protect->battery_level,
-					'battery_health_state' => $protect->battery_health_state,
-					'replace_by_date' => date('Y-m-d', $protect->replace_by_date_utc_secs),
-					'last_update' => date('Y-m-d H:i:s', $protect->{'$timestamp'} / 1000),
-					'last_manual_test' => $protect->latest_manual_test_start_utc_secs == 0 ? NULL : date('Y-m-d H:i:s', $protect->latest_manual_test_start_utc_secs),
-					'tests_passed' => array(
+					'co_status' => $protect->co_status == 0 ? "OK" : $protect->co_status,
+                    'co_previous_peak' => isset($protect->co_previous_peak) ? $protect->co_previous_peak : null,
+                    'co_sequence_number' => $protect->co_sequence_number,
+                    'smoke_status' => $protect->smoke_status == 0 ? "OK" : $protect->smoke_status,
+                    'smoke_sequence_number' => $protect->smoke_sequence_number,
+                    'model' => $protect->model,
+                    'software_version' => $protect->software_version,
+                    'line_power_present' => $protect->line_power_present,
+                    'battery_level' => $protect->battery_level,
+                    'battery_health_state' => $protect->battery_health_state == 0 ? "OK" : $protect->battery_health_state,
+                    'wired_or_battery' => isset($protect->wired_or_battery) ? $protect->wired_or_battery : null,
+                    'born_on_date' => isset($protect->device_born_on_date_utc_secs) ? date(date_format, $protect->device_born_on_date_utc_secs) : null,
+                    'replace_by_date' => date(date_format, $protect->replace_by_date_utc_secs),
+                    'last_update' => date(datetime_format, $protect->{'$timestamp'}/1000),
+                    'last_manual_test' => $protect->latest_manual_test_start_utc_secs == 0 ? null : date(datetime_format, $protect->latest_manual_test_start_utc_secs),
+                    'ntp_green_led_brightness' => isset($protect->ntp_green_led_brightness) ? $protect->ntp_green_led_brightness : null,
+                    'tests_passed' => array(
 						'led' => $protect->component_led_test_passed,
 						'pir' => $protect->component_pir_test_passed,
 						'temp' => $protect->component_temp_test_passed,
@@ -225,7 +236,18 @@ class nest_api {
 						'co' => $protect->component_co_test_passed,
 						'us' => $protect->component_us_test_passed,
 						'hum' => $protect->component_hum_test_passed,
+						'speaker' => isset($protect->component_speaker_test_passed) ? $protect->component_speaker_test_passed : null,
+                        'buzzer' => isset($protect->component_buzzer_test_passed) ? $protect->component_buzzer_test_passed : null,
 					),
+					'nest_features' => array(
+                        'night_time_promise' => !empty($protect->ntp_green_led_enable) ? $protect->ntp_green_led_enable : 0,
+                        'night_light'        => !empty($protect->night_light_enable) ? $protect->night_light_enable : 0,
+                        'auto_away'          => !empty($protect->auto_away) ? $protect->auto_away : 0,
+                        'heads_up'           => !empty($protect->heads_up_enable) ? $protect->heads_up_enable : 0,
+                        'steam_detection'    => !empty($protect->steam_detection_enable) ? $protect->steam_detection_enable : 0,
+                        'home_alarm_link'    => !empty($protect->home_alarm_link_capable) ? $protect->home_alarm_link_capable : 0,
+                        'wired_led_enable'   => !empty($protect->wired_led_enable) ? $protect->wired_led_enable : 0,
+                    ),
 					'serial_number' => $protect->serial_number,
 					'location' => $protect->structure_id,
 					'network' => (object) array(
@@ -235,51 +257,111 @@ class nest_api {
 					),
 					'name' => !empty($protect->description) ? $protect->description : DEVICE_WITH_NO_NAME,
 					'where' => isset($this->where_map[$protect->spoken_where_id]) ? $this->where_map[$protect->spoken_where_id] : $protect->spoken_where_id,
+					'color' => isset($protect->device_external_color) ? $protect->device_external_color : null,
 				);
 				return $infos;
 			}
 		}
 
 		list(, $structure) = explode('.', $this->last_status->link->{$serial_number}->structure);
-		$manual_away = $this->last_status->structure->{$structure}->away;
+		$structure_away = $this->last_status->structure->{$structure}->away;
 		$mode = strtolower($this->last_status->device->{$serial_number}->current_schedule_mode);
 		$target_mode = $this->last_status->shared->{$serial_number}->target_temperature_type;
-		if ($manual_away || $mode == 'away' || $this->last_status->shared->{$serial_number}->auto_away > 0) {
-			$mode = $mode . ',away';
-			$target_mode = 'range';
-			$target_temperatures = array($this->temperatureInUserScale((float) $this->last_status->device->{$serial_number}->away_temperature_low), $this->temperatureInUserScale((float) $this->last_status->device->{$serial_number}->away_temperature_high));
-		} else if ($mode == 'range') {
-			$target_mode = 'range';
-			$target_temperatures = array($this->temperatureInUserScale((float) $this->last_status->shared->{$serial_number}->target_temperature_low), $this->temperatureInUserScale((float) $this->last_status->shared->{$serial_number}->target_temperature_high));
-		} else {
-			$target_temperatures = $this->temperatureInUserScale((float) $this->last_status->shared->{$serial_number}->target_temperature);
-		}
+		$eco_mode = $this->last_status->device->{$serial_number}->eco->mode; // manual-eco, auto-eco, schedule
+		if ($target_mode == TARGET_TEMP_MODE_OFF) {
+            $target_temperatures = false; // No target due to it being off
+            $mode = TARGET_TEMP_MODE_OFF;
+        } elseif ($eco_mode !== "schedule") {
+            // We are in eco, thus not actively using the schedule
+            if ($this->last_status->device->{$serial_number}->away_temperature_low_enabled && $this->last_status->device->{$serial_number}->away_temperature_high_enabled) {
+                // We have both low and high temp eco temperatures
+                $mode = TARGET_TEMP_MODE_RANGE;
+                $target_temperatures = array(
+                    $this->temperatureInUserScale((float) $this->last_status->device->{$serial_number}->away_temperature_low),
+                    $this->temperatureInUserScale((float) $this->last_status->device->{$serial_number}->away_temperature_high)
+                );
+            } elseif ($this->last_status->device->{$serial_number}->away_temperature_low_enabled) {
+                // We have only an eco temp low, i.e. we're heating
+                $mode = TARGET_TEMP_MODE_HEAT;
+                $target_temperatures = $this->temperatureInUserScale((float) $this->last_status->device->{$serial_number}->away_temperature_low);
+            } elseif ($this->last_status->device->{$serial_number}->away_temperature_high_enabled) {
+                // We have only an eco temp high, i.e. we're cooling
+                $mode = TARGET_TEMP_MODE_COOL;
+                $target_temperatures = $this->temperatureInUserScale((float) $this->last_status->device->{$serial_number}->away_temperature_high);
+            } else {
+                // We're in eco with no away temperatures set, i.e. we're technically off (safety temps would still kick in)
+                $mode = TARGET_TEMP_MODE_OFF;
+                $target_temperatures = false;
+            }
+        } elseif ($target_mode === 'range') {
+            $target_temperatures = array(
+                $this->temperatureInUserScale((float) $this->last_status->shared->{$serial_number}->target_temperature_low),
+                $this->temperatureInUserScale((float) $this->last_status->shared->{$serial_number}->target_temperature_high)
+            );
+        } else {
+            // It is either heat or cool mode
+            $target_temperatures = $this->temperatureInUserScale((float) $this->last_status->shared->{$serial_number}->target_temperature);
+        }
+        $current_modes = array();
+        $current_modes[] = $mode;
+        if ($eco_mode !== "schedule") {
+            $current_modes[] = $eco_mode;
+        }
+        if ($structure_away) {
+            $current_modes[] = 'away';
+        }
 		$infos = (object) array(
 			'current_state' => (object) array(
-				'mode' => $mode,
-				'temperature' => $this->temperatureInUserScale((float) $this->last_status->shared->{$serial_number}->current_temperature),
-				'humidity' => $this->last_status->device->{$serial_number}->current_humidity,
-				'ac' => $this->last_status->shared->{$serial_number}->hvac_ac_state,
-				'heat' => $this->last_status->shared->{$serial_number}->hvac_heater_state,
-				'alt_heat' => $this->last_status->shared->{$serial_number}->hvac_alt_heat_state,
-				'fan' => $this->last_status->shared->{$serial_number}->hvac_fan_state,
-				'auto_away' => $this->last_status->shared->{$serial_number}->auto_away, // -1 when disabled, 0 when enabled (thermostat can set auto-away), >0 when enabled and active (thermostat is currently in auto-away mode)
-				'manual_away' => $manual_away,
-				'leaf' => $this->last_status->device->{$serial_number}->leaf,
-				'battery_level' => $this->last_status->device->{$serial_number}->battery_level,
-			),
+				'mode' => implode(',', $current_modes),
+                'temperature' => $this->temperatureInUserScale((float) $this->last_status->shared->{$serial_number}->current_temperature),
+                'humidity' => $this->last_status->device->{$serial_number}->current_humidity,
+                'ac' => $this->last_status->shared->{$serial_number}->hvac_ac_state,
+                'heat' => $this->last_status->shared->{$serial_number}->hvac_heater_state,
+                'alt_heat' => $this->last_status->shared->{$serial_number}->hvac_alt_heat_state,
+                'fan' => $this->last_status->shared->{$serial_number}->hvac_fan_state,
+                'auto_away' => $this->last_status->shared->{$serial_number}->auto_away, // -1 when disabled, 0 when enabled (thermostat can set auto-away), >0 when enabled and active (thermostat is currently in auto-away mode)
+                'manual_away' => $structure_away, //Leaving this for others - but manual away really doesn't exist anymore and should be removed eventually
+                'structure_away' => $structure_away,
+                'leaf' => $this->last_status->device->{$serial_number}->leaf,
+                'battery_level' => $this->last_status->device->{$serial_number}->battery_level,
+				'online' => $this->last_status->track->{$serial_number}->online,
+				'scale' => $this->last_status->device->{$serial_number}->temperature_scale,
+                'active_stages' => (object) array(
+                    'heat' => (object) array(
+                        'stage1' => $this->last_status->shared->{$serial_number}->hvac_heater_state,
+                        'stage2' => $this->last_status->shared->{$serial_number}->hvac_heat_x2_state,
+                        'stage3' => $this->last_status->shared->{$serial_number}->hvac_heat_x3_state,
+                        'alt' => $this->last_status->shared->{$serial_number}->hvac_alt_heat_state,
+                        'alt_stage2' => $this->last_status->shared->{$serial_number}->hvac_alt_heat_x2_state,
+                        'aux' => $this->last_status->shared->{$serial_number}->hvac_aux_heater_state,
+                        'emergency' => $this->last_status->shared->{$serial_number}->hvac_emer_heat_state,
+                    ),
+                    'cool' => (object) array(
+                        'stage1' => $this->last_status->shared->{$serial_number}->hvac_ac_state,
+                        'stage2' => $this->last_status->shared->{$serial_number}->hvac_cool_x2_state,
+                        'stage3' => $this->last_status->shared->{$serial_number}->hvac_cool_x3_state,
+                    ),
+                ),
+                'eco_mode' => $eco_mode,
+                'eco_temperatures' => (object) array(
+                    'low' => ($this->last_status->device->{$serial_number}->away_temperature_low_enabled) ? $this->temperatureInUserScale((float)$this->last_status->device->{$serial_number}->away_temperature_low) : FALSE,
+                    'high' => ($this->last_status->device->{$serial_number}->away_temperature_high_enabled) ? $this->temperatureInUserScale((float)$this->last_status->device->{$serial_number}->away_temperature_high) : FALSE,
+                ),
+            ),
 			'target' => (object) array(
 				'mode' => $target_mode,
 				'temperature' => $target_temperatures,
 				'time_to_target' => $this->last_status->device->{$serial_number}->time_to_target,
 			),
 			'serial_number' => $this->last_status->device->{$serial_number}->serial_number,
-			'scale' => $this->last_status->device->{$serial_number}->temperature_scale,
+			//'scale' => $this->last_status->device->{$serial_number}->temperature_scale,
 			'location' => $structure,
 			'network' => $this->getDeviceNetworkInfo($serial_number),
 			'name' => !empty($this->last_status->shared->{$serial_number}->name) ? $this->last_status->shared->{$serial_number}->name : DEVICE_WITH_NO_NAME,
+			'auto_cool' => ((int) $this->last_status->device->{$serial_number}->leaf_threshold_cool === 0) ? false : ceil($this->temperatureInUserScale((float) $this->last_status->device->{$serial_number}->leaf_threshold_cool)),
+            'auto_heat' => ((int) $this->last_status->device->{$serial_number}->leaf_threshold_heat === 1000) ? false : floor($this->temperatureInUserScale((float) $this->last_status->device->{$serial_number}->leaf_threshold_heat)),
 			'where' => isset($this->last_status->device->{$serial_number}->where_id) ? isset($this->where_map[$this->last_status->device->{$serial_number}->where_id]) ? $this->where_map[$this->last_status->device->{$serial_number}->where_id] : $this->last_status->device->{$serial_number}->where_id:"",
-		);
+        );
 		if ($this->last_status->device->{$serial_number}->has_humidifier) {
 			$infos->current_state->humidifier = $this->last_status->device->{$serial_number}->humidifier_state;
 			$infos->target->humidity = $this->last_status->device->{$serial_number}->target_humidity;
@@ -305,10 +387,12 @@ class nest_api {
 
 	public function setTargetTemperatureMode($mode, $temperature, $serial_number = null) {
 		$serial_number = $this->getDefaultSerial($serial_number);
-
+		
+        if ($temperature !== NULL) {
 		if ($mode == TARGET_TEMP_MODE_RANGE) {
 			if (!is_array($temperature) || count($temperature) != 2 || !is_numeric($temperature[0]) || !is_numeric($temperature[1])) {
-				throw new Exception("Error: when using TARGET_TEMP_MODE_RANGE, you need to set the target temperatures (second argument of setTargetTemperatureMode) using an array of two numeric values.");
+				echo "Error: when using TARGET_TEMP_MODE_RANGE, you need to set the target temperatures (second argument of setTargetTemperatureMode) using an array of two numeric values.\n";
+                return false;
 			}
 			$temp_low = $this->temperatureInCelsius($temperature[0], $serial_number);
 			$temp_high = $this->temperatureInCelsius($temperature[1], $serial_number);
@@ -317,13 +401,14 @@ class nest_api {
 		} else if ($mode != TARGET_TEMP_MODE_OFF) {
 			// heat or cool
 			if (!is_numeric($temperature)) {
-				throw new Exception("Error: when using TARGET_TEMP_MODE_HEAT or TARGET_TEMP_MODE_COLD, you need to set the target temperature (second argument of setTargetTemperatureMode) using an numeric value.");
+				echo "Error: when using TARGET_TEMP_MODE_HEAT or TARGET_TEMP_MODE_COLD, you need to set the target temperature (second argument of setTargetTemperatureMode) using an numeric value.\n";
+                return FALSE;
 			}
 			$temperature = $this->temperatureInCelsius($temperature, $serial_number);
 			$data = json_encode(array('target_change_pending' => TRUE, 'target_temperature' => $temperature));
 			$set_temp_result = $this->doPOST("/v2/put/shared." . $serial_number, $data);
 		}
-
+		}
 		$data = json_encode(array('target_change_pending' => TRUE, 'target_temperature_type' => $mode));
 		return $this->doPOST("/v2/put/shared." . $serial_number, $data);
 	}
@@ -342,7 +427,21 @@ class nest_api {
 		$data = json_encode(array('target_change_pending' => TRUE, 'target_temperature_low' => $temp_low, 'target_temperature_high' => $temp_high));
 		return $this->doPOST("/v2/put/shared." . $serial_number, $data);
 	}
-
+    
+	public function setEcoMode($mode, $serial_number = null) {
+        $serial_number = $this->getDefaultSerial($serial_number);
+        $data = array();
+        $data['mode'] = $mode;
+        $data['touched_by'] = 4;
+        $data['mode_update_timestamp'] = time();
+        $data = json_encode(array('eco' => $data));
+        return $this->doPOST("/v2/put/device." . $serial_number, $data);
+    }
+	
+	public function setEcoTemperatures($temp_low, $temp_high, $serial_number = NULL) {
+        return $this->setAwayTemperatures($temp_low, $temp_high, $serial_number);
+    }
+	
 	public function setAwayTemperatures($temp_low, $temp_high, $serial_number = null) {
 		$serial_number = $this->getDefaultSerial($serial_number);
 		$temp_low = $this->temperatureInCelsius($temp_low, $serial_number);
@@ -412,13 +511,18 @@ class nest_api {
 	}
 
 	public function turnOff($serial_number = null) {
-		return $this->setTargetTemperatureMode(TARGET_TEMP_MODE_OFF, $serial_number);
+		return $this->setTargetTemperatureMode(TARGET_TEMP_MODE_OFF, 0 , $serial_number);
 	}
 
-	public function setAway($away, $serial_number = null) {
+	public function setAway($away_mode, $serial_number = null) {
 		$serial_number = $this->getDefaultSerial($serial_number);
-		$data = json_encode(array('away' => $away, 'away_timestamp' => time(), 'away_setter' => 0));
+		$data = json_encode(array('away' => $away_mode, 'away_timestamp' => time(), 'away_setter' => 0));
 		$structure_id = $this->getDeviceInfo($serial_number)->location;
+		if ($away_mode == AWAY_MODE_ON) {
+            $this->setEcoMode(ECO_MODE_MANUAL, $serial_number);
+        } else {
+            $this->setEcoMode(ECO_MODE_SCHEDULE, $serial_number);
+        }
 		return $this->doPOST("/v2/put/structure." . $structure_id, $data);
 	}
 
@@ -450,9 +554,12 @@ class nest_api {
 		$data = json_encode(array('target_humidity' => ((double) $humidity)));
 		return $this->doPOST("/v2/put/device." . $serial_number, $data);
 	}
-
+	
 	/* Helper functions */
-
+    public function clearStatusCache() {
+        unset($this->last_status);
+    }
+	
 	public function getStatus($retry = TRUE) {
 		$url = "/v3/mobile/" . $this->user;
 		$status = $this->doGET($url);
@@ -511,12 +618,13 @@ class nest_api {
 			}
 			return $protects;
 		}
-		$structure = $this->last_status->user->{$this->userid}->structures[0];
-		list(, $structure_id) = explode('.', $structure);
 		$devices_serials = array();
-		foreach ($this->last_status->structure->{$structure_id}->devices as $device) {
-			list(, $device_serial) = explode('.', $device);
+        foreach ($this->last_status->user->{$this->userid}->structures as $structure) {
+            list(, $structure_id) = explode('.', $structure);
+		    foreach ($this->last_status->structure->{$structure_id}->devices as $device) {
+			    list(, $device_serial) = explode('.', $device);
 			$devices_serials[] = $device_serial;
+			}
 		}
 		return $devices_serials;
 	}
@@ -538,17 +646,18 @@ class nest_api {
 	}
 
 	private function getDeviceNetworkInfo($serial_number = null) {
-		$this->getStatus();
-		$serial_number = $this->getDefaultSerial($serial_number);
-		$connection_info = $this->last_status->track->{$serial_number};
-		return (object) array(
-			'online' => $connection_info->online,
-			'last_connection' => date('Y-m-d H:i:s', $connection_info->last_connection / 1000),
-			'wan_ip' => @$connection_info->last_ip,
-			'local_ip' => $this->last_status->device->{$serial_number}->local_ip,
-			'mac_address' => $this->last_status->device->{$serial_number}->mac_address,
-		);
-	}
+        $this->prepareForGet();
+        $serial_number = $this->getDefaultSerial($serial_number);
+        $connection_info = $this->last_status->track->{$serial_number};
+        return (object) array(
+           //'online' => $connection_info->online,
+            'last_connection' => date(DATETIME_FORMAT, $connection_info->last_connection/1000),
+            'last_connection_UTC' => gmdate(DATETIME_FORMAT, $connection_info->last_connection/1000),
+            'wan_ip' => @$connection_info->last_ip,
+            'local_ip' => $this->last_status->device->{$serial_number}->local_ip,
+            'mac_address' => $this->last_status->device->{$serial_number}->mac_address
+        );
+    }
 
 	private function _setFanMode($mode, $fan_duty_cycle = null, $timer = null, $serial_number = null) {
 		$serial_number = $this->getDefaultSerial($serial_number);
@@ -606,7 +715,8 @@ class nest_api {
 		$this->user = $vars['user'];
 		$this->userid = $vars['userid'];
 		$this->cache_expiration = $vars['cache_expiration'];
-		$this->last_status = $vars['last_status'];
+		// Let's not load this from the disk cache; otherwise, prepareForGet() would always skip getStatus()
+        // $this->last_status = $vars['last_status'];
 	}
 
 	private function saveCache() {
@@ -652,12 +762,14 @@ class nest_api {
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 		curl_setopt($ch, CURLOPT_HEADER, FALSE);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
 		curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
 		curl_setopt($ch, CURLOPT_USERAGENT, self::user_agent);
 		curl_setopt($ch, CURLOPT_COOKIEJAR, $this->cookie_file);
 		curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie_file);
 		if ($method == 'POST') {
+			if (!isset($data)) {
+                throw new RuntimeException("Error: You need to specify \$data when sending a POST.");
+            }
 			curl_setopt($ch, CURLOPT_POST, TRUE);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 			$headers[] = 'Content-length: ' . strlen($data);
@@ -667,6 +779,17 @@ class nest_api {
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2); // for security this should always be set to 2.
 		curl_setopt($ch, CURLOPT_SSLVERSION, 1); // Nest servers now require TLSv1; won't work with SSLv2 or even SSLv3!
 
+		$curl_cainfo = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'cacert.pem';
+        $last_month = time()-30*24*60*60;
+		if (!file_exists($curl_cainfo) || filemtime($curl_cainfo) < $last_month || filesize($curl_cainfo) < 100000) {
+            $certs = static::getCURLCerts();
+            if ($certs) {
+                file_put_contents($curl_cainfo, $certs);
+            }
+        }
+        if (file_exists($curl_cainfo) && filesize($curl_cainfo) > 100000) {
+            curl_setopt($ch, CURLOPT_CAINFO, $curl_cainfo);
+        }
 		$response = curl_exec($ch);
 		$info = curl_getinfo($ch);
 
@@ -709,6 +832,24 @@ class nest_api {
 
 		return $json;
 	}
+	private static function getCURLCerts() {
+        $url = 'https://curl.haxx.se/ca/cacert.pem';
+        $certs = @file_get_contents($url);
+        if (!$certs) {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE); // for security this should always be set to true.
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);    // for security this should always be set to 2.
+            $response = curl_exec($ch);
+            $info = curl_getinfo($ch);
+            curl_close($ch);
+            if ($info['http_code'] == 200) {
+                $certs = $response;
+            }
+        }
+        return $certs;
+    }
 
 	private static function secure_touch($fname) {
 		if (file_exists($fname)) {
