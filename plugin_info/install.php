@@ -23,7 +23,7 @@ function nest_update() {
 	if (is_object($cron)) {
 		$cron->remove();
 	}
-
+	nest::syncWithNest();
 }
 
 ?>
