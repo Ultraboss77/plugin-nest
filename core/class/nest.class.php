@@ -216,7 +216,7 @@ class nest extends eqLogic {
 				$eco_mode = new nestCmd();
 				$eco_mode->setLogicalId('eco_mode');
 				$eco_mode->setIsVisible(1);
-				$eco_mode->setName(__('Mode eco', __FILE__));
+				$eco_mode->setName(__('Eco', __FILE__));
 			}
 			$eco_mode->setType('info');
 			$eco_mode->setSubType('other');
