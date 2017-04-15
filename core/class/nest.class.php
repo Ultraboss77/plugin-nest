@@ -1,5 +1,4 @@
 <?php
-
 /* This file is part of Jeedom.
  *
  * Jeedom is free software: you can redistribute it and/or modify
@@ -216,7 +215,7 @@ class nest extends eqLogic {
 				$eco_mode = new nestCmd();
 				$eco_mode->setLogicalId('eco_mode');
 				$eco_mode->setIsVisible(1);
-				$eco_mode->setName(__('Eco', __FILE__));
+				$eco_mode->setName(__('Mode eco', __FILE__));
 			}
 			$eco_mode->setType('info');
 			$eco_mode->setSubType('other');
@@ -649,7 +648,7 @@ class nestCmd extends cmd {
 		$eqLogic = $this->getEqLogic();
 		$nest_api = nest::getNestApi();
 		if ($this->getLogicalId() == 'thermostat') {
-			$nest_api->setTargetTemperature(round($_options['slider'] * 2) / 2, $eqLogic->getLogicalId());
+			$nest_api->setTargetTemperature(round($_options['slider'] * 2) / 2);
 			sleep(5);
 		}
 		if ($this->getLogicalId() == 'fan_mode_on') {
