@@ -102,21 +102,25 @@ class nest_api {
 
 	/* Getters and setters */
 
-	public function getWeather($postal_code) {
-		try {
-			$weather = $this->doGET("https://home.nest.com/api/0.1/weather/forecast/" . $postal_code);
-		} catch (RuntimeException $ex) {
-			// NESTAPI_ERROR_NOT_JSON_RESPONSE is kinda normal. The forecast API will often return a '502 Bad Gateway' response... meh.
-			if ($ex->getCode() != NESTAPI_ERROR_NOT_JSON_RESPONSE) {
-				throw new RuntimeException("Unexpected issue fetching forecast.", $ex->getCode(), $ex);
-			}
-		}
+	public function getWeather($postal_code, $country_code = NULL) {
+        try {
+            $url = "https://home.nest.com/api/0.1/weather/forecast/$postal_code";
+            if (!empty($country_code)) {
+                $url .= ",$country_code";
+            }
+            $weather = $this->doGET($url);
+        } catch (RuntimeException $ex) {
+            // NESTAPI_ERROR_NOT_JSON_RESPONSE is kinda normal. The forecast API will often return a '502 Bad Gateway' response... meh.
+            if ($ex->getCode() != NESTAPI_ERROR_NOT_JSON_RESPONSE) {
+                throw new RuntimeException("Unexpected issue fetching forecast.", $ex->getCode(), $ex);
+            }
+        }
 
-		return (object) array(
-			'outside_temperature' => isset($weather->now) ? $this->temperatureInUserScale((float) $weather->now->current_temperature) : NULL,
-			'outside_humidity' => isset($weather->now) ? $weather->now->current_humidity : NULL,
-		);
-	}
+        return (object) array(
+            'outside_temperature' => isset($weather->now->current_temperature) ? $this->temperatureInUserScale((float) $weather->now->current_temperature) : NULL,
+            'outside_humidity'    => isset($weather->now->current_humidity) ? $weather->now->current_humidity : NULL
+        );
+    }
 
 	public function getUserLocations() {
 		$this->getStatus();
@@ -133,9 +137,9 @@ class nest_api {
 				}
 			}
 
-			$weather_data = $this->getWeather($structure->postal_code);
+			$weather_data = $this->getWeather($structure->postal_code, $structure->country_code);
 			$user_structures[] = (object) array(
-				'name' => isset($structure->name) ? $structure->name : '',
+				'name' => isset($structure->name)?$structure->name:'',
 				'address' => !empty($structure->street_address) ? $structure->street_address : NULL,
 				'city' => $structure->location,
 				'postal_code' => $structure->postal_code,
@@ -143,7 +147,7 @@ class nest_api {
 				'outside_temperature' => $weather_data->outside_temperature,
 				'outside_humidity' => $weather_data->outside_humidity,
 				'away' => $structure->away,
-				'away_last_changed' => date('Y-m-d H:i:s', $structure->away_timestamp),
+				'away_last_changed' => date(DATETIME_FORMAT, $structure->away_timestamp),
 				'thermostats' => array_map(array($class_name, 'cleanDevices'), $structure->devices),
 				'protects' => $protects,
 			);
@@ -157,14 +161,14 @@ class nest_api {
 		$schedule_days = $this->last_status->schedule->{$serial_number}->days;
 
 		$schedule = array();
-		foreach ((array) $schedule_days as $day => $scheduled_events) {
+		foreach ((array)$schedule_days as $day => $scheduled_events) {
 			$events = array();
 			foreach ($scheduled_events as $scheduled_event) {
 				if ($scheduled_event->entry_type == 'setpoint') {
-					$events[(int) $scheduled_event->time] = (object) array(
-						'time' => $scheduled_event->time / 60, // in minutes
-						'target_temperature' => $scheduled_event->type == 'RANGE' ? array($this->temperatureInUserScale((float) $scheduled_event->{'temp-min'}), $this->temperatureInUserScale((float) $scheduled_event->{'temp-max'})) : $this->temperatureInUserScale((float) $scheduled_event->temp),
-						'mode' => $scheduled_event->type == 'HEAT' ? TARGET_TEMP_MODE_HEAT : ($scheduled_event->type == 'COOL' ? TARGET_TEMP_MODE_COOL : TARGET_TEMP_MODE_RANGE),
+					$events[(int)$scheduled_event->time] = (object) array(
+					   'time' => $scheduled_event->time / 60, // in minutes
+					   'target_temperature' => $scheduled_event->type == 'RANGE' ? array($this->temperatureInUserScale((float) $scheduled_event->{'temp-min'}), $this->temperatureInUserScale((float) $scheduled_event->{'temp-max'})) : $this->temperatureInUserScale((float) $scheduled_event->temp),
+					   'mode' => $scheduled_event->type == 'HEAT' ? TARGET_TEMP_MODE_HEAT : ($scheduled_event->type == 'COOL' ? TARGET_TEMP_MODE_COOL : TARGET_TEMP_MODE_RANGE),
 					);
 				}
 			}
@@ -203,7 +207,6 @@ class nest_api {
 	public function getDeviceInfo($serial_number = null) {
 		$this->getStatus();
 		$serial_number = $this->getDefaultSerial($serial_number);
-
 		$topaz = isset($this->last_status->topaz) ? $this->last_status->topaz : array();
 		foreach ($topaz as $protect) {
 			if ($serial_number == $protect->serial_number) {
@@ -268,11 +271,13 @@ class nest_api {
 		$mode = strtolower($this->last_status->device->{$serial_number}->current_schedule_mode);
 		$target_mode = $this->last_status->shared->{$serial_number}->target_temperature_type;
 		$eco_mode = $this->last_status->device->{$serial_number}->eco->mode; // manual-eco, auto-eco, schedule
+		
 		if ($target_mode == TARGET_TEMP_MODE_OFF) {
             $target_temperatures = false; // No target due to it being off
             $mode = TARGET_TEMP_MODE_OFF;
         } elseif ($eco_mode !== "schedule") {
             // We are in eco, thus not actively using the schedule
+			
             if ($this->last_status->device->{$serial_number}->away_temperature_low_enabled && $this->last_status->device->{$serial_number}->away_temperature_high_enabled) {
                 // We have both low and high temp eco temperatures
                 $mode = TARGET_TEMP_MODE_RANGE;
@@ -302,6 +307,7 @@ class nest_api {
             // It is either heat or cool mode
             $target_temperatures = $this->temperatureInUserScale((float) $this->last_status->shared->{$serial_number}->target_temperature);
         }
+		
         $current_modes = array();
         $current_modes[] = $mode;
         if ($eco_mode !== "schedule") {
@@ -310,6 +316,7 @@ class nest_api {
         if ($structure_away) {
             $current_modes[] = 'away';
         }
+		
 		$infos = (object) array(
 			'current_state' => (object) array(
 				'mode' => implode(',', $current_modes),
@@ -354,7 +361,7 @@ class nest_api {
 				'time_to_target' => $this->last_status->device->{$serial_number}->time_to_target,
 			),
 			'serial_number' => $this->last_status->device->{$serial_number}->serial_number,
-			//'scale' => $this->last_status->device->{$serial_number}->temperature_scale,
+			'scale' => $this->last_status->device->{$serial_number}->temperature_scale,
 			'location' => $structure,
 			'network' => $this->getDeviceNetworkInfo($serial_number),
 			'name' => !empty($this->last_status->shared->{$serial_number}->name) ? $this->last_status->shared->{$serial_number}->name : DEVICE_WITH_NO_NAME,
@@ -376,8 +383,8 @@ class nest_api {
 
 		$payload = array(
 			'objects' => array(
-				array('object_key' => "energy_latest.$serial_number"),
-			),
+				array('object_key' => "energy_latest.$serial_number")
+			)
 		);
 
 		$url = '/v5/subscribe';
@@ -385,7 +392,7 @@ class nest_api {
 		return $this->doPOST($url, json_encode($payload));
 	}
 
-	public function setTargetTemperatureMode($mode, $temperature, $serial_number = null) {
+	public function setTargetTemperatureMode($mode, $temperature = NULL, $serial_number = NULL) {
 		$serial_number = $this->getDefaultSerial($serial_number);
 		
         if ($temperature !== NULL) {
@@ -438,30 +445,30 @@ class nest_api {
         return $this->doPOST("/v2/put/device." . $serial_number, $data);
     }
 	
-	public function setEcoTemperatures($temp_low, $temp_high, $serial_number = NULL) {
-        return $this->setAwayTemperatures($temp_low, $temp_high, $serial_number);
+	public function setAwayTemperatures($temp_low, $temp_high, $serial_number = NULL) {
+        return $this->setEcoTemperatures($temp_low, $temp_high, $serial_number);
     }
 	
-	public function setAwayTemperatures($temp_low, $temp_high, $serial_number = null) {
-		$serial_number = $this->getDefaultSerial($serial_number);
-		$temp_low = $this->temperatureInCelsius($temp_low, $serial_number);
-		$temp_high = $this->temperatureInCelsius($temp_high, $serial_number);
-		$data = array();
-		if ($temp_low === FALSE || $temp_low < 4) {
-			$data['away_temperature_low_enabled'] = FALSE;
-		} else if ($temp_low != NULL) {
-			$data['away_temperature_low_enabled'] = TRUE;
-			$data['away_temperature_low'] = $temp_low;
-		}
-		if ($temp_high === FALSE || $temp_high > 32) {
-			$data['away_temperature_high_enabled'] = FALSE;
-		} else if ($temp_high != NULL) {
-			$data['away_temperature_high_enabled'] = TRUE;
-			$data['away_temperature_high'] = $temp_high;
-		}
-		$data = json_encode($data);
-		return $this->doPOST("/v2/put/device." . $serial_number, $data);
-	}
+	public function setEcoTemperatures($temp_low, $temp_high, $serial_number = NULL) {
+        $serial_number = $this->getDefaultSerial($serial_number);
+        $temp_low = $this->temperatureInCelsius($temp_low, $serial_number);
+        $temp_high = $this->temperatureInCelsius($temp_high, $serial_number);
+        $data = array();
+        if ($temp_low === FALSE) {
+            $data['away_temperature_low_enabled'] = FALSE;
+        } elseif ($temp_low != NULL) {
+            $data['away_temperature_low_enabled'] = TRUE;
+            $data['away_temperature_low'] = $temp_low;
+        }
+        if ($temp_high === FALSE) {
+            $data['away_temperature_high_enabled'] = FALSE;
+        } elseif ($temp_high != NULL) {
+            $data['away_temperature_high_enabled'] = TRUE;
+            $data['away_temperature_high'] = $temp_high;
+        }
+        $data = json_encode($data);
+        return $this->doPOST("/v2/put/device." . $serial_number, $data);
+    }
 
 	public function setFanMode($mode, $serial_number = null) {
 		$duty_cycle = null;
@@ -478,7 +485,7 @@ class nest_api {
 			} else {
 				throw new Exception("setFanMode(array \$mode[, ...]) needs at least a mode and a value in the \$mode array.");
 			}
-		} else if (!is_string($mode)) {
+		} elseif (!is_string($mode)) {
 			throw new Exception("setFanMode() can only take a string or an array as it's first parameter.");
 		}
 		return $this->_setFanMode($mode, $duty_cycle, $timer, $serial_number);
@@ -514,11 +521,11 @@ class nest_api {
 		return $this->setTargetTemperatureMode(TARGET_TEMP_MODE_OFF, 0 , $serial_number);
 	}
 
-	public function setAway($away_mode, $serial_number = null) {
+	public function setAway($away_mode, $serial_number = null, $eco_when_away = true) {
 		$serial_number = $this->getDefaultSerial($serial_number);
 		$data = json_encode(array('away' => $away_mode, 'away_timestamp' => time(), 'away_setter' => 0));
 		$structure_id = $this->getDeviceInfo($serial_number)->location;
-		if ($away_mode == AWAY_MODE_ON) {
+		if ($away_mode == AWAY_MODE_ON && $eco_when_away) {
             $this->setEcoMode(ECO_MODE_MANUAL, $serial_number);
         } else {
             $this->setEcoMode(ECO_MODE_SCHEDULE, $serial_number);
@@ -526,11 +533,15 @@ class nest_api {
 		return $this->doPOST("/v2/put/structure." . $structure_id, $data);
 	}
 
-	public function setAutoAwayEnabled($enabled, $serial_number = null) {
-		$serial_number = $this->getDefaultSerial($serial_number);
-		$data = json_encode(array('auto_away_enable' => $enabled));
-		return $this->doPOST("/v2/put/device." . $serial_number, $data);
-	}
+	 public function setAutoAwayEnabled($enabled, $serial_number = NULL) {
+        return $this->useEcoTempWhenAway($enabled, $serial_number);
+    }
+	
+	public function useEcoTempWhenAway($enabled, $serial_number = NULL) {
+        $serial_number = $this->getDefaultSerial($serial_number);
+        $data = json_encode(array('auto_away_enable' => $enabled));
+        return $this->doPOST("/v2/put/device." . $serial_number, $data);
+    }
 
 	public function setDualFuelBreakpoint($breakpoint, $serial_number = null) {
 		$serial_number = $this->getDefaultSerial($serial_number);
@@ -815,12 +826,12 @@ class nest_api {
 			if (empty($response)) {
 				throw new RuntimeException("Error: Received empty response from request to $url.", NESTAPI_ERROR_EMPTY_RESPONSE);
 			}
-			throw new RuntimeException("Error: Response from request to $url is not valid JSON data. Response: " . print_r($response, true), NESTAPI_ERROR_NOT_JSON_RESPONSE);
+			throw new RuntimeException("Error: Response from request to $url is not valid JSON data. Response: " . str_replace(array("\n","\r"), '', $response), NESTAPI_ERROR_NOT_JSON_RESPONSE);
 		}
 
 		if ($info['http_code'] == 400) {
 			if (!is_object($json)) {
-				throw new RuntimeException("Error: HTTP 400 from request to $url. Response: " . print_r($response, true) . '. Info : ' . print_r($info, true), NESTAPI_ERROR_API_OTHER_ERROR);
+				throw new RuntimeException("Error: HTTP 400 from request to $url. Response: " . str_replace(array("\n","\r"), '', $response), NESTAPI_ERROR_API_OTHER_ERROR);
 			}
 			throw new RuntimeException("Error: HTTP 400 from request to $url. JSON error: $json->error - $json->error_description", NESTAPI_ERROR_API_JSON_ERROR);
 		}
