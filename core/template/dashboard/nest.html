@@ -24,7 +24,7 @@
             <script>
 				var d1 = #temperature#;
                 var d2 = #humidity#;
-                document.getElementById("display").innerHTML = d1.toFixed(2) + "°C / " + d2 + "%";
+                document.getElementById("display").innerHTML = d1.toFixed(2) + "°#scale# / " + d2 + "%";
 				
                 $('.eqLogic[data-eqLogic_uid=#uid#] .refresh').on('click', function () {
                     jeedom.cmd.execute({id: '#refresh_id#'});
@@ -104,7 +104,9 @@
                             step: 0.5,
                             bgColor: "#3498db",
 							fgColor: "#ffffff",
-                            noScroll: true,
+							noScroll: true,
+							angleOffset:210,
+							angleArc:300,
                             release: function (v) {
                                 jeedom.cmd.execute({id: '#thermostat_cmd_id#', value: {slider: v}});
                             },
@@ -117,24 +119,23 @@
                                 }, 200);
                             }
                         });
-						if ('#scale#' == 'C') {
+						if ('#scale#' == 'F') {
 						$('.dial').trigger(
                           'configure',
                           {
                             "min":9,
-                            "max":32,
+                            "max":90,
                           }
                          );
 						 } else {
 						 $('.dial').trigger(
                           'configure',
                           {
-                            "min":50,
-                            "max":90,
+                            "min":9,
+                            "max":32,
                            }
                           );
 						 }
-						 
                         if ('#heat#' == '1') {
                         $('.eqLogic[data-eqLogic_uid=#uid#] .iconCmd#thermostat_cmd_id#').css('color', '#FF9900');
                         } else {
