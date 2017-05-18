@@ -1,0 +1,9 @@
+{
+	"id" : "nest",
+	"name" : "Nest",
+	"description" : "Plugin pour exploiter les nest protect et thermostat",
+	"licence" : "AGPL",
+	"author" : "Loïc",
+	"require" : "3.0",
+	"category" : "communication"
+}
