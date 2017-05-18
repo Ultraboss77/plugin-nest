@@ -17,6 +17,7 @@
 
 /* * ***************************Includes********************************* */
 require_once dirname(__FILE__) . '/../../core/php/nest.inc.php';
+include_file('3rdparty', 'nest_api/nest_api', 'php', 'nest');
 
 class nest extends eqLogic {
 	/*     * *************************Attributs****************************** */
