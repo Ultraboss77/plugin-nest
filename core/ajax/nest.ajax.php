@@ -15,8 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
-
-header('Content-Type: application/json');
 try {
 	require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 	include_file('core', 'authentification', 'php');
@@ -28,8 +26,7 @@ try {
 	ajax::init();
 
 	if (init('action') == 'syncWithNest') {
-		nest::syncWithNest();
-		ajax::success();
+		ajax::success(nest::syncWithNest());
 	}
 
 	throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));

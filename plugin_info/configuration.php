@@ -47,9 +47,9 @@ if (!isConnect()) {
 
 <script>
     $('#bt_syncWithNest').on('click', function () {
-        $.ajax({// fonction permettant de faire de l'ajax
-            type: "POST", // methode de transmission des données au fichier php
-            url: "plugins/nest/core/ajax/nest.ajax.php", // url du fichier php
+        $.ajax({
+            type: "POST",
+            url: "plugins/nest/core/ajax/nest.ajax.php",
             data: {
                 action: "syncWithNest",
             },
@@ -57,7 +57,7 @@ if (!isConnect()) {
             error: function (request, status, error) {
                 handleAjaxError(request, status, error);
             },
-            success: function (data) { // si l'appel a bien fonctionné
+            success: function (data) {
                 if (data.state != 'ok') {
                     $('#div_alert').showAlert({message: data.result, level: 'danger'});
                     return;
