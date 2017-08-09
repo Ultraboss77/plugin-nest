@@ -31,7 +31,6 @@ class nest extends eqLogic {
 		foreach (nest::byType('nest') as $eqLogic) {
 			if ($eqLogic->getIsEnable() == 1) {
 				$eqLogic->updateFromNest();
-				$eqLogic->save();
 			}
 		}
 	}
@@ -384,12 +383,14 @@ class nest extends eqLogic {
 		}
 		log::add('nest', 'debug', print_r($device_info, true));
 
+		$status = array();
+
 		if (isset($device_info->network)) {
 			if (isset($device_info->network->local_ip)) {
-				$this->setStatus('local_ip', $device_info->network->local_ip);
+				$status['local_ip'] = $device_info->network->local_ip;
 			}
 			if (isset($device_info->network->mac_address)) {
-				$this->setStatus('local_mac', $device_info->network->mac_address);
+				$status['local_mac'] = $device_info->network->mac_address;
 			}
 		}
 
@@ -405,10 +406,27 @@ class nest extends eqLogic {
 				$battery = 0;
 			}
 			$this->batteryStatus($battery);
-			$this->setStatus('battery_health_state', $device_info->battery_health_state);
-			$this->setStatus('replace_by_date', $device_info->replace_by_date);
-			$this->setStatus('last_update', $device_info->last_update);
-			$this->setStatus('last_manual_test', $device_info->last_manual_test);
+
+			$status['battery_health_state'] = $device_info->battery_health_state;
+			$status['replace_by_date'] = $device_info->replace_by_date;
+			$status['last_update'] = $device_info->last_update;
+			$status['last_manual_test'] = $device_info->last_manual_test;
+			$status['model'] = $device_info->model;
+			$status['software_version'] = $device_info->software_version;
+			$status['wired_or_battery'] = $device_info->wired_or_battery;
+			$status['born_on_date'] = $device_info->born_on_date;
+			$status['name'] = $device_info->name;
+			$status['where'] = $device_info->where;
+			$status['color'] = $device_info->color;
+			$status['night_time_promise'] = $device_info->nest_features->night_time_promise;
+			$status['night_light'] = $device_info->nest_features->night_light;
+			$status['auto_away'] = $device_info->nest_features->auto_away;
+			$status['heads_up'] = $device_info->nest_features->heads_up;
+			$status['steam_detection'] = $device_info->nest_features->steam_detection;
+			$status['home_alarm_link'] = $device_info->nest_features->home_alarm_link;
+
+			$this->setStatus($status);
+
 			$testOk = true;
 			foreach ($device_info->tests_passed as $key => $value) {
 				$this->setCache('test_' . $key, $value);
@@ -424,23 +442,7 @@ class nest extends eqLogic {
 
 		/*         * ********************THERMOSTAT NEST********************** */
 		if ($this->getConfiguration('nest_type') == 'thermostat') {
-			if (isset($device_info->network)) {
-				if (isset($device_info->network->wan_ip)) {
-					$this->setStatus('wan_ip', $device_info->network->wan_ip);
-				}
-				if (isset($device_info->network->online)) {
-					$this->setStatus('online', $device_info->network->online);
-				}
-				if (isset($device_info->network->last_connection)) {
-					$this->setStatus('last_connection', $device_info->network->last_connection);
-				}
-			}
-			if (isset($device_info->current_state->ac)) {
-				$this->setStatus('ac', $device_info->current_state->ac);
-			}
-			if (isset($device_info->current_state->battery_level)) {
-				$this->setStatus('battery_level', $device_info->current_state->battery_level);
-			}
+			$changed = false;
 			foreach ($device_info->current_state as $key => $value) {
 				$cmd = $this->getCmd(null, $key);
 				if ($key == 'auto_away') {
@@ -455,15 +457,36 @@ class nest extends eqLogic {
 				if ($key == 'eco_mode') {
 					$value = ($value == 'manual-eco') ? 1 : 0;
 				}
-				$this->checkAndUpdateCmd($key, $value);
+				$changed = $this->checkAndUpdateCmd($key, $value) || $changed;
 			}
 			if (isset($device_info->target) && isset($device_info->target->temperature)) {
 				$temperatures = $device_info->target->temperature;
 				$temperature = (is_array($temperatures)) ? array_sum($temperatures) / count($temperatures) : $temperatures;
-				$this->checkAndUpdateCmd('order', $temperature);
+				$changed = $this->checkAndUpdateCmd('order', $temperature) || $changed;
+			}
+			if (isset($device_info->network)) {
+				if (isset($device_info->network->wan_ip)) {
+					$status['wan_ip'] = $device_info->network->mawan_ip_address;
+				}
+				if (isset($device_info->network->online)) {
+					$status['online'] = $device_info->network->online;
+				}
+				if (isset($device_info->network->last_connection)) {
+					$status['last_connection'] = $device_info->network->last_connection;
+				}
+			}
+			if (isset($device_info->current_state->ac)) {
+				$status['ac'] = $device_info->current_state->ac;
+			}
+			if (isset($device_info->current_state->battery_level)) {
+				$status['battery_level'] = $device_info->current_state->battery_level;
+			}
+			$this->setStatus($status);
+			if ($changed) {
+				$this->refreshWidget();
 			}
 		}
-		$this->refreshWidget();
+
 	}
 
 	public function toHtml($_version = 'dashboard') {

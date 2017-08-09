@@ -159,6 +159,34 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
                     <span class="eqLogicAttr tooltips label label-default" data-l1key="status" data-l2key="last_manual_test" style="font-size : 1em"></span>
                 </div>
             </div>
+             <div class="form-group">
+                <label class="col-sm-2 control-label">{{Model}}</label>
+                <div class="col-sm-2">
+                    <span class="eqLogicAttr tooltips label label-default" data-l1key="status" data-l2key="model" style="font-size : 1em"></span>
+                </div>
+                <label class="col-sm-2 control-label">{{Logiciel}}</label>
+                <div class="col-sm-1">
+                    <span class="eqLogicAttr tooltips label label-default" data-l1key="status" data-l2key="software_version" style="font-size : 1em"></span>
+                </div>
+                <label class="col-sm-2 control-label">{{Branché ou sur batterie}}</label>
+                <div class="col-sm-2">
+                    <span class="eqLogicAttr tooltips label label-default" data-l1key="status" data-l2key="wired_or_battery" style="font-size : 1em"></span>
+                </div>
+            </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">{{Fabriqué le}}</label>
+                <div class="col-sm-2">
+                    <span class="eqLogicAttr tooltips label label-default" data-l1key="status" data-l2key="born_on_date" style="font-size : 1em"></span>
+                </div>
+                <label class="col-sm-2 control-label">{{Nom}}</label>
+                <div class="col-sm-1">
+                    <span class="eqLogicAttr tooltips label label-default" data-l1key="status" data-l2key="name" style="font-size : 1em"></span>
+                </div>
+                <label class="col-sm-2 control-label">{{Emplacement}}</label>
+                <div class="col-sm-2">
+                    <span class="eqLogicAttr tooltips label label-default" data-l1key="status" data-l2key="where" style="font-size : 1em"></span>
+                </div>
+            </div>
         </div>
         <div class="type_nest type_thermostat">
             <div class="form-group">
