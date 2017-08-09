@@ -2,28 +2,13 @@
 
 Une fois le plugin installé, il vous faut renseigner vos informations de connexion Nest : 
 
-image::../images/nest1.PNG[]
-
 * *Nom d'utilisateur* : votre nom d'utilisateur Nest (souvent c'est votre adresse mail)
 * *Mot de passe* : mot de passe de votre compte Nest
 * *Synchroniser* : permet de synchroniser Jeedom avec votre compte Nest pour découvrir automatiquement vos équipements Nest. A faire après avoir sauvegardé les paramètres précedent.
 
 == Configuration des équipements
 
-La configuration des équipements Nest est accessible à partir du menu plugin : 
-
-image::../images/nest2.PNG[]
-
-Voilà à quoi ressemble la page du plugin Nest (ici avec déjà 1 équipement) : 
-
-image::../images/nest3.PNG[]
-
-[TIP]
-Comme à beaucoup d'endroits sur Jeedom, placer la souris tout à gauche permet de faire apparaître un menu d'accès rapide (vous pouvez à partir de votre profil le laisser toujours visible).
-
-Une fois que vous cliquez sur un équipement vous obtenez (ici un Protect) : 
-
-image::../images/nest4.PNG[]
+La configuration des équipements Nest est accessible à partir du menu plugin puis communication : 
 
 Vous retrouvez ici toute la configuration de votre équipement : 
 
@@ -53,24 +38,3 @@ En dessous vous retrouvez la liste des commandes :
 * configuration avancée (petites roues crantées) : permet d'afficher la configuration avancée de la commande (méthode d'historisation, widget...)
 * Tester : permet de tester la commande
 * supprimer (signe -) : permet de supprimer la commande
-
-
-== Widget
-
-Voici le widget pour le protect : 
-
-image::../images/nest5.PNG[]
-
-Vous retrouvez l'information sur le CO2 et sur la fumée.
-
-Voici le widget pour le thermostat : 
-
-image::../images/nest6.PNG[]
-
-Vous retrouvez sur ce widget : 
-
-* *en haut* : les informations de température et d'humidité
-* *à droite* la valeur actuelle de la consigne du thermostat (il suffit de cliquer sur le cercle pour la changer)
-* *maison* : permet de forcer le Nest en mode présence
-* *oeil* : permet de passer la détection de présence du Nest en mode automatique
-* *personne* : permet de forcer le Nest en mode absence
