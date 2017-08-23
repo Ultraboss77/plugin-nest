@@ -23,7 +23,7 @@ class nest extends eqLogic {
 	/*     * *************************Attributs****************************** */
 
 	private $_collectDate = '';
-	public static $_widgetPossibility = array('custom' => true);
+	public static $_widgetPossibility = array('custom' => true, 'custom::layout' => false);
 
 	/*     * ***********************Methode static*************************** */
 
