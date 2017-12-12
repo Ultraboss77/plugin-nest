@@ -23,13 +23,13 @@ foreach ($eqLogics as $eqLogic) {
    </div>
 
    <div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
-    <legend>{{Mes équipements Nest}}
-    </legend>
+    <legend>{{Mes équipements Nest}}</legend>
     <?php
 if (count($eqLogics) == 0) {
 	echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Vous n'avez encore Nest de configuré, allez sur la page Générale -> Plugins, configurez votre compte Nest et sauvegardez pour voir apparaitre vos Nest}}</span></center>";
 } else {
 	?>
+       <input class="form-control" placeholder="{{Rechercher}}" style="margin-bottom:4px;" id="in_searchEqlogic" />
        <div class="eqLogicThumbnailContainer">
         <?php
 foreach ($eqLogics as $eqLogic) {
@@ -42,7 +42,7 @@ foreach ($eqLogics as $eqLogic) {
 			echo '<img src="' . $plugin->getPathImgIcon() . '" height="105" width="95" />';
 		}
 		echo "</center>";
-		echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
+		echo '<span class="name" style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
 		echo '</div>';
 	}
 	?>
@@ -56,58 +56,58 @@ foreach ($eqLogics as $eqLogic) {
     <a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
     <a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fa fa-cogs"></i> {{Configuration avancée}}</a>
     <ul class="nav nav-tabs" role="tablist">
-     <li role="presentation"><a class="eqLogicAction cursor" aria-controls="home" role="tab" data-action="returnToThumbnailDisplay"><i class="fa fa-arrow-circle-left"></i></a></li>
-     <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Equipement}}</a></li>
-     <li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
- </ul>
+       <li role="presentation"><a class="eqLogicAction cursor" aria-controls="home" role="tab" data-action="returnToThumbnailDisplay"><i class="fa fa-arrow-circle-left"></i></a></li>
+       <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Equipement}}</a></li>
+       <li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
+   </ul>
 
- <div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
-  <div role="tabpanel" class="tab-pane active" id="eqlogictab">
-      <br/>
-      <form class="form-horizontal">
-        <fieldset>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">{{Nom de l'équipement Nest}}</label>
-                <div class="col-sm-6">
-                    <input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
-                    <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement mail}}"/>
+   <div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
+      <div role="tabpanel" class="tab-pane active" id="eqlogictab">
+          <br/>
+          <form class="form-horizontal">
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">{{Nom de l'équipement Nest}}</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
+                        <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement mail}}"/>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label" >{{Objet parent}}</label>
-                <div class="col-sm-6">
-                    <select class="eqLogicAttr form-control" data-l1key="object_id">
-                        <option value="">{{Aucun}}</option>
-                        <?php
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" >{{Objet parent}}</label>
+                    <div class="col-sm-6">
+                        <select class="eqLogicAttr form-control" data-l1key="object_id">
+                            <option value="">{{Aucun}}</option>
+                            <?php
 foreach (object::all() as $object) {
 	echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
 }
 ?>
-                   </select>
+                       </select>
+                   </div>
                </div>
-           </div>
-           <div class="form-group">
-            <label class="col-sm-4 control-label">{{Activer}}</label>
-            <div class="col-sm-8">
-                <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
-                <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
+               <div class="form-group">
+                <label class="col-sm-4 control-label">{{Activer}}</label>
+                <div class="col-sm-8">
+                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
+                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-4 control-label">{{Catégorie}}</label>
-            <div class="col-sm-8">
-                <?php
+            <div class="form-group">
+                <label class="col-sm-4 control-label">{{Catégorie}}</label>
+                <div class="col-sm-8">
+                    <?php
 foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 	echo '<label class="checkbox-inline">';
 	echo '<input type="checkbox" class="eqLogicAttr" data-l1key="category" data-l2key="' . $key . '" />' . $value['name'];
 	echo '</label>';
 }
 ?>
+               </div>
            </div>
-       </div>
-   </fieldset>
-</form>
-<form class="form-horizontal">
+       </fieldset>
+   </form>
+   <form class="form-horizontal">
     <fieldset>
         <legend>{{Informations}}</legend>
         <div class="form-group">
@@ -159,7 +159,7 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
                     <span class="eqLogicAttr tooltips label label-default" data-l1key="status" data-l2key="last_manual_test" style="font-size : 1em"></span>
                 </div>
             </div>
-             <div class="form-group">
+            <div class="form-group">
                 <label class="col-sm-2 control-label">{{Model}}</label>
                 <div class="col-sm-2">
                     <span class="eqLogicAttr tooltips label label-default" data-l1key="status" data-l2key="model" style="font-size : 1em"></span>
@@ -173,7 +173,7 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
                     <span class="eqLogicAttr tooltips label label-default" data-l1key="status" data-l2key="wired_or_battery" style="font-size : 1em"></span>
                 </div>
             </div>
-              <div class="form-group">
+            <div class="form-group">
                 <label class="col-sm-2 control-label">{{Fabriqué le}}</label>
                 <div class="col-sm-2">
                     <span class="eqLogicAttr tooltips label label-default" data-l1key="status" data-l2key="born_on_date" style="font-size : 1em"></span>
@@ -206,7 +206,7 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
                 </div>
                 <label class="col-sm-2 control-label">{{Batterie}}</label>
                 <div class="col-sm-2">
-                <span class="eqLogicAttr tooltips label label-default" data-l1key="status" data-l2key="battery_level" style="font-size : 1em"></span>
+                    <span class="eqLogicAttr tooltips label label-default" data-l1key="status" data-l2key="battery_level" style="font-size : 1em"></span>
                 </div>
             </div>
         </div>
