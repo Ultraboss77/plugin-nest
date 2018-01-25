@@ -1,8 +1,7 @@
 Le plugin Nest permet de piloter le thermostat Nest et de récupérer les
 informations du Nest Protect.
 
-Configuration du plugin 
-=======================
+== Plugin configuration
 
 Une fois le plugin installé, il vous faut renseigner vos informations de
 connexion Nest :
@@ -22,11 +21,11 @@ Configuration des équipements
 La configuration des équipements Nest est accessible à partir du menu
 plugin puis communication :
 
-Vous retrouvez ici toute la configuration de votre équipement :
+You can find here the full configuration of your device :
 
 -   **Nom de l’équipement Nest** : nom de votre équipement Nest
 
--   **Objet parent** : indique l’objet parent auquel appartient
+-   **Parent Object** : means the parent object the equipment depend
     l’équipement
 
 -   **Activer** : permet de rendre votre équipement actif

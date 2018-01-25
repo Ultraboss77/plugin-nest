@@ -22,11 +22,11 @@ Configuration des équipements
 La configuration des équipements Nest est accessible à partir du menu
 plugin puis communication :
 
-Vous retrouvez ici toute la configuration de votre équipement :
+Aquí encontrará toda la configuración de su dispositivo:
 
 -   **Nom de l’équipement Nest** : nom de votre équipement Nest
 
--   **Objet parent** : indique l’objet parent auquel appartient
+-   **Objeto padre** : especifica el objeto padre al que pertenece
     l’équipement
 
 -   **Activer** : permet de rendre votre équipement actif
@@ -57,7 +57,7 @@ Sur la gauche vous retrouvez :
 
 -   **Dernier test** : date de dernier test (Protect seulement)
 
-En dessous vous retrouvez la liste des commandes :
+A continuación encontrará la lista de ordenes :
 
 -   le nom affiché sur le dashboard
 

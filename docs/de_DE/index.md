@@ -22,7 +22,7 @@ Configuration des équipements
 La configuration des équipements Nest est accessible à partir du menu
 plugin puis communication :
 
-Vous retrouvez ici toute la configuration de votre équipement :
+Hier finden sie die ganze Konfiguration Ihrer Geräte:
 
 -   **Nom de l’équipement Nest** : nom de votre équipement Nest
 
@@ -57,7 +57,7 @@ Sur la gauche vous retrouvez :
 
 -   **Dernier test** : date de dernier test (Protect seulement)
 
-En dessous vous retrouvez la liste des commandes :
+Im unteren Bereich finden sie eine Liste der Befehle :
 
 -   le nom affiché sur le dashboard
 
