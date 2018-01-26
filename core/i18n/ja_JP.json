@@ -1,0 +1,46 @@
+{
+    "plugins/nest/plugin_info/configuration.php": {
+        "Nom d'utilisateur": "ユーザー名",
+        "Mot de passe": "パスワード",
+        "Synchroniser</label>\r\n            <div class=\"col-lg-2\">\r\n                <a class=\"btn btn-default\" id=\"bt_syncWithNest\"><i class='fa fa-refresh'></i> {{Synchroniser mes équipements": "</ label>は同期させます\r\n            <DIVクラス= \"COL-LG-2\">\r\n                <a class=\"btn btn-default\" id=\"bt_syncWithNest\"> <クラス= 'FA FA-リフレッシュ' I> </ I> {{私の機器を同期",
+        "Synchronisation réussie": "正常な同期"
+    },
+    "plugins/nest/desktop/php/nest.php": {
+        "Rechercher": "検索する",
+        "Mes équipements Nest": "私の機器の巣",
+        "Général": "コモン",
+        "Nom de l'équipement nest": "デバイス名の巣",
+        "Nom de l'équipement mail": "名前メールアドレス機器",
+        "Objet parent": "親オブジェクト",
+        "Aucun": "何でもありません",
+        "Activer": "アクティブにし",
+        "Visible": "目に見えます",
+        "Catégorie": "カテゴリ",
+        "Informations": "情報",
+        "Type": "タイプ",
+        "ID": "ID",
+        "IP": "IP",
+        "MAC": "MAC",
+        "Batterie": "バッテリー",
+        "Santé": "健康",
+        "Remplacer le": "置き換えます",
+        "Dernière mise à jour": "最終更新",
+        "Dernier test": "最後のテスト",
+        "IP externe": "外部IP",
+        "Dernier connexion": "最後の接続",
+        "Alimenté": "パワード",
+        "Commande": "オーダー",
+        "Nom": "表題",
+        "Options": "オプション",
+        "Supprimer": "取り除きます",
+        "Sauvegarder": "セーブ"
+    },
+    "plugins/nest/desktop/js/nest.js": {
+        "Historiser": "historicize",
+        "Tester": "テスト"
+    },
+    "plugins/nest/plugin_info/info.xml": {
+        "Plugin pour exploiter les nest protect et thermostat": "巣のサーモスタットを利用し、保護するためのプラグイン",
+        "Aucune": "何でもありません"
+    }
+}

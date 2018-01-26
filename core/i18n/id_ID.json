@@ -2,12 +2,12 @@
     "plugins/nest/plugin_info/configuration.php": {
         "Nom d'utilisateur": "Nama pemakai",
         "Mot de passe": "Password",
-        "Synchroniser</label>\r\n            <div class=\"col-lg-2\">\r\n                <a class=\"btn btn-default\" id=\"bt_syncWithNest\"><i class='fa fa-refresh'></i> {{Synchroniser mes équipements": "Synchroniser</label>\r\n            <div class=\"col-lg-2\">\r\n                <a class=\"btn btn-default\" id=\"bt_syncWithNest\"><i class='fa fa-refresh'></i> {{Synchroniser mes équipements",
+        "Synchroniser</label>\r\n            <div class=\"col-lg-2\">\r\n                <a class=\"btn btn-default\" id=\"bt_syncWithNest\"><i class='fa fa-refresh'></i> {{Synchroniser mes équipements": "Sinkronisasi </ label>\r\n            <Class Div = \"col-LG-2\">\r\n                <a class=\"btn btn-default\" id=\"bt_syncWithNest\"> <i class = 'fa fa-penyegaran'> </ i> {{Sinkronisasi peralatan saya",
         "Synchronisation réussie": "Sinkronisasi berhasil"
     },
     "plugins/nest/desktop/php/nest.php": {
         "Rechercher": "Mencari",
-        "Mes équipements Nest": "Mes équipements Nest",
+        "Mes équipements Nest": "Saya peralatan Nest",
         "Général": "Umum",
         "Nom de l'équipement nest": "Nama peralatan Nest",
         "Nom de l'équipement mail": "Nama peralatan mail",
@@ -23,12 +23,12 @@
         "MAC": "MAC",
         "Batterie": "Baterai",
         "Santé": "Bidang Kesehatan",
-        "Remplacer le": "Remplacer le",
+        "Remplacer le": "menggantikan",
         "Dernière mise à jour": "terakhir diperbarui",
-        "Dernier test": "Dernier test",
-        "IP externe": "IP externe",
-        "Dernier connexion": "Dernier connexion",
-        "Alimenté": "Alimenté",
+        "Dernier test": "tes terakhir",
+        "IP externe": "eksternal IP",
+        "Dernier connexion": "koneksi terakhir",
+        "Alimenté": "bertenaga",
         "Commande": "Pesanan",
         "Nom": "Nama",
         "Options": "Pilihan",
@@ -40,7 +40,7 @@
         "Tester": "Coba"
     },
     "plugins/nest/plugin_info/info.xml": {
-        "Plugin pour exploiter les nest protect et thermostat": "Plugin pour exploiter les nest protect et thermostat",
+        "Plugin pour exploiter les nest protect et thermostat": "Plugin untuk mengeksploitasi dan melindungi sarang thermostat",
         "Aucune": "Tak ada"
     }
 }

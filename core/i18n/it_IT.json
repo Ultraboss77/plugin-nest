@@ -2,14 +2,14 @@
     "plugins/nest/plugin_info/configuration.php": {
         "Nom d'utilisateur": "Nome utente",
         "Mot de passe": "Password",
-        "Synchroniser</label>\r\n            <div class=\"col-lg-2\">\r\n                <a class=\"btn btn-default\" id=\"bt_syncWithNest\"><i class='fa fa-refresh'></i> {{Synchroniser mes équipements": "Synchroniser</label>\r\n            <div class=\"col-lg-2\">\r\n                <a class=\"btn btn-default\" id=\"bt_syncWithNest\"><i class='fa fa-refresh'></i> {{Synchroniser mes équipements",
+        "Synchroniser</label>\r\n            <div class=\"col-lg-2\">\r\n                <a class=\"btn btn-default\" id=\"bt_syncWithNest\"><i class='fa fa-refresh'></i> {{Synchroniser mes équipements": "Sincronizza </ label>\r\n            <Div class = \"col-LG-2\">\r\n                <a class=\"btn btn-default\" id=\"bt_syncWithNest\"> <i class = 'fa fa-refresh'> </ i> {{sincronizzare l'attrezzature",
         "Synchronisation réussie": "Sincronizzazione avvenuta con successo"
     },
     "plugins/nest/desktop/php/nest.php": {
         "Rechercher": "Cerca",
-        "Mes équipements Nest": "Mes équipements Nest",
+        "Mes équipements Nest": "La mia attrezzatura Nest",
         "Général": "Generale",
-        "Nom de l'équipement nest": "Nom de l'équipement nest",
+        "Nom de l'équipement nest": "Nome dispositivo nido",
         "Nom de l'équipement mail": "Nome attrezzature email",
         "Objet parent": "Oggetto padre",
         "Aucun": "Nessuno",
@@ -23,12 +23,12 @@
         "MAC": "MAC",
         "Batterie": "Batteria",
         "Santé": "Salute",
-        "Remplacer le": "Remplacer le",
+        "Remplacer le": "sostituire",
         "Dernière mise à jour": "Ultimo aggiornamento",
-        "Dernier test": "Dernier test",
-        "IP externe": "IP externe",
-        "Dernier connexion": "Dernier connexion",
-        "Alimenté": "Alimenté",
+        "Dernier test": "ultimo test",
+        "IP externe": "IP esterno",
+        "Dernier connexion": "ultimo collegamento",
+        "Alimenté": "motorizzato",
         "Commande": "Comando",
         "Nom": "Nome",
         "Options": "Opzioni",
@@ -40,7 +40,7 @@
         "Tester": "Prova"
     },
     "plugins/nest/plugin_info/info.xml": {
-        "Plugin pour exploiter les nest protect et thermostat": "Plugin pour exploiter les nest protect et thermostat",
+        "Plugin pour exploiter les nest protect et thermostat": "Plugin per valorizzare e proteggere termostato nido",
         "Aucune": "Nessuno"
     }
 }
