@@ -15,7 +15,7 @@ connexion Nest :
     Nest pour découvrir automatiquement vos équipements Nest. A faire
     après avoir sauvegardé les paramètres précedent.
 
-Configuration des équipements 
+Equipment configuration
 =============================
 
 La configuration des équipements Nest est accessible à partir du menu
@@ -32,7 +32,7 @@ You can find here the full configuration of your device :
 
 -   **Visible** : le rend visible sur le dashboard
 
--   **Catégorie** : les catégories de l’équipement (il peut appartenir à
+-   **Category**: categories of equipment (it may belong to
     plusieurs catégories)
 
 Sur la gauche vous retrouvez :
