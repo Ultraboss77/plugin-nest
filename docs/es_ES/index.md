@@ -1,7 +1,7 @@
 Le plugin Nest permet de piloter le thermostat Nest et de récupérer les
 informations du Nest Protect.
 
-Configuration du plugin 
+configuración del plugin
 =======================
 
 Une fois le plugin installé, il vous faut renseigner vos informations de
