@@ -27,11 +27,11 @@ Aquí encontrará toda la configuración de su dispositivo:
 -   **Nom de l’équipement Nest** : nom de votre équipement Nest
 
 -   **Objeto padre** : especifica el objeto padre al que pertenece
-    l’équipement
+    equipo
 
--   **Activer** : permet de rendre votre équipement actif
+-   ** ** Activar: para que su equipo activo
 
--   **Visible** : le rend visible sur le dashboard
+-   Visible ** **: hace visible en el tablero de instrumentos
 
 -   ** ** Categoría: categorías de equipos (que pueden pertenecer a
     plusieurs catégories)
@@ -67,7 +67,7 @@ A continuación encontrará la lista de ordenes :
     la configuration avancée de la commande (méthode
     d’historisation, widget…​)
 
--   Tester : permet de tester la commande
+-   Prueba: prueba el comando
 
 -   supprimer (signe -) : permet de supprimer la commande
 
