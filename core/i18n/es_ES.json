@@ -38,10 +38,10 @@
         "Commandes": "Comandos",
         "Nom de l'équipement Nest": "Nombre del dispositivo Nest",
         "Model": "Modelo",
-        "Logiciel": "Logiciel",
-        "Branché (0) ou batterie (1)": "Branché (0) ou batterie (1)",
-        "Fabriqué le": "Fabriqué le",
-        "Emplacement": "Emplacement"
+        "Logiciel": "Software",
+        "Branché (0) ou batterie (1)": "Conectado (0) o batería (1)",
+        "Fabriqué le": "Hecho en",
+        "Emplacement": "Ubicación"
     },
     "plugins/nest/desktop/js/nest.js": {
         "Historiser": "Guardar historial",
