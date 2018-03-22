@@ -2,12 +2,11 @@
     "plugins/nest/plugin_info/configuration.php": {
         "Nom d'utilisateur": "Nama pemakai",
         "Mot de passe": "Password",
-        "Synchroniser</label>\r\n            <div class=\"col-lg-2\">\r\n                <a class=\"btn btn-default\" id=\"bt_syncWithNest\"><i class='fa fa-refresh'></i> {{Synchroniser mes équipements": "Synchroniser</label>\r\n            <div class=\"col-lg-2\">\r\n                <a class=\"btn btn-default\" id=\"bt_syncWithNest\"><i class='fa fa-refresh'></i> {{Synchroniser mes équipements",
         "Synchronisation réussie": "Sinkronisasi berhasil"
     },
     "plugins/nest/desktop/php/nest.php": {
         "Rechercher": "Mencari",
-        "Mes équipements Nest": "Mes équipements Nest",
+        "Mes équipements Nest": "Saya peralatan Nest",
         "Général": "Umum",
         "Nom de l'équipement nest": "Nama peralatan Nest",
         "Nom de l'équipement mail": "Nama peralatan mail",
@@ -23,24 +22,36 @@
         "MAC": "MAC",
         "Batterie": "Baterai",
         "Santé": "Bidang Kesehatan",
-        "Remplacer le": "Remplacer le",
-        "Dernière mise à jour": "Dernière mise à jour",
-        "Dernier test": "Dernier test",
-        "IP externe": "IP externe",
-        "Dernier connexion": "Dernier connexion",
-        "Alimenté": "Alimenté",
+        "Remplacer le": "menggantikan",
+        "Dernière mise à jour": "terakhir diperbarui",
+        "Dernier test": "tes terakhir",
+        "IP externe": "eksternal IP",
+        "Dernier connexion": "koneksi terakhir",
+        "Alimenté": "bertenaga",
         "Commande": "Pesanan",
         "Nom": "Nama",
         "Options": "Pilihan",
         "Supprimer": "Menghapus",
-        "Sauvegarder": "Menyimpan"
+        "Sauvegarder": "Menyimpan",
+        "Configuration avancée": "konfigurasi lanjutan",
+        "Equipement": "Peralatan",
+        "Commandes": "Perintah",
+        "Nom de l'équipement Nest": "Nom de l'équipement Nest",
+        "Model": "Model",
+        "Logiciel": "Logiciel",
+        "Branché (0) ou batterie (1)": "Branché (0) ou batterie (1)",
+        "Fabriqué le": "Fabriqué le",
+        "Emplacement": "Emplacement"
     },
     "plugins/nest/desktop/js/nest.js": {
         "Historiser": "Historicize",
         "Tester": "Coba"
     },
     "plugins/nest/plugin_info/info.xml": {
-        "Plugin pour exploiter les nest protect et thermostat": "Plugin pour exploiter les nest protect et thermostat",
+        "Plugin pour exploiter les nest protect et thermostat": "Plugin untuk mengeksploitasi dan melindungi sarang thermostat",
         "Aucune": "Tak ada"
+    },
+    "plugins/nest/core/class/nest.class.php": {
+        "Erreur sur ": "Error"
     }
 }

@@ -1,0 +1,57 @@
+{
+    "plugins/nest/plugin_info/configuration.php": {
+        "Nom d'utilisateur": "Kullanıcı adı ",
+        "Mot de passe": "Şifre",
+        "Synchronisation réussie": "Sekronizasyon başarılı"
+    },
+    "plugins/nest/desktop/php/nest.php": {
+        "Rechercher": "Arayın",
+        "Mes équipements Nest": "Nest cihazlarım",
+        "Général": "Genel",
+        "Nom de l'équipement nest": "nest cihazının ismi",
+        "Nom de l'équipement mail": "Mail ekipmanın ismi",
+        "Objet parent": "Üst nesne",
+        "Aucun": "Hiçbir",
+        "Activer": "Etkinleştirmek",
+        "Visible": "Görülebilir",
+        "Catégorie": "Kategori",
+        "Informations": "Bilgiler",
+        "Type": "Ceşit",
+        "ID": "ID",
+        "IP": "IP",
+        "MAC": "MAC",
+        "Batterie": "Batarya",
+        "Santé": "Sağlık",
+        "Remplacer le": "Degiştir",
+        "Dernière mise à jour": "Son güncelleme",
+        "Dernier test": "Son test",
+        "IP externe": "Dış IP",
+        "Dernier connexion": "Son bağlantı",
+        "Alimenté": "Enerjili",
+        "Commande": "Komuta",
+        "Nom": "İsim",
+        "Options": "Opsiyonlar",
+        "Supprimer": "Sil",
+        "Sauvegarder": "Kaydet",
+        "Configuration avancée": "Gelişmiş ayarlar",
+        "Equipement": "Cihaz",
+        "Commandes": "Komutalar",
+        "Nom de l'équipement Nest": "Nom de l'équipement Nest",
+        "Model": "Model",
+        "Logiciel": "Logiciel",
+        "Branché (0) ou batterie (1)": "Branché (0) ou batterie (1)",
+        "Fabriqué le": "Fabriqué le",
+        "Emplacement": "Emplacement"
+    },
+    "plugins/nest/desktop/js/nest.js": {
+        "Historiser": "Tarihe göre sırala",
+        "Tester": "Dene"
+    },
+    "plugins/nest/plugin_info/info.xml": {
+        "Plugin pour exploiter les nest protect et thermostat": "Nest protect ve termostatları kullanmak için eklenti",
+        "Aucune": "Hiçbir"
+    },
+    "plugins/nest/core/class/nest.class.php": {
+        "Erreur sur ": "Hata"
+    }
+}

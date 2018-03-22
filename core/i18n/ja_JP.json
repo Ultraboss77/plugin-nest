@@ -1,0 +1,57 @@
+{
+    "plugins/nest/plugin_info/configuration.php": {
+        "Nom d'utilisateur": "ユーザー名",
+        "Mot de passe": "パスワード",
+        "Synchronisation réussie": "正常な同期"
+    },
+    "plugins/nest/desktop/php/nest.php": {
+        "Rechercher": "検索する",
+        "Mes équipements Nest": "私の機器の巣",
+        "Général": "コモン",
+        "Nom de l'équipement nest": "デバイス名の巣",
+        "Nom de l'équipement mail": "名前メールアドレス機器",
+        "Objet parent": "親オブジェクト",
+        "Aucun": "何でもありません",
+        "Activer": "アクティブにし",
+        "Visible": "目に見えます",
+        "Catégorie": "カテゴリ",
+        "Informations": "情報",
+        "Type": "タイプ",
+        "ID": "ID",
+        "IP": "IP",
+        "MAC": "MAC",
+        "Batterie": "バッテリー",
+        "Santé": "健康",
+        "Remplacer le": "置き換えます",
+        "Dernière mise à jour": "最終更新",
+        "Dernier test": "最後のテスト",
+        "IP externe": "外部IP",
+        "Dernier connexion": "最後の接続",
+        "Alimenté": "パワード",
+        "Commande": "オーダー",
+        "Nom": "表題",
+        "Options": "オプション",
+        "Supprimer": "取り除きます",
+        "Sauvegarder": "セーブ",
+        "Configuration avancée": "高度な設定",
+        "Equipement": "設備",
+        "Commandes": "コマンド",
+        "Nom de l'équipement Nest": "Nom de l'équipement Nest",
+        "Model": "モデル",
+        "Logiciel": "Logiciel",
+        "Branché (0) ou batterie (1)": "Branché (0) ou batterie (1)",
+        "Fabriqué le": "Fabriqué le",
+        "Emplacement": "Emplacement"
+    },
+    "plugins/nest/desktop/js/nest.js": {
+        "Historiser": "historicize",
+        "Tester": "テスト"
+    },
+    "plugins/nest/plugin_info/info.xml": {
+        "Plugin pour exploiter les nest protect et thermostat": "巣のサーモスタットを利用し、保護するためのプラグイン",
+        "Aucune": "何でもありません"
+    },
+    "plugins/nest/core/class/nest.class.php": {
+        "Erreur sur ": "エラー"
+    }
+}

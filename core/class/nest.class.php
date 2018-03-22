@@ -418,13 +418,14 @@ class nest extends eqLogic {
 			$status['name'] = $device_info->name;
 			$status['where'] = $device_info->where;
 			$status['color'] = $device_info->color;
-			$status['night_time_promise'] = $device_info->nest_features->night_time_promise;
-			$status['night_light'] = $device_info->nest_features->night_light;
-			$status['auto_away'] = $device_info->nest_features->auto_away;
-			$status['heads_up'] = $device_info->nest_features->heads_up;
-			$status['steam_detection'] = $device_info->nest_features->steam_detection;
-			$status['home_alarm_link'] = $device_info->nest_features->home_alarm_link;
-
+			if (isset($device_info->nest_features) && is_object($device_info->nest_features)) {
+				$status['night_time_promise'] = $device_info->nest_features->night_time_promise;
+				$status['night_light'] = $device_info->nest_features->night_light;
+				$status['auto_away'] = $device_info->nest_features->auto_away;
+				$status['heads_up'] = $device_info->nest_features->heads_up;
+				$status['steam_detection'] = $device_info->nest_features->steam_detection;
+				$status['home_alarm_link'] = $device_info->nest_features->home_alarm_link;
+			}
 			$this->setStatus($status);
 
 			$testOk = true;
@@ -542,7 +543,7 @@ class nest extends eqLogic {
 		}
 	}
 
-/*     * **********************Getteur Setteur*************************** */
+	/*     * **********************Getteur Setteur*************************** */
 
 	public function getCollectDate() {
 		return $this->_collectDate;

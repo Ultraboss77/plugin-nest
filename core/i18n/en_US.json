@@ -2,7 +2,6 @@
     "plugins/nest/plugin_info/configuration.php": {
         "Nom d'utilisateur": "Username",
         "Mot de passe": "Password",
-        "Synchroniser</label>\r\n            <div class=\"col-lg-2\">\r\n                <a class=\"btn btn-default\" id=\"bt_syncWithNest\"><i class='fa fa-refresh'></i> {{Synchroniser mes équipements": "Synchronize</label>\n            <div class=\"col-lg-2\">\n                <a class=\"btn btn-default\" id=\"bt_syncWithNest\"><i class='fa fa-refresh'></i> {{Synchronize my devices",
         "Synchronisation réussie": "Synchronization successful"
     },
     "plugins/nest/desktop/php/nest.php": {
@@ -33,7 +32,16 @@
         "Nom": "Name",
         "Options": "Options",
         "Supprimer": "Delete",
-        "Sauvegarder": "Save"
+        "Sauvegarder": "Save",
+        "Configuration avancée": "Advanced configuration",
+        "Equipement": "Device",
+        "Commandes": "Commands",
+        "Nom de l'équipement Nest": "Nest device name",
+        "Model": "Model",
+        "Logiciel": "Software",
+        "Branché (0) ou batterie (1)": "Plugged (0) or battery (1)",
+        "Fabriqué le": "Made on",
+        "Emplacement": "Location"
     },
     "plugins/nest/desktop/js/nest.js": {
         "Historiser": "Historize",
@@ -42,5 +50,8 @@
     "plugins/nest/plugin_info/info.xml": {
         "Plugin pour exploiter les nest protect et thermostat": "Plugin to use Nest Protect and Thermostat",
         "Aucune": "None"
+    },
+    "plugins/nest/core/class/nest.class.php": {
+        "Erreur sur ": "Error on"
     }
 }
