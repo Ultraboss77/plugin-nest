@@ -1,7 +1,7 @@
 {
 	"id" : "nest",
 	"name" : "Nest",
-	"description" : "Ce plugin vous permettra de retrouver votre Thermostat Nest ou votre Nest Protect dans votre Jeedom.",
+	"description" : "Ce plugin vous permettra de retrouver votre Thermostat Nest ou votre Nest Protect (attention pas de remonté en temps réel des alertes) dans votre Jeedom.",
 	"licence" : "AGPL",
 	"author" : "Loïc",
 	"require" : "3.0",
