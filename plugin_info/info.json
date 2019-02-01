@@ -1,7 +1,7 @@
 {
 	"id" : "nest",
 	"name" : "Nest",
-	"description" : "Ce plugin vous permettra de retrouver votre Thermostat Nest ou votre Nest Protect (attention pas de remonté en temps réel des alertes) dans votre Jeedom.",
+	"description" : "Ce plugin vous permettra de retrouver votre Thermostat Nest ou votre Nest Protect (attention pas de remonté en temps réel des alertes) dans votre Jeedom.<br/>IMPORTANT : Il n'y a pas d'API pour le Nest E en europe. Ce plugin ne permet donc pas de piloter un thermostat Nest E en europe.",
 	"licence" : "AGPL",
 	"author" : "Loïc",
 	"require" : "3.0",
