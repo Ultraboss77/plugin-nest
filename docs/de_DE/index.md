@@ -12,7 +12,7 @@ connexion Nest :
 
 -   **Mot de passe** : mot de passe de votre compte Nest
 
--   **Synchroniser** : permet de synchroniser Jeedom avec votre compte
+-   **Synchronisieren** : ermöglicht das Synchronisieren von Jeedom mit Ihrem 
     Nest pour découvrir automatiquement vos équipements Nest. A faire
     après avoir sauvegardé les paramètres précedent.
 
@@ -57,15 +57,15 @@ Sur la gauche vous retrouvez :
 
 -   **Dernier test** : date de dernier test (Protect seulement)
 
-En dessous vous retrouvez la liste des commandes :
+Im unteren Bereich finden sie eine Liste der Befehle :
 
--   le nom affiché sur le dashboard
+-   Der Name, der auf dem Armaturenbrett angezeigt wird
 
--   historiser : permet d’historiser la donnée
+-   Chronik : erlaubt das Archivieren der Daten
 
--   configuration avancée (petites roues crantées) : permet d’afficher
-    la configuration avancée de la commande (méthode
-    d’historisation, widget…​)
+-   Erweiterte Konfiguration (kleine Zahnräder) : Erlaubt die erweiterte
+    Konfiguration des Befehls anzuzeigen (Methode der
+    Archivierung, Widget ...)
 
 -   Test: prüft den Befehl
 

@@ -431,7 +431,7 @@ class nest extends eqLogic {
 			$testOk = true;
 			foreach ($device_info->tests_passed as $key => $value) {
 				$this->setCache('test_' . $key, $value);
-				if ($value != 1) {
+				if ($value != 1 && !in_array($key,array('heat','us))) {
 					$testOk = false;
 					log::add('nest', 'error', __('Echec du test : ', __FILE__) . $key . __(' sur ', __FILE__) . $this->getHumanName(), 'nestTest' . $key);
 				}
