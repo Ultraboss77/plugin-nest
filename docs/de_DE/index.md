@@ -1,6 +1,14 @@
 Le plugin Nest permet de piloter le thermostat Nest et de récupérer les
 informations du Nest Protect.
 
+> **IMPORTANT**
+>
+>Il n'y a pas d'API pour le Nest E en europe. Ce plugin ne permet donc pas de piloter un thermostat Nest E en europe.
+
+> **IMPORTANT**
+>
+> Il n'y a pas de remonté en temps réel (juste une synchronisation toute les 15min), ce plugin ne peut donc etre utilisé pour avoir une alerte en temps réel en cas d'incendie (nest protect)
+
 Plugin-Konfiguration
 =======================
 
@@ -22,16 +30,16 @@ Gerätekonfiguration
 La configuration des équipements Nest est accessible à partir du menu
 plugin puis communication :
 
-Sie werden hier alle die Konfiguration Ihrer Geräte finden:
+Sie finden hier die ganze Konfiguration von ihrem Gerät :
 
 -   **Nom de l’équipement Nest** : nom de votre équipement Nest
 
--   **Übergeordnete Objekt** zeigt das übergeordnete Objekt gehört
-    Ausrüstung
+-   **Eltern Objekt** : gibt das übergeordnete Objekt an, zu dem das
+    Gerät gehört
 
--   **Aktivieren**: auf Ihre aktiven Geräte machen
+-   **Aktivieren** : ermöglicht es Ihnen, Ihre Gereäte zu aktivieren
 
--   Visible ** **: macht es sichtbar auf dem Armaturenbrett
+-   **Sichtbar** : macht es auf dem Armaturenbrett sichtbar
 
 -   ** ** Kategorie: Gerätekategorien (es kann gehören
     plusieurs catégories)
