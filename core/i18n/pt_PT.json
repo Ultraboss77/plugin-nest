@@ -1,14 +1,26 @@
 {
-    "plugins/nest/plugin_info/configuration.php": {
+    "plugin_info\/configuration.php": {
         "Nom d'utilisateur": "Nome de Usuário",
         "Mot de passe": "senha",
+        "Synchroniser": "Synchroniser",
+        "Synchroniser mes équipements": "Synchroniser mes équipements",
         "Synchronisation réussie": "sincronização bem-sucedida"
     },
-    "plugins/nest/desktop/php/nest.php": {
-        "Rechercher": "Pesquisar",
+    "desktop\/js\/nest.js": {
+        "Historiser": "historicizar",
+        "Tester": "teste"
+    },
+    "desktop\/php\/nest.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
         "Mes équipements Nest": "Meu equipamento Nest",
-        "Général": "Geral",
-        "Nom de l'équipement nest": "Nome do dispositivo ninho",
+        "Vous n'avez encore Nest de configuré, allez sur la page Générale -> Plugins, configurez votre compte Nest et sauvegardez pour voir apparaitre vos Nest": "Vous n'avez encore Nest de configuré, allez sur la page Générale -> Plugins, configurez votre compte Nest et sauvegardez pour voir apparaitre vos Nest",
+        "Rechercher": "Pesquisar",
+        "Configuration avancée": "configuração avançada",
+        "Sauvegarder": "Salvar",
+        "Supprimer": "remover",
+        "Equipement": "equipamento",
+        "Commandes": "comandos",
+        "Nom de l'équipement Nest": "Nom de l'équipement Nest",
         "Nom de l'équipement mail": "Nome equipamentos Email",
         "Objet parent": "objeto pai",
         "Aucun": "Nemhum",
@@ -25,33 +37,22 @@
         "Remplacer le": "substituir",
         "Dernière mise à jour": "Última atualização",
         "Dernier test": "último teste",
-        "IP externe": "IP externo",
-        "Dernier connexion": "última conexão",
-        "Alimenté": "potência",
-        "Commande": "ordem",
-        "Nom": "Nome",
-        "Options": "opções",
-        "Supprimer": "remover",
-        "Sauvegarder": "Salvar",
-        "Configuration avancée": "configuração avançada",
-        "Equipement": "equipamento",
-        "Commandes": "comandos",
-        "Nom de l'équipement Nest": "Nom de l'équipement Nest",
         "Model": "modelo",
         "Logiciel": "Logiciel",
         "Branché (0) ou batterie (1)": "Branché (0) ou batterie (1)",
         "Fabriqué le": "Fabriqué le",
-        "Emplacement": "Emplacement"
+        "Nom": "Nome",
+        "Emplacement": "Emplacement",
+        "IP externe": "IP externo",
+        "Dernier connexion": "última conexão",
+        "Alimenté": "potência",
+        "Options": "opções"
     },
-    "plugins/nest/desktop/js/nest.js": {
-        "Historiser": "historicizar",
-        "Tester": "teste"
+    "core\/ajax\/nest.ajax.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Aucune methode correspondante à : ": "Aucune methode correspondante à : "
     },
-    "plugins/nest/plugin_info/info.xml": {
-        "Plugin pour exploiter les nest protect et thermostat": "Plugin para explorar e proteger ninho termostato",
-        "Aucune": "Nenhum"
-    },
-    "plugins/nest/core/class/nest.class.php": {
+    "core\/class\/nest.class.php": {
         "Erreur sur ": "erro"
     }
 }

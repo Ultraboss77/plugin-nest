@@ -1,14 +1,26 @@
 {
-    "plugins\/nest\/plugin_info\/configuration.php": {
+    "plugin_info\/configuration.php": {
         "Nom d'utilisateur": "Nom d'utilisateur",
         "Mot de passe": "Mot de passe",
+        "Synchroniser": "Synchroniser",
+        "Synchroniser mes équipements": "Synchroniser mes équipements",
         "Synchronisation réussie": "Synchronisation réussie"
     },
-    "plugins\/nest\/desktop\/php\/nest.php": {
-        "Rechercher": "Rechercher",
+    "desktop\/js\/nest.js": {
+        "Historiser": "Historiser",
+        "Tester": "Tester"
+    },
+    "desktop\/php\/nest.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
         "Mes équipements Nest": "Mes équipements Nest",
-        "Général": "Général",
-        "Nom de l'équipement nest": "Nom de l'équipement nest",
+        "Vous n'avez encore Nest de configuré, allez sur la page Générale -> Plugins, configurez votre compte Nest et sauvegardez pour voir apparaitre vos Nest": "Vous n'avez encore Nest de configuré, allez sur la page Générale -> Plugins, configurez votre compte Nest et sauvegardez pour voir apparaitre vos Nest",
+        "Rechercher": "Rechercher",
+        "Configuration avancée": "Configuration avancée",
+        "Sauvegarder": "Sauvegarder",
+        "Supprimer": "Supprimer",
+        "Equipement": "Equipement",
+        "Commandes": "Commandes",
+        "Nom de l'équipement Nest": "Nom de l'équipement Nest",
         "Nom de l'équipement mail": "Nom de l'équipement mail",
         "Objet parent": "Objet parent",
         "Aucun": "Aucun",
@@ -25,33 +37,49 @@
         "Remplacer le": "Remplacer le",
         "Dernière mise à jour": "Dernière mise à jour",
         "Dernier test": "Dernier test",
-        "IP externe": "IP externe",
-        "Dernier connexion": "Dernier connexion",
-        "Alimenté": "Alimenté",
-        "Commande": "Commande",
-        "Nom": "Nom",
-        "Options": "Options",
-        "Supprimer": "Supprimer",
-        "Sauvegarder": "Sauvegarder",
-        "Configuration avancée": "Configuration avancée",
-        "Equipement": "Equipement",
-        "Commandes": "Commandes",
-        "Nom de l'équipement Nest": "Nom de l'équipement Nest",
         "Model": "Model",
         "Logiciel": "Logiciel",
         "Branché (0) ou batterie (1)": "Branché (0) ou batterie (1)",
         "Fabriqué le": "Fabriqué le",
-        "Emplacement": "Emplacement"
+        "Nom": "Nom",
+        "Emplacement": "Emplacement",
+        "IP externe": "IP externe",
+        "Dernier connexion": "Dernier connexion",
+        "Alimenté": "Alimenté",
+        "Options": "Options"
     },
-    "plugins\/nest\/desktop\/js\/nest.js": {
-        "Historiser": "Historiser",
-        "Tester": "Tester"
+    "core\/ajax\/nest.ajax.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Aucune methode correspondante à : ": "Aucune methode correspondante à : "
     },
-    "plugins\/nest\/plugin_info\/info.xml": {
-        "Plugin pour exploiter les nest protect et thermostat": "Plugin pour exploiter les nest protect et thermostat",
-        "Aucune": "Aucune"
-    },
-    "plugins\/nest\/core\/class\/nest.class.php": {
-        "Erreur sur ": "Erreur sur "
+    "core\/class\/nest.class.php": {
+        "Aucun nom d\\'utilisateur ou mot de passe défini": "Aucun nom d\\'utilisateur ou mot de passe défini",
+        "Rafraîhir": "Rafraîhir",
+        "Température": "Température",
+        "Humidité": "Humidité",
+        "Chauffage": "Chauffage",
+        "Etat de la détection de mouvement du Nest": "Etat de la détection de mouvement du Nest",
+        "Fonction Chez moi\/ Absent": "Fonction Chez moi\/ Absent",
+        "Consigne": "Consigne",
+        "Thermostat": "Thermostat",
+        "Fonction Absent": "Fonction Absent",
+        "Fonction Chez moi": "Fonction Chez moi",
+        "Températures éco désactivées": "Températures éco désactivées",
+        "Températures éco activées": "Températures éco activées",
+        "Mode eco": "Mode eco",
+        "Températures éco": "Températures éco",
+        "mode": "mode",
+        "Mode éco activées": "Mode éco activées",
+        "Mode éco désactivées": "Mode éco désactivées",
+        "Eteint": "Eteint",
+        "Allumer": "Allumer",
+        "En ligne": "En ligne",
+        "Scale": "Scale",
+        "CO": "CO",
+        "Fumée": "Fumée",
+        "Erreur sur ": "Erreur sur ",
+        "Echec du test : ": "Echec du test : ",
+        " sur ": " sur ",
+        "Etat": "Etat"
     }
 }
