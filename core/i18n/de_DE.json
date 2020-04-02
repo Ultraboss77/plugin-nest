@@ -1,14 +1,26 @@
 {
-    "plugins/nest/plugin_info/configuration.php": {
+    "plugin_info\/configuration.php": {
         "Nom d'utilisateur": "Benutzername",
         "Mot de passe": "Passwort",
+        "Synchroniser": "synchronize",
+        "Synchroniser mes équipements": "Synchronisiere meine Ausrüstung",
         "Synchronisation réussie": "erfolgreiche Synchronisation"
     },
-    "plugins/nest/desktop/php/nest.php": {
-        "Rechercher": "Suchen nach",
+    "desktop\/js\/nest.js": {
+        "Historiser": "Chronik",
+        "Tester": "Test"
+    },
+    "desktop\/php\/nest.php": {
+        "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
         "Mes équipements Nest": "Meine Nest Geräte",
-        "Général": "Allgemein",
-        "Nom de l'équipement nest": "Nest Gerätename",
+        "Vous n'avez encore Nest de configuré, allez sur la page Générale -> Plugins, configurez votre compte Nest et sauvegardez pour voir apparaitre vos Nest": "Sie haben noch kein Nest konfiguriert. Gehen Sie zur Seite Allgemein -&gt; Plugins, konfigurieren Sie Ihr Nest-Konto und speichern Sie es, damit Ihr Nest angezeigt wird",
+        "Rechercher": "Suchen nach",
+        "Configuration avancée": "Erweiterte Konfiguration",
+        "Sauvegarder": "Speichern",
+        "Supprimer": "Löschen",
+        "Equipement": "Gerät",
+        "Commandes": "Befehle",
+        "Nom de l'équipement Nest": "Nest Gerätename",
         "Nom de l'équipement mail": "E-Mail Name",
         "Objet parent": "Eltern-Objekt",
         "Aucun": "Ohne",
@@ -17,7 +29,7 @@
         "Catégorie": "Kategorie",
         "Informations": "Information",
         "Type": "Typ",
-        "ID": "ID",
+        "ID": "Identifikation",
         "IP": "IP",
         "MAC": "MAC",
         "Batterie": "Batterie",
@@ -25,33 +37,22 @@
         "Remplacer le": "ersetzen",
         "Dernière mise à jour": "Letzte Änderung",
         "Dernier test": "letzter Test",
+        "Model": "Modell",
+        "Logiciel": "Software",
+        "Branché (0) ou batterie (1)": "Angeschlossen (0) oder Batterie (1)",
+        "Fabriqué le": "Gemacht am",
+        "Nom": "Name",
+        "Emplacement": "Lage",
         "IP externe": "Externe IP",
         "Dernier connexion": "Letzer Login",
         "Alimenté": "Aktiv",
-        "Commande": "Befehl",
-        "Nom": "Name",
-        "Options": "Optionen",
-        "Supprimer": "Löschen",
-        "Sauvegarder": "Speichern",
-        "Configuration avancée": "Erweiterte Konfiguration",
-        "Equipement": "Gerät",
-        "Commandes": "Befehle",
-        "Nom de l'équipement Nest": "Nest Gerätename",
-        "Model": "Model",
-        "Logiciel": "Software",
-        "Branché (0) ou batterie (1)": "Angeschlossen (0) oder Batterie (1)",
-        "Fabriqué le": "Fabriqué le",
-        "Emplacement": "Lage"
+        "Options": "Optionen"
     },
-    "plugins/nest/desktop/js/nest.js": {
-        "Historiser": "Chronik",
-        "Tester": "Test"
+    "core\/ajax\/nest.ajax.php": {
+        "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
+        "Aucune methode correspondante à : ": "Keine Methode entsprechend:"
     },
-    "plugins/nest/plugin_info/info.xml": {
-        "Plugin pour exploiter les nest protect et thermostat": "Plugin um Nest Thermostat zu nutzen und zu schützen ",
-        "Aucune": "Ohne"
-    },
-    "plugins/nest/core/class/nest.class.php": {
+    "core\/class\/nest.class.php": {
         "Erreur sur ": "Fehler auf "
     }
 }
