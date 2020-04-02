@@ -37,11 +37,9 @@ class nest extends eqLogic {
 
 	public static function getNestApi() {
                 if (config::byKey('username', 'nest') == '' || config::byKey('password', 'nest') == '') {
-                        throw new Exception(__('Aucun nom d\'utilisateur ou mot de passe défini', __FILE__));
+                        throw new Exception(__('Aucun issueToken ou Cookies défini', __FILE__));
                 }
-                $issue_token = 'YOUR_ISSUE_TOKEN';
-                $cookies = 'YOUR_COOKIES';
-                return new nest_api(NULL, NULL, $issue_token, $cookies);
+                return new nest_api(NULL, NULL, config::byKey('username', 'nest'), config::byKey('password', 'nest'));
 	}
 
 	public static function syncWithNest() {
