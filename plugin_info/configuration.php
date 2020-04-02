@@ -31,7 +31,7 @@ if (!isConnect()) {
             </div>
         </div>
         <div class="form-group">
-            <label class="col-lg-4 control-label">{{Cookie}}</label>
+            <label class="col-lg-4 control-label">{{Cookies}}</label>
             <div class="col-lg-4">
                 <input type="password" class="configKey form-control" data-l1key="password" />
             </div>
