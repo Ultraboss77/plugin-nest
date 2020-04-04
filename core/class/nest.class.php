@@ -456,7 +456,7 @@ class nest extends eqLogic {
 					$value = ($value == 1) ? 1 : 0;
 				}
 				if ($key == 'eco_mode') {
-					$value = ($value == 'manual-eco') ? 1 : 0;
+					$value = (($value == "manual-eco") || ($value == "auto-eco")) ? 1 : 0;
 				}
 				$changed = $this->checkAndUpdateCmd($key, $value) || $changed;
 			}
