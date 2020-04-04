@@ -460,7 +460,7 @@ class nest_api
             ),
             'target' => (object) array(
                 'mode' => $target_mode,
-                'temperature' => $target_temperatures,
+                'temperature' => round(((round(($target_temperatures * 1.8) + 32) - 32) / 1.8) * 2) / 2,
                 'time_to_target' => $this->last_status->device->{$serial_number}->time_to_target
             ),
             'sensors' => $sensors,
