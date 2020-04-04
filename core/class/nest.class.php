@@ -624,47 +624,47 @@ class nestCmd extends cmd {
 		$nest_api = nest::getNestApi();
 		if ($this->getLogicalId() == 'thermostat') {
 			$nest_api->setTargetTemperature(round($_options['slider'] * 2) / 2);
-			sleep(5);
+			sleep(1);
 		}
 		if ($this->getLogicalId() == 'fan_mode_on') {
 			$nest_api->setFanMode(FAN_MODE_ON, $eqLogic->getLogicalId());
-			sleep(5);
+			sleep(1);
 		}
 		if ($this->getLogicalId() == 'fan_mode_off') {
 			$nest_api->setFanMode(FAN_MODE_OFF, $eqLogic->getLogicalId());
-			sleep(5);
+			sleep(1);
 		}
 		if ($this->getLogicalId() == 'off') {
 			$nest_api->turnOff($eqLogic->getLogicalId());
-			sleep(5);
+			sleep(1);
 		}
 		if ($this->getLogicalId() == 'away_on') {
 			$nest_api->setAway(TRUE, $eqLogic->getLogicalId());
-			sleep(5);
+			sleep(1);
 		}
 		if ($this->getLogicalId() == 'away_off') {
 			$nest_api->setAway(FALSE, $eqLogic->getLogicalId());
-			sleep(5);
+			sleep(1);
 		}
 		if ($this->getLogicalId() == 'auto_away_on') {
 			$nest_api->setAutoAwayEnabled(TRUE, $eqLogic->getLogicalId());
-			sleep(5);
+			sleep(1);
 		}
 		if ($this->getLogicalId() == 'auto_away_off') {
 			$nest_api->setAutoAwayEnabled(FALSE, $eqLogic->getLogicalId());
-			sleep(5);
+			sleep(1);
 		}
 		if ($this->getLogicalId() == 'away_mode_on') {
 			$nest_api->setEcoMode(ECO_MODE_MANUAL, $eqLogic->getLogicalId());
-			sleep(5);
+			sleep(1);
 		}
 		if ($this->getLogicalId() == 'away_mode_off') {
 			$nest_api->setEcoMode(ECO_MODE_SCHEDULE, $eqLogic->getLogicalId());
-			sleep(5);
+			sleep(1);
 		}
 		if ($this->getLogicalId() == 'cool') {
 			$nest_api->setTargetTemperatureMode(TARGET_TEMP_MODE_HEAT, NULL, $eqLogic->getLogicalId());
-			sleep(5);
+			sleep(1);
 		}
 		$eqLogic->updateFromNest();
 		$eqLogic->save();
