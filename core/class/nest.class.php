@@ -127,7 +127,7 @@ class nest extends eqLogic {
 				$manual_away = new nestCmd();
 				$manual_away->setLogicalId('manual_away');
 				$manual_away->setIsVisible(0);
-				$manual_away->setName(__('Fonction Chez moi/ Absent', __FILE__));
+				$manual_away->setName(__('Absence', __FILE__));
 			}
 			$manual_away->setType('info');
 			$manual_away->setSubType('binary');
@@ -191,7 +191,7 @@ class nest extends eqLogic {
 				$auto_away_off = new nestCmd();
 				$auto_away_off->setLogicalId('auto_away_off');
 				$auto_away_off->setIsVisible(1);
-				$auto_away_off->setName(__('Températures éco désactivées', __FILE__));
+				$auto_away_off->setName(__('Températures éco auto désactivées', __FILE__));
 			}
 			$auto_away_off->setType('action');
 			$auto_away_off->setSubType('other');
@@ -203,7 +203,7 @@ class nest extends eqLogic {
 				$auto_away_on = new nestCmd();
 				$auto_away_on->setLogicalId('auto_away_on');
 				$auto_away_on->setIsVisible(1);
-				$auto_away_on->setName(__('Températures éco activées', __FILE__));
+				$auto_away_on->setName(__('Températures éco auto activées', __FILE__));
 			}
 			$auto_away_on->setType('action');
 			$auto_away_on->setSubType('other');
@@ -215,7 +215,7 @@ class nest extends eqLogic {
 				$eco_mode = new nestCmd();
 				$eco_mode->setLogicalId('eco_mode');
 				$eco_mode->setIsVisible(1);
-				$eco_mode->setName(__('Mode eco', __FILE__));
+				$eco_mode->setName(__('Mode éco', __FILE__));
 			}
 			$eco_mode->setType('info');
 			$eco_mode->setSubType('other');
@@ -239,7 +239,7 @@ class nest extends eqLogic {
 				$mode = new nestCmd();
 				$mode->setLogicalId('mode');
 				$mode->setIsVisible(1);
-				$mode->setName(__('mode', __FILE__));
+				$mode->setName(__('Mode', __FILE__));
 			}
 			$mode->setType('info');
 			$mode->setSubType('other');
@@ -251,7 +251,7 @@ class nest extends eqLogic {
 				$away_mode_on = new nestCmd();
 				$away_mode_on->setLogicalId('away_mode_on');
 				$away_mode_on->setIsVisible(1);
-				$away_mode_on->setName(__('Mode éco activées', __FILE__));
+				$away_mode_on->setName(__('Mode éco activé', __FILE__));
 			}
 			$away_mode_on->setType('action');
 			$away_mode_on->setSubType('other');
@@ -263,7 +263,7 @@ class nest extends eqLogic {
 				$away_mode_off = new nestCmd();
 				$away_mode_off->setLogicalId('away_mode_off');
 				$away_mode_off->setIsVisible(1);
-				$away_mode_off->setName(__('Mode éco désactivées', __FILE__));
+				$away_mode_off->setName(__('Mode éco désactivé', __FILE__));
 			}
 			$away_mode_off->setType('action');
 			$away_mode_off->setSubType('other');
