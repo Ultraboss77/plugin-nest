@@ -655,11 +655,11 @@ class nestCmd extends cmd {
 			sleep(5);
 		}
 		if ($this->getLogicalId() == 'away_mode_on') {
-			$nest_api->setAway(TRUE, $eqLogic->getLogicalId());
+			$nest_api->setEcoMode(ECO_MODE_MANUAL, $eqLogic->getLogicalId());
 			sleep(5);
 		}
 		if ($this->getLogicalId() == 'away_mode_off') {
-			$nest_api->setAway(FALSE, $eqLogic->getLogicalId());
+			$nest_api->setEcoMode(ECO_MODE_SCHEDULE, $eqLogic->getLogicalId());
 			sleep(5);
 		}
 		if ($this->getLogicalId() == 'cool') {
