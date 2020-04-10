@@ -460,7 +460,7 @@ class nest_api
             ),
             'target' => (object) array(
                 'mode' => $target_mode,
-                'temperature' => $target_temperatures,
+                'temperature' => round(((round(($target_temperatures * 1.8) + 32) - 32) / 1.8) * 2) / 2,
                 'time_to_target' => $this->last_status->device->{$serial_number}->time_to_target
             ),
             'sensors' => $sensors,
@@ -780,11 +780,6 @@ class nest_api
         $serial_number = $this->getDefaultSerial($serial_number);
         $data = json_encode(array('away' => $away_mode, 'away_timestamp' => time(), 'away_setter' => 0));
         $structure_id = $this->getDeviceInfo($serial_number)->location;
-        if ($away_mode == AWAY_MODE_ON && $eco_when_away) {
-            $this->setEcoMode(ECO_MODE_MANUAL, $serial_number);
-        } else {
-            $this->setEcoMode(ECO_MODE_SCHEDULE, $serial_number);
-        }
         return $this->doPOST("/v2/put/structure." . $structure_id, $data);
     }
 

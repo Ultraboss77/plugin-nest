@@ -127,7 +127,7 @@ class nest extends eqLogic {
 				$manual_away = new nestCmd();
 				$manual_away->setLogicalId('manual_away');
 				$manual_away->setIsVisible(0);
-				$manual_away->setName(__('Fonction Chez moi/ Absent', __FILE__));
+				$manual_away->setName(__('Absence', __FILE__));
 			}
 			$manual_away->setType('info');
 			$manual_away->setSubType('binary');
@@ -191,7 +191,7 @@ class nest extends eqLogic {
 				$auto_away_off = new nestCmd();
 				$auto_away_off->setLogicalId('auto_away_off');
 				$auto_away_off->setIsVisible(1);
-				$auto_away_off->setName(__('Températures éco désactivées', __FILE__));
+				$auto_away_off->setName(__('Températures éco auto désactivées', __FILE__));
 			}
 			$auto_away_off->setType('action');
 			$auto_away_off->setSubType('other');
@@ -203,7 +203,7 @@ class nest extends eqLogic {
 				$auto_away_on = new nestCmd();
 				$auto_away_on->setLogicalId('auto_away_on');
 				$auto_away_on->setIsVisible(1);
-				$auto_away_on->setName(__('Températures éco activées', __FILE__));
+				$auto_away_on->setName(__('Températures éco auto activées', __FILE__));
 			}
 			$auto_away_on->setType('action');
 			$auto_away_on->setSubType('other');
@@ -215,7 +215,7 @@ class nest extends eqLogic {
 				$eco_mode = new nestCmd();
 				$eco_mode->setLogicalId('eco_mode');
 				$eco_mode->setIsVisible(1);
-				$eco_mode->setName(__('Mode eco', __FILE__));
+				$eco_mode->setName(__('Mode éco', __FILE__));
 			}
 			$eco_mode->setType('info');
 			$eco_mode->setSubType('other');
@@ -239,7 +239,7 @@ class nest extends eqLogic {
 				$mode = new nestCmd();
 				$mode->setLogicalId('mode');
 				$mode->setIsVisible(1);
-				$mode->setName(__('mode', __FILE__));
+				$mode->setName(__('Mode', __FILE__));
 			}
 			$mode->setType('info');
 			$mode->setSubType('other');
@@ -251,7 +251,7 @@ class nest extends eqLogic {
 				$away_mode_on = new nestCmd();
 				$away_mode_on->setLogicalId('away_mode_on');
 				$away_mode_on->setIsVisible(1);
-				$away_mode_on->setName(__('Mode éco activées', __FILE__));
+				$away_mode_on->setName(__('Mode éco activé', __FILE__));
 			}
 			$away_mode_on->setType('action');
 			$away_mode_on->setSubType('other');
@@ -263,7 +263,7 @@ class nest extends eqLogic {
 				$away_mode_off = new nestCmd();
 				$away_mode_off->setLogicalId('away_mode_off');
 				$away_mode_off->setIsVisible(1);
-				$away_mode_off->setName(__('Mode éco désactivées', __FILE__));
+				$away_mode_off->setName(__('Mode éco désactivé', __FILE__));
 			}
 			$away_mode_off->setType('action');
 			$away_mode_off->setSubType('other');
@@ -456,7 +456,7 @@ class nest extends eqLogic {
 					$value = ($value == 1) ? 1 : 0;
 				}
 				if ($key == 'eco_mode') {
-					$value = ($value == 'manual-eco') ? 1 : 0;
+					$value = (($value == "manual-eco") || ($value == "auto-eco")) ? 1 : 0;
 				}
 				$changed = $this->checkAndUpdateCmd($key, $value) || $changed;
 			}
@@ -624,47 +624,47 @@ class nestCmd extends cmd {
 		$nest_api = nest::getNestApi();
 		if ($this->getLogicalId() == 'thermostat') {
 			$nest_api->setTargetTemperature(round($_options['slider'] * 2) / 2);
-			sleep(5);
+			sleep(1);
 		}
 		if ($this->getLogicalId() == 'fan_mode_on') {
 			$nest_api->setFanMode(FAN_MODE_ON, $eqLogic->getLogicalId());
-			sleep(5);
+			sleep(1);
 		}
 		if ($this->getLogicalId() == 'fan_mode_off') {
 			$nest_api->setFanMode(FAN_MODE_OFF, $eqLogic->getLogicalId());
-			sleep(5);
+			sleep(1);
 		}
 		if ($this->getLogicalId() == 'off') {
 			$nest_api->turnOff($eqLogic->getLogicalId());
-			sleep(5);
+			sleep(1);
 		}
 		if ($this->getLogicalId() == 'away_on') {
 			$nest_api->setAway(TRUE, $eqLogic->getLogicalId());
-			sleep(5);
+			sleep(1);
 		}
 		if ($this->getLogicalId() == 'away_off') {
 			$nest_api->setAway(FALSE, $eqLogic->getLogicalId());
-			sleep(5);
+			sleep(1);
 		}
 		if ($this->getLogicalId() == 'auto_away_on') {
 			$nest_api->setAutoAwayEnabled(TRUE, $eqLogic->getLogicalId());
-			sleep(5);
+			sleep(1);
 		}
 		if ($this->getLogicalId() == 'auto_away_off') {
 			$nest_api->setAutoAwayEnabled(FALSE, $eqLogic->getLogicalId());
-			sleep(5);
+			sleep(1);
 		}
 		if ($this->getLogicalId() == 'away_mode_on') {
-			$nest_api->setAway(TRUE, $eqLogic->getLogicalId());
-			sleep(5);
+			$nest_api->setEcoMode(ECO_MODE_MANUAL, $eqLogic->getLogicalId());
+			sleep(1);
 		}
 		if ($this->getLogicalId() == 'away_mode_off') {
-			$nest_api->setAway(FALSE, $eqLogic->getLogicalId());
-			sleep(5);
+			$nest_api->setEcoMode(ECO_MODE_SCHEDULE, $eqLogic->getLogicalId());
+			sleep(1);
 		}
 		if ($this->getLogicalId() == 'cool') {
 			$nest_api->setTargetTemperatureMode(TARGET_TEMP_MODE_HEAT, NULL, $eqLogic->getLogicalId());
-			sleep(5);
+			sleep(1);
 		}
 		$eqLogic->updateFromNest();
 		$eqLogic->save();
