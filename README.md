@@ -1,4 +1,4 @@
-# plugin-nest
+# plugin-nest for Jeedom V4
 Fork from official Jeedom plugin-nest with new Google account token &amp; cookie access from https://github.com/gboudreau/nest-api
 
 Using a Google Account
