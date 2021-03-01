@@ -432,7 +432,7 @@ class nest_api
                 'leaf' => $this->last_status->device->{$serial_number}->leaf,
                 'battery_level' => $this->last_status->device->{$serial_number}->battery_level,
                 'online' => $this->last_status->track->{$serial_number}->online,
-				'scale' => $this->last_status->device->{$serial_number}->temperature_scale,
+		'scale' => $this->last_status->device->{$serial_number}->temperature_scale,
                 'active_stages' => (object) array(
                     'heat' => (object) array(
                         'stage1' => $this->last_status->shared->{$serial_number}->hvac_heater_state,
