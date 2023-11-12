@@ -1,3 +1,9 @@
+# 12/11/2023
+
+- branche master devient la V3_legacy
+- branche V4 figée
+- branches beta et master mises à jour depuis la V4
+
 # 28/11/2019
 
 - Change du user agent par Nest/3.0.1.15 (iOS) os=6.0 platform=iPad3,1
