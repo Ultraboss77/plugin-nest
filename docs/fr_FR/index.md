@@ -31,7 +31,9 @@ The values of `$issue_token`, and `$cookies` are specific to your Google Account
 - In the `Filter` box, enter `oauth2/iframe`
 - Several network calls will appear in the Dev Tools window. Click on the last iframe call.
 - In the `Headers` tab, under `Request Headers`, copy the entire cookie value (include the whole string which is several lines long and has many field/value pairs - do not include the `Cookie:` prefix). This is your `$cookies`; make sure all of it is on a single line.
+
 ----------------------
+
 -   **Synchroniser** : permet de synchroniser Jeedom avec votre compte
     Nest pour découvrir automatiquement vos équipements Nest. A faire
     après avoir sauvegardé les paramètres précedent.
