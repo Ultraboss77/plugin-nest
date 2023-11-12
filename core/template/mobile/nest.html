@@ -1,43 +1,35 @@
-<div id="plugin_container" class="eqLogic-widget eqLogic allowResize" style="width:#width#;height:#height#;border:#border#;border-radius:#border-radius#;background-color: #background-color#;color: #color#; #style#;" data-category="" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#" >
+<div id="plugin_container" class="eqLogic-widget eqLogic allowResize" style="width:#width#;height:#height#;border:#border#;border-radius:#border-radius#;background-color: #background-color#;color: #color#; #style#;" data-category="#category#" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#" >
     <span class="statusCmd" style="position : relative;left : 2px;z-index: 1030;"></span>
-    <i class='fa fa-refresh pull-right cursor refresh' style="margin-top: 5px;margin-right: 5px;"></i>
-
+    <span class="cmd pull-right cursor refresh" data-cmd_id="#refresh_id#"><i class="fas fa-sync"></i>
+    </span>
     <center class="widget-name"><strong><a style="font-size : 1.1em;color:white">#name_display#</a></strong></center>
 
     <center>
-        <div class="row" style="margin-top:5px">
+        <div class="row" style="margin-top:20px">
     <div class="col-xs-12">
-
               <center>
-                             <div class="thermostat">
+                     <div class="thermostat">
 
-                             <div class="fa fa-circle circle" style="font-size: 10em;position : relative;margin-top : 15px;margin-left : -5px;"></div>
-                 <div class="circle2" style="font-size: 15em;display: inline-block; width: 0.4em; height: 0.4em; border: 30px solid black;border-radius: 0.35em;  position : absolute;margin-top : 16px;margin-left : -147px;"></div>
-                                 <div class="circle1" style="font-size: 24.5em; display: inline-block; width: 0.4em; height: 0.4em; border: 7px solid #CECECE;border-radius: 0.35em;position : absolute;margin-top : 10px;margin-left : -155px;"></div>
-                             <div class="cmd cmd-widget" data-type="action" data-subtype="slider" data-cmd_id="#thermostat_cmd_id#" style="position : relative;margin-top : -129px;left : -3px;">
-                 <input type="text" class="dial" id= "display3" data-role="none"  data-width="96" data-height="96" />
-                                </div>
-                                <span class="fa fa-home home cursor" style="font-size: 1.7em;position : absolute;margin-top : -128px;margin-left: -30px;"></span>
-                                <span class="icon jeedom-mouvement away cursor" style="font-size: 1.7em;position : absolute;margin-top : -128px;margin-left: -30px;"></span>
-                                <span class="fa fa-eye auto" style="font-size: 1.7em; position : absolute;margin-top : -128px; margin-left: 1px;color:#3498db";></span>
-                                <span class="scale" style="font-weight:bold; position: absolute; margin-top: -70px; margin-left : 23px;">°#scale#</span>
-                                <span style="font-size:2em; position : absolute;margin-left: -47px;margin-top: -75px;" class="stop">Éteint</span>
-                                <span class="fa fa-leaf leaf" style="font-size: 1.5em; position : absolute;margin-top : -35px;margin-left : -12px;"></span>
-                            <span style="font-size : 0.8em;font-weight: bold;position: absolute; margin-left : -38px;margin-top: -5px;"><div id="display2"></div></span>
-                                <span style="font-size:0.7em; position : absolute;margin-left: -27px;margin-top: 8px;" class="eco">Mode Éco</span>
+                     <div class="fa fa-circle circle" style="font-size: 10em;position: relative;margin-top: 15px;margin-left: -5px;"></div>
+                     <div class="circle2" style="font-size: 17em;display: inline-block; width: 0.4em; height: 0.4em; border: 30px solid black;border-radius: 0.35em;  position: absolute;margin-top: -4px;margin-left: -149px;"></div>
+                     <div class="circle1" style="font-size: 27.5em; display: inline-block; width: 0.4em; height: 0.4em; border: 7px solid #CECECE;border-radius: 0.35em;position: absolute;margin-top: -11px;margin-left: -155px;"></div>
+                     <div class="cmd cmd-widget" data-type="action" data-subtype="slider" data-cmd_id="#thermostat_cmd_id#" style="position: relative;margin-top: -129px;left: -3px;">
+                     <input class="dial" id="display3" data-role="none"  data-width="96" data-height="96" />
+                     </div>
+                     <span class="fa fa-home home cursor" style="font-size: 1.5em;position: absolute;margin-top: -126px;margin-left: -30px;"></span>
+                     <span class="icon jeedom-mouvement away cursor" style="font-size: 1.5em;position: absolute;margin-top: -126px;margin-left: -30px;"></span>
+                     <span class="fa fa-eye auto" style="font-size: 1.5em; position: absolute;margin-top: -126px; margin-left: 1px;color:#5a5a5a";></span>
+                     <span class="scale" style="font-weight:bold; position: absolute; margin-top: -70px; margin-left: 23px; color: white;">°#scale#</span>
+                     <span style="font-size:2em; position : absolute;margin-left: -40px;margin-top: -75px;" class="stop">Éteint</span>
+                     <span class="fa fa-leaf leaf" style="font-size: 1.5em; position: absolute;margin-top: -35px;margin-left: -12px;"></span>
+                     <span style="font-size: 0.8em;font-weight: bold;position: absolute; margin-left: -38px;margin-top: -5px; color: white;"><div id="display2"></div></span>
+                     <span style="font-size:0.7em; position: absolute;margin-left: -27px;margin-top: 8px;" class="eco">Mode Éco</span>
 
-                        </div>
-                             <span class="fa fa-power-off cool cursor" style="font-size: 2em; position : absolute;margin-top : 10px;margin-left : -89px;"></span>
-                             <span class="eco1 cursor" style="font-size:1.3em;font-weight:bold;position: absolute; margin-top : 14px;margin-left : 50px;">Éco</span>
-                 <span class="cmd cmd-widget" data-cmd_id="#away_off_id#" style="display:none;"></span>
-                 <span class="cmd cmd-widget" data-cmd_id="#away_on_id#" style="display:none;"></span>
-                 <span class="cmd cmd-widget" data-cmd_id="#refresh_id#" style="display:none;"></span>
-                 <span class="cmd cmd-widget" data-cmd_id="#cool_id#" style="display:none;"></span>
-                             <span class="cmd cmd-widget" data-cmd_id="#away_mode_on_id#" style="display:none;"></span>
-                             <span class="cmd cmd-widget" data-cmd_id="#away_mode_off_id#" style="display:none;"></span>
-                                </div>
-                            </div>
-
+                     </div>
+                     <span class="fa fa-power-off cool cursor" style="font-size: 2em; position: absolute;margin-top: 25px;margin-left: -80px;"></span>
+                     <i class="eco1 cursor" style="font-size:1.3em;font-weight:bold;position: absolute; margin-top: 30px;margin-left: 40px;">Éco</i>
+                     </div>
+                     </div>
             <script>
                 var d1 = #temperature#;
                 var d2 = #humidity#;
@@ -73,21 +65,21 @@
                 });
 
                         if (('#mode#' == 'off\,away') || ('#mode#' == 'off')){
-                                $('.eqLogic[data-eqLogic_uid=#uid#] .cool').on('click', function () {
+                    $('.eqLogic[data-eqLogic_uid=#uid#] .cool').on('click', function () {
                     jeedom.cmd.execute({id: '#cool_id#'});
                 });
                         } else {
-                                $('.eqLogic[data-eqLogic_uid=#uid#] .cool').on('click', function () {
+                    $('.eqLogic[data-eqLogic_uid=#uid#] .cool').on('click', function () {
                     jeedom.cmd.execute({id: '#off_id#'});
                 });
                                 }
 
                    if ('#eco_mode#' == '0') {
-                                $('.eqLogic[data-eqLogic_uid=#uid#] .eco1').on('click', function () {
+                    $('.eqLogic[data-eqLogic_uid=#uid#] .eco1').on('click', function () {
                     jeedom.cmd.execute({id: '#away_mode_on_id#'});
                                  });
                   } else {
-                                $('.eqLogic[data-eqLogic_uid=#uid#] .eco1').on('click',  function () {
+                    $('.eqLogic[data-eqLogic_uid=#uid#] .eco1').on('click',  function () {
                     jeedom.cmd.execute({id: '#away_mode_off_id#'});
                 });
                         }
@@ -112,7 +104,7 @@
                                 }, 200);
                             }
                         });
-                                                if ('#scale#' == 'F') {
+                        if ('#scale#' == 'F') {
                          $('.dial').trigger(
                           'configure',{"min":50,"max":90}
                          );
@@ -123,26 +115,25 @@
                         };
                         if (('#mode#' == 'off\,away') || ('#mode#' == 'off') || ('#mode#' == 'off\,manual-eco')){
                         $('.eqLogic[data-eqLogic_uid=#uid#] .power-off').css('color', 'black');
-                                                $('.eqLogic[data-eqLogic_uid=#uid#] .circle').css('color', 'black');
+                        $('.eqLogic[data-eqLogic_uid=#uid#] .circle').css('color', 'black');
                         $('.eqLogic[data-eqLogic_uid=#uid#] .eco1').hide();
                         $('.eqLogic[data-eqLogic_uid=#uid#] .dial').hide();
-                                                $('.eqLogic[data-eqLogic_uid=#uid#] .leaf').hide();
-                                                $('.eqLogic[data-eqLogic_uid=#uid#] .scale').hide();
+                        $('.eqLogic[data-eqLogic_uid=#uid#] .scale').hide();
                         $('.dial').trigger(
                           'configure',{"min":0,bgColor: "black",fgColor: "black"}
                          );
                         } else {
-                                                $('.eqLogic[data-eqLogic_uid=#uid#] .stop').hide();
+                        $('.eqLogic[data-eqLogic_uid=#uid#] .stop').hide();
                         $('.eqLogic[data-eqLogic_uid=#uid#] .power-off').hide();
-                                                $('.eqLogic[data-eqLogic_uid=#uid#] .circle').css('color', 'gray');
-                                                $('.dial').trigger(
+                        $('.eqLogic[data-eqLogic_uid=#uid#] .circle').css('color', 'gray');
+                        $('.dial').trigger(
                           'configure',{bgColor: "gray"}
                          );
                         };
                         if ('#eco_mode#' == '1') {
                         $('.eqLogic[data-eqLogic_uid=#uid#] .eco').css('color', '#33FF33');
-                                            $('.eqLogic[data-eqLogic_uid=#uid#] .circle').css('color', '#20FFB1');
-                                                $('.dial').trigger(
+                        $('.eqLogic[data-eqLogic_uid=#uid#] .circle').css('color', '#20FFB1');
+                        $('.dial').trigger(
                           'configure',{bgColor: "#20FFB1"}
                          );
                         } else {
@@ -151,10 +142,10 @@
                         };
                         if ('#heat#' == '1') {
                         $('.eqLogic[data-eqLogic_uid=#uid#] .circle').css('color', '#FF9900');
-                                                $('.dial').trigger(
+                        $('.dial').trigger(
                           'configure',{bgColor: "#FF9900"}
                          );
                         }
                     });
                 </script>
-    </div>
+</div>

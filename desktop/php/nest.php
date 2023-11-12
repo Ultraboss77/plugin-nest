@@ -189,7 +189,7 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
             <div class="form-group">
                 <label class="col-sm-2 control-label">{{Alimenté}}</label>
                 <div class="col-sm-2">
-                    <span class="eqLogicAttr tooltips label label-default" data-l1key="status" data-l2key="ac" style="font-size : 1em"></span>
+                    <span class="eqLogicAttr tooltips label label-default" data-l1key="status" data-l2key="online" style="font-size : 1em"></span>
                 </div>
                 <label class="col-sm-2 control-label">{{Batterie}}</label>
                 <div class="col-sm-2">
