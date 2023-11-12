@@ -9,7 +9,7 @@ Ce plugin utilise https://github.com/gboudreau/nest-api modifié pour Jeedom.
 
 ## Changelog
 
-./changelog
+[Changelog](./changelog)
 
 ## Pré-Requis
 
