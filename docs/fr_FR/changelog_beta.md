@@ -1,3 +1,5 @@
+# Changelog plugin-nest - BETA
+
 # 12/11/2023
 
 - branche master devient la V3_legacy
