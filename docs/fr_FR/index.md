@@ -1,5 +1,20 @@
+# Plugin nest
+
+## Description
+
 Le plugin Nest permet de piloter le thermostat Nest et de récupérer les
 informations du Nest Protect.
+
+Ce plugin utilise https://github.com/gboudreau/nest-api modifié pour Jeedom.
+
+## Pré-Requis
+
+- Vous devez vous connecter à votre compte Nest via un compte Google
+
+## Installation
+
+- Rajouter le plugin dans Jeedom en mode github
+- Activer le plugin
 
 > **IMPORTANT**
 >
@@ -7,7 +22,7 @@ informations du Nest Protect.
 
 > **IMPORTANT**
 >
-> Il n'y a pas de remonté en temps réel (juste une synchronisation toute les 15min), ce plugin ne peut donc etre utilisé pour avoir une alerte en temps réel en cas d'incendie (nest protect)
+> Il n'y a pas de remonté en temps réel (juste une synchronisation toute les 5min), ce plugin ne peut donc etre utilisé pour avoir une alerte en temps réel en cas d'incendie (nest protect)
 
 Configuration du plugin 
 =======================
