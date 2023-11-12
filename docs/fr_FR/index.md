@@ -13,7 +13,12 @@ Ce plugin utilise https://github.com/gboudreau/nest-api modifié pour Jeedom.
 
 ## Installation
 
-- Rajouter le plugin dans Jeedom en mode github
+- Rajouter le plugin dans Jeedom en mode github :
+ID=nest
+Utilisateur=Ultraboss77
+Dépôt=plugin-nest
+branche=V4 ou master (si Jeedom >= 4), sinon V3_legacy
+
 - Activer le plugin
 
 > **IMPORTANT**
