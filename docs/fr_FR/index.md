@@ -7,6 +7,10 @@ informations du Nest Protect.
 
 Ce plugin utilise https://github.com/gboudreau/nest-api modifié pour Jeedom.
 
+## Changelog
+
+./changelog
+
 ## Pré-Requis
 
 - Vous devez vous connecter à votre compte Nest via un compte Google
