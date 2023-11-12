@@ -5,6 +5,7 @@
 - branche master devient la V3_legacy
 - branche V4 figée
 - branches beta et master mises à jour depuis la V4
+- refonte doc et changelog
 
 # 28/11/2019
 
