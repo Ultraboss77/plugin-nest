@@ -5,9 +5,11 @@
 	"licence" : "AGPL",
 	"author" : "Loïc",
 	"require" : "3.0",
-    "category" : "communication",
-    "changelog" : "https://jeedom.github.io/plugin-nest/#language#/changelog",
-    "documentation" : "https://jeedom.github.io/plugin-nest/#language#/",
-	"language" : ["fr_FR","en_US","de_DE","sp_SP","ru_RU","id_ID","it_IT"],
-	"compatibility" : ["Jeedomboard","Smart","RPI/RPI2","Docker","DIY"]    
+	"category" : "communication",
+    	"changelog" : "https://ultraboss77.github.io/plugin-nest/#language#/changelog",
+    	"documentation" : "https://ultraboss77.github.io/plugin-nest/#language#/",
+    	"changelog_beta" : "https://ultraboss77.github.io/plugin-nest/#language#/changelog_beta",
+    	"documentation_beta" : "https://ultraboss77.github.io/plugin-nest/#language#/index_beta",
+	"language" : ["fr_FR","en_US","de_DE","sp_SP"],
+	"compatibility" : ["miniplus","smart","rpi","docker","diy","mobile","v4"]   
 }
