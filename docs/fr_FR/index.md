@@ -15,10 +15,7 @@ Configuration du plugin
 Une fois le plugin installé, il vous faut renseigner vos informations de
 connexion Nest :
 
--   **Nom d’utilisateur** : votre nom d’utilisateur Nest (souvent c’est
-    votre adresse mail)
-
--   **Mot de passe** : mot de passe de votre compte Nest
+-   **issueToken** et **Cookies** : voir https://github.com/Ultraboss77/plugin-nest/blob/beta/README.md#using-a-google-account
 
 -   **Synchroniser** : permet de synchroniser Jeedom avec votre compte
     Nest pour découvrir automatiquement vos équipements Nest. A faire
