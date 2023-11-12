@@ -218,7 +218,7 @@ class nest extends eqLogic {
                                 $eco_mode->setName(__('Mode éco', __FILE__));
                         }
                         $eco_mode->setType('info');
-                        $eco_mode->setSubType('other');
+                        $eco_mode->setSubType('string');
                         $eco_mode->setEqLogic_id($eqLogic->getId());
                         $eco_mode->save();
 
@@ -242,7 +242,7 @@ class nest extends eqLogic {
                                 $mode->setName(__('Mode', __FILE__));
                         }
                         $mode->setType('info');
-                        $mode->setSubType('other');
+                        $mode->setSubType('string');
                         $mode->setEqLogic_id($eqLogic->getId());
                         $mode->save();
 
@@ -314,7 +314,7 @@ class nest extends eqLogic {
                                 $scale->setName(__('Unité', __FILE__));
                         }
                         $scale->setType('info');
-                        $scale->setSubType('other');
+                        $scale->setSubType('string');
                         $scale->setEqLogic_id($eqLogic->getId());
                         $scale->save();
                         $eqLogic->save();
