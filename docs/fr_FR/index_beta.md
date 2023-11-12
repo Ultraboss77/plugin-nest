@@ -1,4 +1,4 @@
-# Plugin nest
+# Plugin nest - BETA
 
 ## Description
 
@@ -9,7 +9,7 @@ Ce plugin utilise https://github.com/gboudreau/nest-api modifié pour Jeedom.
 
 ## Changelog
 
-[Changelog](./changelog)
+[Changelog](./changelog_beta)
 
 ## Pré-Requis
 
@@ -120,5 +120,4 @@ En dessous vous retrouvez la liste des commandes :
 -   Tester : permet de tester la commande
 
 -   supprimer (signe -) : permet de supprimer la commande
-
 
