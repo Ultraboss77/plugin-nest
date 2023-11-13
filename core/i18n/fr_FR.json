@@ -7,6 +7,9 @@
         "Synchronisation réussie": "Synchronisation réussie"
     },
     "desktop\/js\/nest.js": {
+        "Nom de la commande": "Nom de la commande",
+        "Choisir une icône": "Choisir une icône",
+        "Unité": "Unité",
         "Historiser": "Historiser",
         "Tester": "Tester"
     },
@@ -44,9 +47,10 @@
         "Nom": "Nom",
         "Emplacement": "Emplacement",
         "IP externe": "IP externe",
-        "Dernier connexion": "Dernier connexion",
+        "Dernière connexion": "Dernière connexion",
         "Alimenté": "Alimenté",
-        "Options": "Options"
+        "Options": "Options",
+        "Actions": "Actions"
     },
     "core\/ajax\/nest.ajax.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
@@ -74,7 +78,7 @@
         "Eteint": "Eteint",
         "Allumer": "Allumer",
         "En ligne": "En ligne",
-        "Scale": "Scale",
+        "Scale": "Unité",
         "CO": "CO",
         "Fumée": "Fumée",
         "Erreur sur ": "Erreur sur ",
