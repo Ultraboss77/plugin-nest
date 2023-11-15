@@ -101,6 +101,14 @@ if (count($eqLogics) == 0) {
             <div class="col-sm-2">
                 <span class="eqLogicAttr tooltips label label-default" data-l1key="configuration" data-l2key="nest_type" style="font-size : 1em" ></span>
             </div>
+            <div class="col-sm-2">
+                <?php if ($eqLogic->getConfiguration('nest_type') != '') {
+                              echo '<img src="plugins/nest/core/img/' . $eqLogic->getConfiguration('nest_type', '') . '.jpg" height="105" width="95" />';
+                              } else {
+                              echo '<img src="' . $plugin->getPathImgIcon() . '" height="105" width="95" />';
+                              }
+                ?>
+            </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">{{ID}}</label>
