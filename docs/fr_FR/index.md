@@ -25,7 +25,7 @@ Utilisateur=Ultraboss77
 
 Dépôt=plugin-nest
 
-branche=V4 ou master (si Jeedom >= 4), sinon V3_legacy
+branche=master ou V4 (si Jeedom >= 4), sinon V3_legacy
 
 - Activer le plugin
 
