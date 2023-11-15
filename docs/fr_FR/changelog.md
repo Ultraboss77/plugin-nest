@@ -1,5 +1,9 @@
 # Changelog plugin-nest
 
+# 15/11/2023
+
+- refresh tab équipement et commandes
+  
 # 12/11/2023
 
 - branche master devient la V3_legacy
