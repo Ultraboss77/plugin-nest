@@ -1,6 +1,10 @@
 Changelog plugin-nest - BETA
 =============
 
+# 11/01/2024
+
+- Corrections affichage custom template
+
 # 13/11/2023
 
 - refresh tab équipement et commandes
