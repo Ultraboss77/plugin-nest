@@ -1,33 +1,44 @@
-<div id="plugin_container" class="eqLogic-widget eqLogic allowResize #category#" style="width:#width#;height:#height#;border:#border#;border-radius:#border-radius#;background-color: #background-color#;color: #color#; #style#" data-eqtype="nest" data-translate-category="#categorie#" data-category="#category#" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#" >
-    <span class="statusCmd" style="position : relative;left : 2px;z-index: 1030;"></span>
-    <span class="cmd pull-right cursor refresh" data-cmd_id="#refresh_id#"><i class="fas fa-sync"></i>
-    </span>
-    <center class="widget-name"><a href="#eqLink#" style="font-size : 1.1em;color:white">#name_display#</a></center>
+<div class="eqLogic eqLogic-widget allowResize allowLayout #custom_layout#  #category#"
+      style="min-height: 230px;min-width:230px; position: relative; width:#width#; height:#height#;
+             background-color:#background-color#; color:#color#; border:#border#; border-radius:#border-radius#;#style#"
+      data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-cat_color="#catcolore#"
+      data-version="#version#" data-translate-category="#translate_category#" data-category="#category#" data-tags="#tags#">
 
-   <div class="row">
+        <center class="widget-name">
+                <span class="warning" title="#alert_name#">
+                        <i class='#alert_icon#'></i>
+                </span>
+        <span class="cmd refresh pull-right cursor" data-cmd_id="#refresh_id#">
+                        <i class="fas fa-sync"></i>
+                </span>
+                <span class="reportModeVisible">#name_display# <span class="object_name">#object_name#</span></span>
+                <a href="#eqLink#" class="reportModeHidden">#name_display# <span class="object_name">#object_name#</span></a>
+        </center>
+
+        <center class="row">
         <div class="col-xs-12">
-            <div class="cmd cmd-widget" data-type="action" data-subtype="slider" data-cmd_id="#thermostat_cmd_id#" style="width : 232px;height : 211px;display : block;">
-                           <div>
-                 <i class="fa fa-circle circle" style="font-size: 10.5em;margin-left: 53px;margin-top: 36px;position :absolute;"></i>
-                 <div class="circle2" style="font-size: 39em;display: inline-block; width: 0.4em; height: 0.4em; border: 36px solid black; margin-left: 24px;margin-top: 5px; border-radius: 0.35em;position :absolute;"></div>
-                 <div class="circle1" style="font-size: 40em; display: inline-block; width: 0.4em; height: 0.4em; border: 7px solid #CECECE;margin-left: 21px;margin-top: 1px; border-radius: 0.35em;position :absolute;"></div>
-                 <div style="margin-top : 40px;margin-left : 60px; position :absolute; " >
-                        <input class="dial" value="#order#" data-role="none" data-width="116" data-height="116" />
-                 </div>
-
-                 <i class="fa fa-power-off cool cursor" style="font-size: 2.5em; position : absolute;top : 170px;left : 14px;"></i>
-                 <i style="font-size:1.8em;font-weight:bold; position : absolute; top: 180px; left: 185px;" class="eco1 cursor">Éco</i>
-                 <i class="fa fa-leaf leaf" style="font-size: 1.5em; position : absolute;margin-top : 125px;margin-left:110px;"></i>
-                 <i class="fa fa-eye auto" style="font-size: 1.8em; position : absolute;margin-top : 15px; margin-left: 127px;color:#5a5a5a";></i>
-                 <i class="fa fa-home home cursor" style="font-size: 1.8em;position : absolute;margin-top : 15px;margin-left: 88px; color: initial;"></i>
-                 <i class="icon jeedom-mouvement away cursor" style="font-size: 1.8em;position : absolute;margin-top : 15px;margin-left: 88px;"></i>
-                 <span style="font-size : 1em;font-weight: bold;position: absolute; margin-left : 83px;margin-top: 157px; color: white;"><div id="display"></div></span>
-                 <div style="font-size:2em; position : absolute;margin-left: 85px;margin-top: 85px;" class="stop">Éteint</div>
-                 <div style="font-size:0.8em; position : absolute;margin-left: 95px;margin-top: 170px;" class="eco">Mode Éco</div>
-                 <div class="scale" style="font-weight:bold; position: absolute; top: 75px; left : 152px; color: white;">
-                      °#scale#
-                </div>
-                </div>
+          <div class="circle1" style="font-size: 40em; display: inline-block; width: 0.4em; height: 0.4em; border: 5px solid #CECECE;margin-left: 1px;margin-top: 1px; border-radius: 0.35em;position :relative;">
+          <div class="circle2" style="font-size: 0.95em; width: 0.4em; height: 0.4em; border: 44px solid black; border-radius: 0.40em;position :absolute;"></div>
+          <div class="cmd cmd-widget" data-type="action" data-subtype="slider" data-cmd_id="#thermostat_cmd_id#" style="width : 215px;height : 215px;display : block;">
+            <i class="fa fa-circle circle" style="font-size: 10.5em;margin-left: 0px;margin-top: 44px;position :relative;"></i>
+              <div style="margin-top : -122px;margin-left : 50px; position :absolute; " >
+                  <input class="dial" value="#order#" data-role="none" data-width="116" data-height="116" />
+              </div>
+          <div class="scale" style="font-weight:bold; position: absolute; top: 75px; left : 135px; color: white;">
+              °#scale#
+          </div>
+          <div>
+          <i class="fa fa-power-off cool cursor" style="font-size: 2.5em; position : absolute;top : 185px;left : -2px;"></i>
+          <i style="font-size:1.8em;font-weight:bold; position : absolute; top: 200px; left: 175px;" class="eco1 cursor">Éco</i>
+          <i class="fa fa-leaf leaf" style="font-size: 1.5em; position : absolute;margin-top : -30px;margin-left : -10px;"></i>
+          <i class="fa fa-eye auto" style="font-size: 1.8em; position : absolute;margin-top : -155px; margin-left: 15px;color:#5a5a5a";></i>
+          <i class="fa fa-home home cursor" style="font-size: 1.8em;position : absolute;margin-top : -155px;margin-left: -40px; color: initial;"></i>
+          <i class="icon jeedom-mouvement away cursor" style="font-size: 1.8em;position : absolute;margin-top : -155px;margin-left: -40px;"></i>
+          <span style="font-size : 1.2em;font-weight: bold;position: absolute; margin-left : -40px;margin-top: 5px; color: white;"><div id="display"></div></span>
+          <div style="font-size:2em; position : absolute;margin-left: 80px;margin-top: -72px;" class="stop">Éteint</div>
+          <div style="font-size:0.8em; position : absolute;margin-left: 86px;margin-top: 25px;" class="eco">Mode Éco</div>
+          </div>
+          </div>
                 <script>
                 var d1 = #temperature#;
                 var d2 = #humidity#;
@@ -79,7 +90,7 @@
                     jeedom.cmd.execute({id: '#away_mode_off_id#'});
                 });
                         }
-                        $.include(['plugins/nest/core/template/dashboard/jquery.knob.js'], function () {
+                        $.include(['plugins/nest/core/template/jquery.knob.js'], function () {
                         $(".eqLogic[data-eqLogic_uid=#uid#] .cmd[data-cmd_id=#thermostat_cmd_id#] .dial").knob({
                             step: 0.5,
                                 fgColor: "#ffffff",
@@ -146,5 +157,5 @@
                 </script>
             </div>
         </div>
-    </div>
+    </center>
 </div>
