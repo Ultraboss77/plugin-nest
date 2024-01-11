@@ -216,8 +216,8 @@ if (count($eqLogics) == 0) {
                 <th style="min-width:150px;width:300px;">{{Nom}}</th>
                 <th style="width:130px;">{{Type}}</th>
                 <th class="hidden-xs" style="min-width:50px;width:150px;">Logical ID</th>
-                <th style="min-width:260px;width:400px;">{{Options}}</th>
                 <th>{{Etat}}</th>
+                <th style="min-width:260px;width:400px;">{{Options}}</th>
                 <th style="min-width:80px;width:180px;">{{Actions}}</th>
         </tr>
     </thead>
