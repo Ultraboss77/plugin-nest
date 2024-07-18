@@ -318,6 +318,42 @@ class nest extends eqLogic {
                         $scale->setEqLogic_id($eqLogic->getId());
                         $scale->save();
                         $eqLogic->save();
+
+                        $hot_water_on = $eqLogic->getCmd(null, 'hot_water_on');
+                        if (!is_object($hot_water_on)) {
+                                $hot_water_on = new nestCmd();
+                                $hot_water_on->setLogicalId('hot_water_on');
+                                $hot_water_on->setIsVisible(1);
+                                $hot_water_on->setName(__('Allumer eau chaude', __FILE__));
+                        }
+                        $hot_water_on->setType('action');
+                        $hot_water_on->setSubType('other');
+                        $hot_water_on->setEqLogic_id($eqLogic->getId());
+                        $hot_water_on->save();
+
+                        $hot_water_off = $eqLogic->getCmd(null, 'hot_water_off');
+                        if (!is_object($hot_water_off)) {
+                                $hot_water_off = new nestCmd();
+                                $hot_water_off->setLogicalId('hot_water_off');
+                                $hot_water_off->setIsVisible(1);
+                                $hot_water_off->setName(__('Éteindre eau chaude', __FILE__));
+                        }
+                        $hot_water_off->setType('action');
+                        $hot_water_off->setSubType('other');
+                        $hot_water_off->setEqLogic_id($eqLogic->getId());
+                        $hot_water_off->save();
+
+                        $hot_water = $eqLogic->getCmd(null, 'hot_water');
+                        if (!is_object($hot_water)) {
+                                $hot_water = new nestCmd();
+                                $hot_water->setLogicalId('hot_water');
+                                $hot_water->setIsVisible(1);
+                                $hot_water->setName(__('Eau chaude', __FILE__));
+                        }
+                        $hot_water->setType('info');
+                        $hot_water->setSubType('binary');
+                        $hot_water->setEqLogic_id($eqLogic->getId());
+                        $hot_water->save();
                 }
 
                 $devices = $nest_api->getDevices(DEVICE_TYPE_PROTECT);
@@ -532,6 +568,12 @@ class nest extends eqLogic {
                         $away_mode_off = $this->getCmd(null, 'away_mode_off');
                         $replace['#away_mode_off_id#'] = $away_mode_off->getId();
 
+                        $hot_water_on = $this->getCmd(null, 'hot_water_on');
+                        $replace['#hot_water_on_id#'] = $hot_water_on->getId();
+
+                        $hot_water_off = $this->getCmd(null, 'hot_water_off');
+                        $replace['#hot_water_off_id#'] = $hot_water_off->getId();
+
                         $refresh = $this->getCmd(null, 'refresh');
                         if (is_object($refresh)) {
                                 $replace['#refresh_id#'] = $refresh->getId();
@@ -666,6 +708,14 @@ class nestCmd extends cmd {
                 if ($this->getLogicalId() == 'cool') {
                         $nest_api->setTargetTemperatureMode(TARGET_TEMP_MODE_HEAT, NULL, $eqLogic->getLogicalId());
                         sleep(1);
+                }
+                if ($this->getLogicalId() == 'hot_water_on') {
+                        $nest_api->setHotWaterBoost(3600, $eqLogic->getLogicalId());
+                        sleep(3);
+                }
+                if ($this->getLogicalId() == 'hot_water_off') {
+                        $nest_api->cancelHotWaterBoost($eqLogic->getLogicalId());
+                        sleep(3);
                 }
                 $eqLogic->updateFromNest();
                 $eqLogic->save();
